@@ -64,7 +64,7 @@ const products = [
         function updateCartButton() {
             const cartButton = document.getElementById('cartButton');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartButton.textContent = `???? Cart (${totalItems})`;
+            cartButton.textContent = `Cart (${totalItems})`;
         }
 
         function renderCart() {
