@@ -6,6 +6,7 @@ const products = [
             { id: 5, name: "HUMANITY Oversize", price: 115.000, sizes: ["S", "M", "L",], image: "E.jpg" },
             { id: 6, name: "SKELETON Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "F.jpg" },
             { id: 7, name: "Bone Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "G.jpg" },
+            { id: 8, name: "HOURSE Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "H.jpg" },
         ];
 
         let cart = [];
