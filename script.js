@@ -109,7 +109,7 @@ const products = [
         }
 
         function sendOrderToWhatsApp() {
-            const phoneNumber = "6287871420482"; // Country code followed by the phone number without spaces or symbols
+            const phoneNumber = "6287820843118"; // Country code followed by the phone number without spaces or symbols
             let message = "New order:\n\n";
             cart.forEach(item => {
                 message += `${item.name} (Size: ${item.selectedSize}) - Quantity: ${item.quantity} - Price: Rp${(item.price * item.quantity).toFixed(3)}\n`;
