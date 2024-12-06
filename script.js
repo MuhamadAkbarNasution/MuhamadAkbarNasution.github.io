@@ -7,6 +7,9 @@ const products = [
             { id: 6, name: "SKELETON Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "F.jpg" },
             { id: 7, name: "BONE Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "G.jpg" },
             { id: 8, name: "HOURSE Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "H.jpg" },
+            { id: 9, name: "CRANIUM Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "I.jpg" },
+            { id: 10, name: "GUN Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "J.jpg" },
+            { id: 11, name: "KNIGHT Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "K.jpg" },
         ];
 
         let cart = [];
