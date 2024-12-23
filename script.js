@@ -14,6 +14,7 @@ const products = [
             { id: 13, name: "KAVALERI Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "M.jpg" },
             { id: 14, name: "TRUST ISSUES Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "N.jpg" },
             { id: 15, name: "LOW LIFE Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "O.jpg" },
+            { id: 16, name: "TELEKINESIS Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "P.jpg" },
         ];
 
         let cart = [];
