@@ -15,6 +15,9 @@ const products = [
             { id: 14, name: "TRUST ISSUES Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "N.jpg" },
             { id: 15, name: "LOW LIFE Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "O.jpg" },
             { id: 16, name: "TELEKINESIS Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "P.jpg" },
+            { id: 17, name: "LUXU Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "Q.jpg" },
+            { id: 18, name: "ÉCLATÉ Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "R.jpg" },
+            { id: 19, name: "STAR Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "S.jpg" },
         ];
 
         let cart = [];
