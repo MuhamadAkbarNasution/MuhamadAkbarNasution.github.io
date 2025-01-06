@@ -18,6 +18,13 @@ const products = [
             { id: 17, name: "LUXU Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "Q.jpg" },
             { id: 18, name: "ÉCLATÉ Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "R.jpg" },
             { id: 19, name: "STAR Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "S.jpg" },
+            { id: 20, name: "DOG Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "T.jpg" },
+            { id: 21, name: "TEN Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "U.jpg" },
+            { id: 22, name: "FERRARI Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "V.jpg" },
+            { id: 23, name: "THE FALLEN Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "W.jpg" },
+            { id: 24, name: "AMERICAN Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "X.jpg" },
+            { id: 25, name: "LUX1982 Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "Y.jpg" },
+            { id: 26, name: "F80 Oversize", price: 115.000, sizes: ["S", "M", "L"], image: "Z.jpg" },
         ];
 
         let cart = [];
