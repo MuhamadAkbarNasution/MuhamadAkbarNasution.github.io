@@ -4,59 +4,56 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 'baju-001',
             name: 'Skeleton',
-            image: 'Skeleton.jpg', // Pastikan gambar ini ada di folder Anda
+            image: 'Skeleton.jpg',
             description: 'T-Shirt paling nyaman dan bagus untuk dipakai setiap hari, cocok disemua musim.',
             basePrice: 95000,
             sizes: ['XS', 'S', 'M', 'L', 'XL'],
-            color: 'putih',
-            stock: { 'XS': 10, 'S': 15, 'M': 20, 'L': 12, 'XL': 5 } // Simulated stock levels
+            color: 'putih'
         },
         {
             id: 'baju-002',
             name: 'Dog and éclipse',
-            image: 'Dog.jpg', // Pastikan gambar ini ada di folder Anda
+            image: 'Dog.jpg',
             description: 'T-Shirt paling nyaman dan bagus untuk dipakai setiap hari, cocok disemua musim.',
             basePrice: 95000,
             sizes: ['XS','S', 'M', 'L', 'XL'],
-            color: 'hitam',
-            stock: { 'XS': 5, 'S': 8, 'M': 10, 'L': 7, 'XL': 3 }
+            color: 'hitam'
         },
         {
             id: 'baju-003',
             name: 'Travis Scoot',
-            image: 'Travis scoot.jpg', // Pastikan gambar ini ada di folder Anda
+            image: 'Travis scoot.jpg',
             description: 'T-Shirt paling nyaman dan bagus untuk dipakai setiap hari, cocok disemua musim.',
             basePrice: 95000,
             sizes: ['XS', 'S', 'M', 'L', 'XL'],
-            color: 'hitam',
-            stock: { 'XS': 3, 'S': 6, 'M': 8, 'L': 5, 'XL': 2 }
+            color: 'hitam'
         },
         {
             id: 'baju-004',
             name: 'Person',
-            image: 'Person.jpg', // Pastikan gambar ini ada di folder Anda
+            image: 'Person.jpg',
             description: 'T-Shirt paling nyaman dan bagus untuk dipakai setiap hari, cocok disemua musim.',
             basePrice: 95000,
             sizes: ['XS', 'S', 'M', 'L', 'XL'],
-            color: 'hitam',
-            stock: { 'XS': 7, 'S': 12, 'M': 15, 'L': 10, 'XL': 4 }
+            color: 'hitam'
         },
-        // Tambahkan produk lain sesuai kebutuhan Anda
+        
     ];
 
     // --- INFORMASI PENJUAL ---
     const sellerInfo = {
         name: "Luxuliver Official",
         address: "Srengseng Sawah, Kel. Srengseng Sawah, Kec. Jagakarsa, Kota Jakarta Selatan, DKI Jakarta, 12640",
-        phone: "+62 852-1819-7546", // Nomor telepon untuk ditampilkan
+        phone: "+62 852-1819-7546", // Nomor telepo
         email: "info@luxuliver.com",
         instagram: "https://www.instagram.com/luxuliver", // Link Ig
-        whatsappAdmin: "6287871420482" // Nomor WhatsApp admin untuk order (tanpa + dan spasi)
+        whatsappAdmin: "6287871420482" // Nomor WhatsApp admin
     };
     // --- AKHIR INFORMASI PENJUAL ---
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let orderCounter = parseInt(localStorage.getItem('orderCounter')) || 1000;
+    // BARIS BARU UNTUK FAVORIT
     let favorites = JSON.parse(localStorage.getItem('favorites')) || []; 
 
     // DOM Elements
@@ -87,33 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const quickViewModal = document.getElementById('quick-view-modal');
     const closeModalButton = quickViewModal.querySelector('.close-button');
     const modalBody = quickViewModal.querySelector('.modal-body');
-    const modalAddToCartBtn = document.getElementById('modal-add-to-cart-btn');
-    const modalSizeOptions = document.getElementById('modal-size-options');
-    const modalStockInfo = document.getElementById('modal-stock-info'); // NEW: Stock info element
+    const modalAddToCartBtn = document.getElementById('modal-add-to-cart-btn'); // Ambil tombol add to cart di modal
+    const modalSizeOptions = document.getElementById('modal-size-options'); // Ambil container size options di modal
 
     // Footer contact info elements
     const sellerAddressSpan = document.getElementById('seller-address');
     const sellerPhoneSpan = document.getElementById('seller-phone');
     const sellerEmailSpan = document.getElementById('seller-email');
 
-    // Favorit DOM Elements
+    // DOM Elements BARU UNTUK FAVORIT
     const favoriteCountSpan = document.getElementById('favorite-count');
     const favoriteProductsList = document.getElementById('favorite-products-list');
     const emptyFavoritesMessage = document.getElementById('empty-favorites-message');
 
-    // Metode Ekspedisi DOM Element
+    // DOM Element untuk Metode Ekspedisi BARU
     const expeditionMethodSelect = document.getElementById('expedition-method');
 
-    // NEW: Elemen untuk Confirmation Modal
-    const confirmationModal = document.getElementById('confirmation-modal');
-    const confirmMessage = document.getElementById('confirm-message');
-    const confirmYesBtn = document.getElementById('confirm-yes');
-    const confirmNoBtn = document.getElementById('confirm-no');
-
-    // NEW: Elemen untuk Toast/Snackbar Container (akan dibuat dan ditambahkan ke body)
-    const toastContainer = document.createElement('div');
-    toastContainer.id = 'toast-container';
-    document.body.appendChild(toastContainer);
 
     // --- Fungsi Bantuan ---
     const formatRupiah = (number) => {
@@ -122,72 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getPriceBySize = (basePrice, size) => {
         if (size && size.toUpperCase() === 'XL') {
-            return basePrice + 5000; // Contoh: Harga +5000 untuk ukuran XL
+            return basePrice + 5000;
         }
         return basePrice;
     };
-
-    // NEW: Fungsi untuk menampilkan Toast/Snackbar Notification
-    const showToast = (message, type = 'info') => {
-        const toast = document.createElement('div');
-        toast.classList.add('toast-notification', type); // Tambahkan kelas 'info', 'success', 'error', 'warning'
-        toast.textContent = message;
-        toastContainer.appendChild(toast);
-
-        // Paksa reflow untuk animasi (penting untuk CSS transition)
-        void toast.offsetWidth; 
-        toast.classList.add('show');
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            // Hapus toast dari DOM setelah animasi selesai
-            toast.addEventListener('transitionend', () => toast.remove());
-        }, 3000); // Notifikasi akan hilang setelah 3 detik
-    };
-
-    // NEW: Fungsi untuk Validasi Form Checkout (Reusable)
-    const validateField = (inputElement) => {
-        const value = inputElement.value.trim();
-        const feedbackElement = inputElement.nextElementSibling; // Get the .invalid-feedback div
-
-        let isValid = true;
-        let errorMessage = '';
-
-        if (inputElement.hasAttribute('required') && value === '') {
-            isValid = false;
-            errorMessage = 'Bidang ini wajib diisi.';
-        } else if (inputElement.type === 'tel') {
-            const phoneRegex = /^[0-9]{10,15}$/;
-            if (!phoneRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Nomor WhatsApp tidak valid (10-15 digit angka).';
-            }
-        } else if (inputElement.tagName === 'SELECT' && value === '') {
-            isValid = false;
-            errorMessage = 'Harap pilih salah satu opsi.';
-        }
-
-        if (isValid) {
-            inputElement.classList.remove('is-invalid');
-            inputElement.classList.add('is-valid');
-            if (feedbackElement) feedbackElement.classList.remove('show');
-        } else {
-            inputElement.classList.add('is-invalid');
-            inputElement.classList.remove('is-valid');
-            if (feedbackElement) {
-                feedbackElement.textContent = errorMessage;
-                feedbackElement.classList.add('show');
-            }
-        }
-        return isValid;
-    };
-
-    // NEW: Add event listeners for instant validation on input change and blur
-    checkoutForm.querySelectorAll('input, textarea, select').forEach(input => {
-        input.addEventListener('input', () => validateField(input));
-        input.addEventListener('blur', () => validateField(input));
-    });
-
 
     // --- Render Skeleton Loader ---
     const renderSkeletonLoaders = (containerElement, count) => {
@@ -211,11 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Render Produk (Fungsi yang lebih fleksibel untuk berbagai etalase) ---
     const renderProductsInContainer = (productsToRender, containerElement, noResultsElement, initialLoad = false) => {
         // Tampilkan skeleton jika ini bukan pemanggilan ulang (misal setelah search)
-        if (!initialLoad && productsToRender.length > 0) {
-             const skeletonCount = Math.min(productsToRender.length, 8); // Max 8 skeletons
+        if (!initialLoad) {
+             const skeletonCount = Math.min(productsToRender.length > 0 ? productsToRender.length : 4, 8); // Max 8 skeletons
              renderSkeletonLoaders(containerElement, skeletonCount);
         }
        
+
         // Simulasikan loading data dengan setTimeout
         setTimeout(() => {
             containerElement.innerHTML = ''; // Hapus skeleton loader
@@ -231,11 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 noResultsElement.style.display = 'none';
                 productsToRender.forEach(product => {
-                    // Determine initial stock status for display
-                    const totalStock = Object.values(product.stock).reduce((sum, current) => sum + current, 0);
-                    const stockClass = totalStock > 0 ? 'in-stock' : 'out-of-stock';
-                    const stockText = totalStock > 0 ? `Stok: Tersedia (${totalStock})` : 'Stok: Habis';
-
                     const productCard = document.createElement('div');
                     productCard.classList.add('product-card');
                     productCard.innerHTML = `
@@ -243,17 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="product-info">
                             <h3>${product.name}</h3>
                             <p class="price">${formatRupiah(getPriceBySize(product.basePrice, 'M'))}</p>
-                            <div class="stock-info ${stockClass}">${stockText}</div> <div class="size-options" data-product-id="${product.id}">
-                                ${product.sizes.map(size => `
-                                    <span class="size-option ${product.stock[size] === 0 ? 'disabled' : ''}" 
-                                          data-size="${size}" 
-                                          data-stock="${product.stock[size]}">
-                                        ${size}
-                                    </span>
-                                `).join('')}
+                            <div class="size-options" data-product-id="${product.id}">
+                                ${product.sizes.map(size => `<span class="size-option" data-size="${size}">${size}</span>`).join('')}
                             </div>
                             <div class="product-actions">
-                                <button class="btn add-to-cart" data-id="${product.id}" ${totalStock === 0 ? 'disabled' : ''}><i class="fas fa-shopping-cart"></i> Tambah ke Keranjang</button>
+                                <button class="btn add-to-cart" data-id="${product.id}">Tambah ke Keranjang</button>
                                 <button class="btn quick-view-btn" data-id="${product.id}"><i class="fas fa-eye"></i> Quick View</button>
                                 <button class="btn add-to-favorite" data-id="${product.id}"><i class="far fa-heart"></i></button>
                             </div>
@@ -265,28 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Event listener untuk pilihan ukuran
                 containerElement.querySelectorAll('.size-option').forEach(option => {
                     option.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('disabled')) {
-                            showToast("Ukuran ini sedang tidak tersedia.", "error");
-                            return;
-                        }
                         const parentSizes = e.target.closest('.product-card').querySelector('.size-options');
                         parentSizes.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
                         e.target.classList.add('selected');
-
-                        // Enable/disable Add to Cart button based on selected size stock
-                        const productId = e.target.closest('.product-card').querySelector('.add-to-cart').dataset.id;
-                        const product = products.find(p => p.id === productId);
-                        const selectedSize = e.target.dataset.size;
-                        const addToCartButton = e.target.closest('.product-card').querySelector('.add-to-cart');
-
-                        if (product.stock[selectedSize] > 0) {
-                            addToCartButton.disabled = false;
-                            addToCartButton.textContent = "Tambah ke Keranjang";
-                            addToCartButton.classList.remove('added');
-                        } else {
-                            addToCartButton.disabled = true;
-                            addToCartButton.textContent = "Stok Habis";
-                        }
                     });
                 });
 
@@ -297,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const selectedSizeElement = e.target.closest('.product-card').querySelector('.size-option.selected');
 
                         if (!selectedSizeElement) {
-                            showToast("Mohon pilih ukuran baju terlebih dahulu!", "warning");
+                            alert("Mohon pilih ukuran baju terlebih dahulu!");
                             return;
                         }
                         const selectedSize = selectedSizeElement.dataset.size;
@@ -325,11 +220,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
 
-                // Event listener untuk tombol Favorit
+                // Event listener untuk tombol Favorit BARU
                 containerElement.querySelectorAll('.add-to-favorite').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const productId = e.target.dataset.id || e.target.closest('button').dataset.id;
-                        toggleFavorite(productId, e.target.closest('button'));
+                        toggleFavorite(productId, e.target.closest('button')); // Kirim elemen tombol juga
                     });
                 });
             }
@@ -394,64 +289,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const product = products.find(p => p.id === productId);
         if (!product) return;
 
-        const currentStock = product.stock[size];
-        const existingItemInCart = cart.find(item => item.id === productId && item.size === size);
-        const quantityInCart = existingItemInCart ? existingItemInCart.quantity : 0;
-
-        if (currentStock <= 0 || quantityInCart >= currentStock) {
-            showToast(`Stok untuk ${product.name} ukuran ${size} habis atau tidak mencukupi!`, "error");
-            return;
-        }
-
         const price = getPriceBySize(product.basePrice, size);
         const existingItemIndex = cart.findIndex(item => item.id === productId && item.size === size);
 
         if (existingItemIndex > -1) {
             cart[existingItemIndex].quantity++;
-            showToast(`Kuantitas ${product.name} (${size}) diperbarui di keranjang!`, "info");
         } else {
             cart.push({ id: product.id, name: product.name, image: product.image, price: price, size: size, quantity: 1 });
-            showToast(`${product.name} (${size}) ditambahkan ke keranjang!`, "success");
         }
-        
-        product.stock[size]--; // Decrease simulated stock
         saveCart();
         renderCart();
-        renderAllProductShowcases(); // Re-render product list to update stock display
     };
 
     const updateQuantity = (productId, size, change) => {
-        const product = products.find(p => p.id === productId);
-        if (!product) return;
-
         const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
         if (itemIndex > -1) {
-            const currentQuantity = cart[itemIndex].quantity;
-            const newQuantity = currentQuantity + change;
-
-            if (newQuantity <= 0) {
-                // NEW: Tampilkan modal konfirmasi sebelum menghapus
-                showConfirmationModal(`Anda yakin ingin menghapus "${cart[itemIndex].name} (${cart[itemIndex].size})" dari keranjang?`, () => {
-                    const removedItemName = cart[itemIndex].name; // Simpan nama sebelum dihapus
-                    const removedItemSize = cart[itemIndex].size; // Simpan ukuran sebelum dihapus
-                    product.stock[size] += cart[itemIndex].quantity; // Restore stock
-                    cart.splice(itemIndex, 1);
-                    saveCart();
-                    renderCart();
-                    renderAllProductShowcases(); // Re-render product list to update stock display
-                    showToast(`"${removedItemName} (${removedItemSize})" berhasil dihapus dari keranjang.`, "success");
-                });
-            } else if (newQuantity > product.stock[size] + currentQuantity) { // Check against original stock + what's already in cart
-                showToast(`Stok untuk ${product.name} ukuran ${size} hanya tersisa ${product.stock[size] + currentQuantity} item.`, "error");
-            } else {
-                cart[itemIndex].quantity = newQuantity;
-                product.stock[size] -= change; // Update simulated stock
-                saveCart();
-                renderCart();
-                renderAllProductShowcases(); // Re-render product list to update stock display
-                showToast(`Kuantitas "${cart[itemIndex].name} (${cart[itemIndex].size})" diubah.`, "info");
+            cart[itemIndex].quantity += change;
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
             }
         }
+        saveCart();
+        renderCart();
     };
 
     const calculateCartTotals = () => {
@@ -464,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let discount = 0;
         if (totalItems >= 5) {
-            discount = subtotal * 0.02; // Diskon 2% jika 5 item atau lebih
+            discount = subtotal * 0.02;
         }
 
         const total = subtotal - discount;
@@ -540,29 +399,21 @@ document.addEventListener('DOMContentLoaded', () => {
     checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Perform validation for all fields
-        const customerNameInput = document.getElementById('customer-name');
-        const customerPhoneInput = document.getElementById('customer-phone');
-        const customerAddressInput = document.getElementById('customer-address');
-        const expeditionMethodInput = document.getElementById('expedition-method');
+        const customerName = document.getElementById('customer-name').value;
+        const customerPhone = document.getElementById('customer-phone').value;
+        const customerAddress = document.getElementById('customer-address').value;
+        // PERUBAHAN DI SINI: MENGAMBIL NILAI DARI ID BARU
+        const expeditionMethod = document.getElementById('expedition-method').value;
 
-        const isNameValid = validateField(customerNameInput);
-        const isPhoneValid = validateField(customerPhoneInput);
-        const isAddressValid = validateField(customerAddressInput);
-        const isExpeditionValid = validateField(expeditionMethodInput);
-
-        if (!isNameValid || !isPhoneValid || !isAddressValid || !isExpeditionValid) {
-            showToast("Harap lengkapi semua bidang yang wajib diisi dengan benar.", "error");
-            return; // Stop submission if any validation fails
+        // VALIDASI NOMOR TELEPON BARU
+        const phoneRegex = /^[0-9]{10,15}$/; // Antara 10 sampai 15 digit angka
+        if (!phoneRegex.test(customerPhone)) {
+            alert("Nomor WhatsApp tidak valid. Harap masukkan antara 10 hingga 15 digit angka saja.");
+            return; // Hentikan proses jika validasi gagal
         }
         
-        const customerName = customerNameInput.value;
-        const customerPhone = customerPhoneInput.value;
-        const customerAddress = customerAddressInput.value;
-        const expeditionMethod = expeditionMethodInput.value;
-        
         const { total } = calculateCartTotals();
-        const orderId = `LXVR-${orderCounter++}`; // Buat ID pesanan unik
+        const orderId = `LX-${orderCounter++}`; // Buat ID pesanan unik
         localStorage.setItem('orderCounter', orderCounter); // Simpan counter baru
 
         let orderDetails = `*Order Baru dari Luxuliver Shop*\n\n`;
@@ -570,6 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderDetails += `*Nama Pelanggan:* ${customerName}\n`;
         orderDetails += `*Telepon:* ${customerPhone}\n`;
         orderDetails += `*Alamat:* ${customerAddress}\n`;
+        // PERUBAHAN DI SINI: MENGGUNAKAN expeditionMethod
         orderDetails += `*Metode Ekspedisi:* ${expeditionMethod.toUpperCase().replace('-', ' ')}\n\n`; // Format J&T, LION PARCEL, JNE
         orderDetails += `*Detail Pesanan:*\n`;
 
@@ -589,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCart();
         checkoutForm.reset();
         checkoutFormContainer.style.display = 'none'; // Sembunyikan form kembali
-        showToast("Pesanan Anda telah berhasil dibuat! Kami akan menghubungi Anda melalui WhatsApp.", "success");
+        alert("Pesanan Anda telah berhasil dibuat! Kami akan menghubungi Anda melalui WhatsApp.");
     });
 
 
@@ -606,110 +458,142 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modal-product-price').textContent = formatRupiah(getPriceBySize(product.basePrice, 'M')); // Default size M for display
         modalAddToCartBtn.dataset.id = product.id; // Set product ID for ATC button
 
-        // Render size options in modal with stock info
-        modalSizeOptions.innerHTML = product.sizes.map(size => {
-            const stockForSize = product.stock[size] || 0;
-            const isDisabled = stockForSize === 0 ? 'disabled' : '';
-            return `
-                <span class="size-option ${isDisabled}" 
-                      data-size="${size}" 
-                      data-stock="${stockForSize}">
-                    ${size}
-                </span>
-            `;
-        }).join('');
-
-        // Set default selected size to M if available, otherwise first available size
-        let defaultSelectedSize = 'M';
-        if (!product.sizes.includes('M') || product.stock['M'] === 0) {
-            defaultSelectedSize = product.sizes.find(size => product.stock[size] > 0) || product.sizes[0];
-        }
-        const defaultSizeOptionElement = modalSizeOptions.querySelector(`.size-option[data-size="${defaultSelectedSize}"]`);
-        if (defaultSizeOptionElement && !defaultSizeOptionElement.classList.contains('disabled')) {
-            defaultSizeOptionElement.classList.add('selected');
-            document.getElementById('modal-product-price').textContent = formatRupiah(getPriceBySize(product.basePrice, defaultSelectedSize));
-            // Update modal stock info for default selected size
-            updateModalStockInfo(product, defaultSelectedSize);
-            modalAddToCartBtn.disabled = false;
-        } else {
-            // If no default size is selectable, disable add to cart
-            modalAddToCartBtn.disabled = true;
-            modalStockInfo.textContent = 'Stok: Habis';
-            modalStockInfo.className = 'stock-info out-of-stock';
-        }
-
-
+        // Render size options in modal
+        modalSizeOptions.innerHTML = product.sizes.map(size => `<span class="size-option" data-size="${size}">${size}</span>`).join('');
         // Add event listeners for size options in modal
         modalSizeOptions.querySelectorAll('.size-option').forEach(option => {
             option.addEventListener('click', (e) => {
-                if (e.target.classList.contains('disabled')) {
-                    showToast("Ukuran ini sedang tidak tersedia.", "error");
-                    return;
-                }
                 modalSizeOptions.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
                 e.target.classList.add('selected');
                 // Update price in modal based on selected size
                 document.getElementById('modal-product-price').textContent = formatRupiah(getPriceBySize(product.basePrice, e.target.dataset.size));
-                // Update modal stock info based on selected size
-                updateModalStockInfo(product, e.target.dataset.size);
-                modalAddToCartBtn.disabled = false; // Enable button if a selectable size is chosen
             });
         });
 
-        // Event listener for Add to Cart button in modal
-        modalAddToCartBtn.onclick = () => {
-            const selectedSizeElement = modalSizeOptions.querySelector('.size-option.selected');
-            if (!selectedSizeElement) {
-                showToast("Mohon pilih ukuran baju terlebih dahulu!", "warning");
-                return;
-            }
-            const selectedSize = selectedSizeElement.dataset.size;
-            addToCart(productId, selectedSize);
-            quickViewModal.classList.remove('show'); // Close modal after adding to cart
-            body.classList.remove('no-scroll'); // Re-enable scrolling
-        };
-
-        // Event listener for Add to Favorite button in modal
-        quickViewModal.querySelector('.modal-add-to-favorite').onclick = (e) => {
-            const id = e.target.dataset.id || e.target.closest('button').dataset.id;
-            toggleFavorite(id, e.target.closest('button'));
-        };
-
-        // Show modal
-        quickViewModal.classList.add('show');
-        body.classList.add('no-scroll'); // Disable scrolling on body
-    };
-
-    // NEW: Function to update stock info in Quick View Modal
-    const updateModalStockInfo = (product, selectedSize) => {
-        const stockForSize = product.stock[selectedSize] || 0;
-        if (stockForSize > 0) {
-            modalStockInfo.textContent = `Stok: Tersedia (${stockForSize})`;
-            modalStockInfo.className = 'stock-info in-stock';
-            modalAddToCartBtn.disabled = false;
-        } else {
-            modalStockInfo.textContent = 'Stok: Habis';
-            modalStockInfo.className = 'stock-info out-of-stock';
-            modalAddToCartBtn.disabled = true;
+        // Set default selected size to M if available, otherwise first size
+        const defaultSizeOption = modalSizeOptions.querySelector('.size-option[data-size="M"]') || modalSizeOptions.querySelector('.size-option');
+        if (defaultSizeOption) {
+            defaultSizeOption.classList.add('selected');
+            // Ensure modal price reflects default selected size
+            document.getElementById('modal-product-price').textContent = formatRupiah(getPriceBySize(product.basePrice, defaultSizeOption.dataset.size));
         }
-    };
 
+        // Set product ID for modal's Add to Favorite button
+        const modalAddtoFavoriteBtn = quickViewModal.querySelector('.modal-add-to-favorite');
+        modalAddtoFavoriteBtn.dataset.id = product.id;
+        // Update its state
+        updateFavoriteButtons(); // Call this to set the correct class and icon
+
+        quickViewModal.classList.add('show');
+        body.classList.add('no-scroll'); // Prevent body scroll
+    };
 
     closeModalButton.addEventListener('click', () => {
         quickViewModal.classList.remove('show');
-        body.classList.remove('no-scroll');
+        body.classList.remove('no-scroll'); // Allow body scroll
     });
 
-    window.addEventListener('click', (event) => {
-        if (event.target === quickViewModal) {
+    window.addEventListener('click', (e) => {
+        if (e.target === quickViewModal) {
             quickViewModal.classList.remove('show');
             body.classList.remove('no-scroll');
         }
     });
 
-    // --- Favorit Logic ---
+    // Event listener for Add to Cart button within modal
+    modalAddToCartBtn.addEventListener('click', (e) => {
+        const productId = e.target.dataset.id;
+        const selectedSizeElement = modalSizeOptions.querySelector('.size-option.selected');
+
+        if (!selectedSizeElement) {
+            alert("Mohon pilih ukuran baju terlebih dahulu!");
+            return;
+        }
+        const selectedSize = selectedSizeElement.dataset.size;
+        addToCart(productId, selectedSize);
+
+        // Feedback visual tombol "Ditambahkan!"
+        const originalText = modalAddToCartBtn.textContent;
+        modalAddToCartBtn.textContent = "✅ Ditambahkan!";
+        modalAddToCartBtn.classList.add('added');
+        modalAddToCartBtn.disabled = true;
+
+        setTimeout(() => {
+            modalAddToCartBtn.textContent = originalText;
+            modalAddToCartBtn.classList.remove('added');
+            modalAddToCartBtn.disabled = false;
+        }, 1500);
+    });
+
+    // Event listener for Add to Favorite button within modal BARU
+    quickViewModal.querySelector('.modal-add-to-favorite').addEventListener('click', (e) => {
+        const modalProductId = e.target.dataset.id || e.target.closest('button').dataset.id;
+        toggleFavorite(modalProductId, e.target.closest('button'));
+    });
+
+
+    // --- BACK TO TOP BUTTON ---
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- Skeleton Loader Animation ---
+    const animateOnScroll = () => {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (sectionTop < windowHeight * 0.75) { // Atur 75% dari tinggi viewport
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible'); // Hapus saat tidak terlihat lagi
+            }
+        });
+    };
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Panggil sekali saat load untuk elemen yang sudah terlihat
+
+
+    // --- FUNGSI BARU UNTUK FAVORIT ---
     const saveFavorites = () => {
         localStorage.setItem('favorites', JSON.stringify(favorites));
+    };
+
+    const toggleFavorite = (productId, buttonElement = null) => {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const favoriteIndex = favorites.findIndex(item => item.id === productId);
+
+        if (favoriteIndex > -1) {
+            // Remove from favorites
+            favorites.splice(favoriteIndex, 1);
+            if (buttonElement) {
+                buttonElement.classList.remove('favorited');
+                buttonElement.querySelector('i').classList.remove('fas');
+                buttonElement.querySelector('i').classList.add('far');
+            }
+        } else {
+            // Add to favorites
+            favorites.push({ id: product.id, name: product.name, image: product.image, basePrice: product.basePrice }); // Simpan basePrice untuk render di favorit
+            if (buttonElement) {
+                buttonElement.classList.add('favorited');
+                buttonElement.querySelector('i').classList.remove('far');
+                buttonElement.querySelector('i').classList.add('fas');
+            }
+        }
+        saveFavorites();
+        renderFavorites(); // Panggil ini untuk memperbarui tampilan daftar favorit
+        updateFavoriteButtons(); // Panggil ini untuk memastikan semua tombol terupdate
     };
 
     const renderFavorites = () => {
@@ -718,66 +602,38 @@ document.addEventListener('DOMContentLoaded', () => {
             emptyFavoritesMessage.style.display = 'block';
         } else {
             emptyFavoritesMessage.style.display = 'none';
-            favorites.forEach(favId => {
-                const product = products.find(p => p.id === favId);
-                if (product) {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    const totalStock = Object.values(product.stock).reduce((sum, current) => sum + current, 0);
-                    const stockClass = totalStock > 0 ? 'in-stock' : 'out-of-stock';
-                    const stockText = totalStock > 0 ? `Stok: Tersedia (${totalStock})` : 'Stok: Habis';
+            favorites.forEach(favProduct => {
+                const product = products.find(p => p.id === favProduct.id); // Dapatkan detail lengkap produk
+                if (!product) return; // Lewati jika produk tidak ditemukan di data asli
 
-                    productCard.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="product-info">
-                            <h3>${product.name}</h3>
-                            <p class="price">${formatRupiah(getPriceBySize(product.basePrice, 'M'))}</p>
-                            <div class="stock-info ${stockClass}">${stockText}</div>
-                            <div class="size-options" data-product-id="${product.id}">
-                                ${product.sizes.map(size => `
-                                    <span class="size-option ${product.stock[size] === 0 ? 'disabled' : ''}" 
-                                          data-size="${size}" 
-                                          data-stock="${product.stock[size]}">
-                                        ${size}
-                                    </span>
-                                `).join('')}
-                            </div>
-                            <div class="product-actions">
-                                <button class="btn add-to-cart" data-id="${product.id}" ${totalStock === 0 ? 'disabled' : ''}><i class="fas fa-shopping-cart"></i> Tambah ke Keranjang</button>
-                                <button class="btn quick-view-btn" data-id="${product.id}"><i class="fas fa-eye"></i> Quick View</button>
-                                <button class="btn add-to-favorite favorited" data-id="${product.id}"><i class="fas fa-heart"></i></button> </div>
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="price">${formatRupiah(product.basePrice)}</p>
+                        <div class="product-actions">
+                            <button class="btn add-to-cart" data-id="${product.id}"><i class="fas fa-shopping-cart"></i> Tambah ke Keranjang</button>
+                            <button class="btn quick-view-btn" data-id="${product.id}"><i class="fas fa-eye"></i> Quick View</button>
+                            <button class="btn remove-from-favorite btn-primary" data-id="${product.id}"><i class="fas fa-heart-broken"></i> Hapus</button>
                         </div>
-                    `;
-                    favoriteProductsList.appendChild(productCard);
-                }
+                    </div>
+                `;
+                favoriteProductsList.appendChild(productCard);
             });
 
-            // Re-attach event listeners for newly rendered favorites
-            favoriteProductsList.querySelectorAll('.size-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('disabled')) {
-                        showToast("Ukuran ini sedang tidak tersedia.", "error");
-                        return;
-                    }
-                    const parentSizes = e.target.closest('.product-card').querySelector('.size-options');
-                    parentSizes.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
-                    e.target.classList.add('selected');
-                });
-            });
-
+            // Event listener untuk tombol "Tambah ke Keranjang" di daftar favorit (gunakan ukuran M sebagai default)
             favoriteProductsList.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = e.target.dataset.id;
-                    const selectedSizeElement = e.target.closest('.product-card').querySelector('.size-option.selected');
-                    if (!selectedSizeElement) {
-                        showToast("Mohon pilih ukuran baju terlebih dahulu!", "warning");
-                        return;
-                    }
-                    const selectedSize = selectedSizeElement.dataset.size;
-                    addToCart(productId, selectedSize);
+                    // Untuk sederhana, kita tambahkan dengan ukuran M dulu (Anda bisa modifikasi untuk memilih ukuran)
+                    addToCart(productId, 'M');
+                    alert('Produk ditambahkan ke keranjang!');
                 });
             });
 
+            // Event listener untuk tombol Quick View di daftar favorit
             favoriteProductsList.querySelectorAll('.quick-view-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = e.target.dataset.id;
@@ -785,86 +641,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            favoriteProductsList.querySelectorAll('.add-to-favorite').forEach(button => {
+            // Event listener untuk tombol "Hapus dari Favorit"
+            favoriteProductsList.querySelectorAll('.remove-from-favorite').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const productId = e.target.dataset.id || e.target.closest('button').dataset.id;
-                    toggleFavorite(productId, e.target.closest('button'));
+                    const productId = e.target.dataset.id;
+                    toggleFavorite(productId); // Ini akan menghapus dan memperbarui tampilan
                 });
             });
         }
         favoriteCountSpan.textContent = favorites.length;
-        updateFavoriteButtons(); // Update all favorite buttons across the page
-    };
-
-    const toggleFavorite = (productId, buttonElement) => {
-        const index = favorites.indexOf(productId);
-        if (index > -1) {
-            favorites.splice(index, 1);
-            showToast("Produk dihapus dari favorit.", "info");
-        } else {
-            favorites.push(productId);
-            showToast("Produk ditambahkan ke favorit!", "success");
-        }
-        saveFavorites();
-        renderFavorites();
-        updateFavoriteButtons(); // Crucial for updating buttons on all pages
     };
 
     const updateFavoriteButtons = () => {
         document.querySelectorAll('.add-to-favorite').forEach(button => {
             const productId = button.dataset.id;
-            if (favorites.includes(productId)) {
+            if (favorites.some(fav => fav.id === productId)) {
                 button.classList.add('favorited');
-                button.innerHTML = '<i class="fas fa-heart"></i>';
+                button.querySelector('i').classList.remove('far');
+                button.querySelector('i').classList.add('fas');
             } else {
                 button.classList.remove('favorited');
-                button.innerHTML = '<i class="far fa-heart"></i>';
+                button.querySelector('i').classList.remove('fas');
+                button.querySelector('i').classList.add('far');
             }
         });
-    };
-
-    // --- NEW: Confirmation Modal ---
-    let confirmCallback = null; // Callback function to execute on 'Yes'
-
-    const showConfirmationModal = (message, callback) => {
-        confirmMessage.textContent = message;
-        confirmCallback = callback;
-        confirmationModal.classList.add('show');
-        body.classList.add('no-scroll');
-    };
-
-    confirmYesBtn.addEventListener('click', () => {
-        if (confirmCallback) {
-            confirmCallback();
+        // Lakukan hal yang sama untuk tombol di modal quick view jika modal terbuka
+        const modalFavButton = quickViewModal.querySelector('.modal-add-to-favorite');
+        if (modalFavButton) {
+            const productId = modalFavButton.dataset.id;
+            if (favorites.some(fav => fav.id === productId)) {
+                modalFavButton.classList.add('favorited');
+                modalFavButton.querySelector('i').classList.remove('far');
+                modalFavButton.querySelector('i').classList.add('fas');
+            } else {
+                modalFavButton.classList.remove('favorited');
+                modalFavButton.querySelector('i').classList.remove('fas');
+                modalFavButton.querySelector('i').classList.add('far');
+            }
         }
-        confirmationModal.classList.remove('show');
-        body.classList.remove('no-scroll');
-        confirmCallback = null; // Reset callback
-    });
+    };
+    // AKHIR FUNGSI BARU UNTUK FAVORIT
 
-    confirmNoBtn.addEventListener('click', () => {
-        confirmationModal.classList.remove('show');
-        body.classList.remove('no-scroll');
-        confirmCallback = null;
-    });
 
-    // --- NEW: Scroll-to-Top Button Logic ---
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) { // Show button after scrolling 300px
-            backToTopButton.classList.add('show');
-        } else {
-            backToTopButton.classList.remove('show');
-        }
-    });
-
-    backToTopButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-
-    // --- Inisialisasi Aplikasi ---
+    // --- Inisialisasi Aplikasi ---\
     const initializeApp = () => {
         // Tampilkan skeleton saat inisialisasi
         renderSkeletonLoaders(productList, 8); // Tampilkan 8 skeleton di koleksi utama
@@ -873,9 +692,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Kemudian baru render produk asli setelah sedikit delay
         setTimeout(() => {
-            renderAllProductShowcases(false); // Render semua produk tanpa filter awal
+            renderAllProductShowcases();
             renderCart(); // Ini akan mengatur visibility form checkout
-            renderFavorites(); // Merender favorit saat load
+            renderFavorites(); // PANGGIL INI UNTUK MERENDER FAVORIT SAAT LOAD
             currentYearSpan.textContent = new Date().getFullYear();
 
             // Update informasi penjual di footer
@@ -884,8 +703,8 @@ document.addEventListener('DOMContentLoaded', () => {
             sellerEmailSpan.textContent = sellerInfo.email;
 
             // Update link Instagram di header dan footer
-            document.querySelector('nav ul li a[href*="instagram.com"]').href = sellerInfo.instagram;
-            document.querySelector('footer a[href*="instagram.com"]').href = sellerInfo.instagram;
+            document.querySelector('nav ul li a[href*=\"instagram.com\"]').href = sellerInfo.instagram;
+            document.querySelector('footer a[href*=\"instagram.com\"]').href = sellerInfo.instagram;
 
             // Hapus kelas no-scroll dari body setelah semua konten dimuat
             body.classList.remove('no-scroll');
