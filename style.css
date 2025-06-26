@@ -23,7 +23,7 @@
     --border-color: #e0e6ec; /* Lighter, subtle border */
 
     /* Bayangan: Lebih halus, lebih tersebar, dan sedikit kebiruan */
-    --shadow-extra-light: rgba(62, 90, 125, 0.05); /* NEW: Even lighter shadow */
+    --shadow-extra-light: rgba(62, 90, 125, 0.05); /* Even lighter shadow */
     --shadow-light: rgba(62, 90, 125, 0.1); /* Subtle shadow with primary hue */
     --shadow-medium: rgba(62, 90, 125, 0.2);
     --shadow-strong: rgba(62, 90, 125, 0.35);
@@ -58,13 +58,9 @@ body {
     background-attachment: fixed;
     background-size: cover;
     /* Ganti dengan gambar JPG Anda yang berkualitas tinggi */
-    background-image: url('your-stunning-background-image.jpg'); /* Pastikan path benar */
-    background-position: center top; /* Sesuaikan posisi agar gambar fokus di bagian atas/tengah */
-    background-repeat: no-repeat;
-    /* NEW: Layer background noise untuk tekstur premium */
     background-image:
         linear-gradient(rgba(240,244,247,0.8), rgba(240,244,247,0.8)), /* Lapisan overlay warna untuk kontras teks */
-        url('data:image/svg+xml;utf8,...'), /* Lapisan noise/tekstur SVG halus */
+        url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg"><circle fill="%23e5e9ed" cx="1" cy="1" r="0.5"/></svg>'), /* Lapisan noise/tekstur SVG halus */
         url('AA.jpg'); /* <-- Ini adalah tempat gambar JPG Anda */
     background-blend-mode: overlay, normal, normal; /* Cara lapisan-lapisan ini bercampur */
     background-size: cover, auto, cover; /* Cara ukuran background diatur */
@@ -167,7 +163,7 @@ a:hover {
     transform: perspective(1px) translateZ(0); /* For consistent 3D transforms */
     -webkit-tap-highlight-color: transparent; /* Remove highlight on touch */
 }
-/* NEW: Shine effect on hover */
+/* Shine effect on hover */
 .btn::before {
     content: '';
     position: absolute;
@@ -180,37 +176,6 @@ a:hover {
     transition: transform 0.6s ease-in-out;
     opacity: 0;
     z-index: 1;
-}
-
- /* Gaya untuk tombol ikon, ini kemungkinan sudah ada di file Anda */
-.btn-icon {
-    background: none;
-    border: none;
-    color: var(--light-text); /* Sesuaikan dengan warna teks ikon Anda */
-    cursor: pointer;
-    font-size: 1.2rem; /* Ukuran ikon */
-    padding: 5px;
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-icon:hover {
-    color: var(--primary-color); /* Warna saat hover */
-}
-
-/* Jika Anda ingin gaya spesifik untuk tombol bagikan (opsional) */
-.share-product-btn {
-    /* Misalnya, Anda ingin mengubah warna ikon khusus untuk tombol bagikan */
-    /* color: var(--accent-color); */
-}
-
-/* Penyesuaian margin untuk tombol di modal, jika style="margin-top: 10px;" di HTML tidak cukup */
-#quick-view-modal .share-product-btn {
-    margin-top: 10px; /* Memastikan ada jarak yang cukup */
-    width: 100%; /* Agar tombol memanjang penuh seperti lainnya */
-    justify-content: center; /* Memusatkan teks dan ikon */
 }
 .btn:hover::before {
     transform: skewX(-20deg) translateX(150%); /* Move across the button */
@@ -231,7 +196,7 @@ a:hover {
     transform: translateY(-7px) scale(1.02); /* Efek lift dan sedikit scale */
     box-shadow: 0 15px 35px rgba(62, 90, 125, 0.6); /* Bayangan hover lebih dalam */
 }
-.btn-primary:active { /* NEW: Press down effect */
+.btn-primary:active { /* Press down effect */
     transform: translateY(-2px) scale(0.99);
     box-shadow: 0 5px 10px rgba(62, 90, 125, 0.3);
 }
@@ -276,7 +241,15 @@ header {
     z-index: 999;
     backdrop-filter: blur(12px); /* Blur lebih kuat */
     border-bottom: 1px solid var(--border-color); /* Border bawah halus */
+    transition: all 0.3s ease-in-out; /* Add transition for sticky header */
 }
+
+/* Sticky Header Effect */
+header.scrolled {
+    padding: 1rem 0; /* Smaller padding when scrolled */
+    box-shadow: 0 8px 30px var(--shadow-medium); /* More prominent shadow when scrolled */
+}
+
 header .container {
     display: flex;
     justify-content: space-between;
@@ -340,6 +313,36 @@ header nav a i {
 header nav a:hover i,
 header nav a.active i {
     color: var(--primary-color);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    background-color: var(--background-color);
+    padding: 1.2rem 0;
+    font-size: 0.95rem;
+    color: var(--light-text);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-extra-light);
+    position: sticky;
+    top: 6.5rem; /* Adjust based on header height */
+    z-index: 900;
+    backdrop-filter: blur(8px);
+}
+.breadcrumbs .container {
+    display: flex;
+    align-items: center;
+}
+.breadcrumbs a {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+.breadcrumbs span {
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 /* Hero Section */
@@ -432,7 +435,7 @@ section.visible {
     opacity: 1;
     transform: translateY(0);
 }
-/* NEW: Section divider with a softer gradient */
+/* Section divider with a softer gradient */
 .section-divider {
     height: 70px; /* Tinggi divider */
     background: linear-gradient(to right, transparent, rgba(62, 90, 125, 0.15), transparent); /* Gradien lembut */
@@ -496,7 +499,7 @@ section.visible {
     border: 1px solid var(--border-color); /* Tambah border halus */
     position: relative;
 }
-/* NEW: Subtle inner shadow for depth */
+/* Subtle inner shadow for depth */
 .product-card::after {
     content: '';
     position: absolute;
@@ -814,6 +817,142 @@ section.visible {
     box-shadow: 0 12px 30px rgba(62, 90, 125, 0.4);
 }
 
+/* Checkout Progress Bar */
+.checkout-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+    position: relative;
+    padding: 0 20px;
+}
+
+.checkout-progress-bar .progress-line {
+    position: absolute;
+    height: 4px;
+    background-color: var(--border-color);
+    width: calc(100% - 40px); /* Adjust width to fit between steps */
+    left: 20px;
+    z-index: 0;
+}
+
+.checkout-progress-bar .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.checkout-progress-bar .progress-step .step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    border: 3px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--light-text);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.checkout-progress-bar .progress-step .step-name {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--light-text);
+    white-space: nowrap;
+    transition: color 0.3s ease-in-out;
+}
+
+.checkout-progress-bar .progress-step.active .step-number {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(62, 90, 125, 0.4);
+}
+
+.checkout-progress-bar .progress-step.active .step-name {
+    color: var(--primary-color);
+}
+
+.checkout-progress-bar .progress-step.completed .step-number {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(107, 176, 151, 0.4);
+}
+
+.checkout-progress-bar .progress-step.completed .step-name {
+    color: var(--secondary-color);
+}
+
+/* Form Sections for multi-step checkout */
+.form-section {
+    display: none;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.form-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    gap: 20px;
+}
+.form-actions .btn {
+    flex: 1;
+}
+
+/* Order Summary Details */
+#order-summary-details {
+    padding: 30px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-base);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+#order-summary-details p {
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+#order-summary-details p:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+}
+#order-summary-details strong {
+    color: var(--text-color);
+}
+#order-summary-details span.value {
+    color: var(--primary-dark-hover);
+    font-weight: 600;
+}
+
+
 /* Footer */
 footer {
     background-color: #1a2228; /* Abu-abu sangat gelap, mendekati hitam pekat */
@@ -824,7 +963,7 @@ footer {
     position: relative;
     overflow: hidden;
 }
-/* NEW: Subtle radial gradient in footer */
+/* Subtle radial gradient in footer */
 footer::before {
     content: '';
     position: absolute;
@@ -907,402 +1046,252 @@ footer::before {
 .back-to-top.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 .back-to-top:hover {
-    background: linear-gradient(45deg, var(--accent-dark-hover), var(--accent-color));
-    transform: translateY(-10px) scale(1.05); /* Efek lift lebih jelas */
+    transform: translateY(-8px) scale(1.05); /* Further lift and scale on hover */
     box-shadow: 0 15px 35px rgba(255, 145, 77, 0.6);
 }
 
-
 /* Quick View Modal */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.85); /* Latar belakang modal lebih gelap */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+    backdrop-filter: blur(8px); /* Blur background */
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-    animation: fadeInBackground 0.5s forwards;
-    backdrop-filter: blur(15px); /* NEW: Lebih blur lagi untuk efek glassmorphism */
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
 }
-@keyframes fadeInBackground {
-    from { background-color: rgba(0,0,0,0); }
-    to { background-color: rgba(0,0,0,0.85); }
+.modal.show {
+    opacity: 1;
 }
 
-.modal.show {
-    display: flex;
-}
 .modal-content {
     background-color: var(--surface-color);
     margin: auto;
-    padding: 60px; /* Padding lebih besar */
-    border-radius: 25px; /* Lebih bulat lagi */
-    width: 95%;
-    max-width: 1100px; /* Max width lebih besar */
-    box-shadow: 0 25px 60px var(--shadow-deep); /* Bayangan sangat kuat */
+    padding: 50px;
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 20px 60px var(--shadow-strong);
+    max-width: 900px; /* Larger modal */
+    width: 90%;
     position: relative;
-    transform: translateY(-100px) scale(0.92); /* Mulai dari lebih tinggi dan sedikit kecil */
-    opacity: 0;
-    animation: dropInScale 0.7s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Kurva animasi lebih kompleks */
-    border: 2px solid var(--primary-light); /* Lebih menonjolkan border */
-    overflow: hidden; /* Untuk memastikan shadow tidak bocor */
+    transform: translateY(-50px); /* Initial slide up effect */
+    transition: transform 0.3s ease-out;
+    border: 1px solid var(--border-color);
 }
-/* NEW: Subtle radial gradient in modal background */
-.modal-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 10% 10%, rgba(62, 90, 125, 0.05) 0%, rgba(0,0,0,0) 50%),
-                radial-gradient(circle at 90% 90%, rgba(62, 90, 125, 0.05) 0%, rgba(0,0,0,0) 50%);
-    pointer-events: none;
-    z-index: 0;
+.modal.show .modal-content {
+    transform: translateY(0);
 }
 
-@keyframes dropInScale {
-    from { transform: translateY(-120px) scale(0.88); opacity: 0; }
-    to { transform: translateY(0) scale(1); opacity: 1; }
-}
-.close-button {
+.modal-content .close-button {
     color: var(--light-text);
+    font-size: 3rem;
+    font-weight: bold;
     position: absolute;
-    top: 30px;
-    right: 40px;
-    font-size: 48px; /* Ukuran lebih besar */
-    font-weight: normal;
+    top: 20px;
+    right: 30px;
     cursor: pointer;
-    transition: color 0.4s ease, transform 0.4s ease;
-    z-index: 10;
+    transition: color 0.3s ease-in-out;
 }
-.close-button:hover,
-.close-button:focus {
-    color: #e74c3c; /* Warna merah kuat untuk tutup */
-    transform: rotate(180deg) scale(1.2); /* Animasi putar lebih dramatis */
+.modal-content .close-button:hover,
+.modal-content .close-button:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
 }
+
 .modal-body {
     display: flex;
-    gap: 70px; /* Jarak antar elemen sangat besar */
+    gap: 40px;
     align-items: flex-start;
 }
 .modal-body img {
-    flex-basis: 50%; /* Gambar lebih dominan */
-    max-width: 50%;
+    width: 45%; /* Image takes more space */
     height: auto;
-    object-fit: contain;
+    max-height: 450px; /* Limit image height */
+    object-fit: cover;
     border-radius: var(--border-radius-base);
-    box-shadow: 0 10px 25px var(--shadow-medium);
+    box-shadow: 0 10px 30px var(--shadow-medium);
     border: 1px solid var(--border-color);
 }
 .modal-product-info {
-    flex-basis: 50%;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 .modal-product-info h3 {
-    font-size: 3.2rem; /* Ukuran font lebih besar */
+    font-size: 2.2rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
     color: var(--primary-color);
-    letter-spacing: -1.5px;
 }
-.modal-product-info p#modal-product-description {
-    font-size: 1.35rem;
-    color: var(--light-text);
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
+.modal-product-info p {
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    color: var(--text-color);
 }
 .modal-product-info .price {
-    font-size: 2.8rem; /* Ukuran font harga lebih besar */
-    margin-bottom: 3.5rem;
-    color: var(--primary-color);
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: -1.5px;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
 }
 .modal-product-info .size-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    margin-bottom: 3.5rem;
-    justify-content: flex-start;
-}
-.modal-product-info .size-option {
-    padding: 16px 28px; /* Ukuran opsi lebih besar */
-    font-size: 1.15rem;
-    border-width: 2px;
+    margin-bottom: 2.5rem;
+    justify-content: flex-start; /* Align sizes to left */
 }
 .modal-product-info .btn {
-    margin-top: 30px;
-    padding: 22px 45px;
-    font-size: 1.35rem;
+    margin-top: 15px; /* Spacing between buttons */
+    width: auto;
+    padding: 16px 30px;
+    font-size: 1.1rem;
 }
-
-/* Skeleton Loader Styles */
-.skeleton-card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 10px 30px var(--shadow-light);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    animation: loadingPulse 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1); /* Lebih halus */
+.modal-product-info .modal-add-to-favorite {
+    background-color: var(--background-color);
+    color: var(--light-text);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-extra-light);
 }
-.skeleton-image {
-    width: 100%;
-    height: 350px; /* Sesuai dengan tinggi gambar produk */
-    background: linear-gradient(90deg, var(--skeleton-bg) 0%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 100%);
-    background-size: 200% 100%;
+.modal-product-info .modal-add-to-favorite:hover {
+    background-color: #eaf1f7;
+    color: var(--primary-dark-hover);
 }
-.skeleton-info {
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Jarak antar elemen skeleton */
-}
-.skeleton-text {
-    height: 25px; /* Tinggi teks skeleton lebih besar */
-    background-color: var(--skeleton-bg);
-    border-radius: 6px;
-}
-.skeleton-text-lg {
-    width: 90%;
-    height: 42px;
-}
-.skeleton-text-sm {
-    width: 70%;
-}
-.skeleton-text-xs {
-    width: 50%;
-}
-.skeleton-button {
-    height: 60px; /* Lebih tinggi */
-    width: 100%;
-    background-color: var(--skeleton-bg);
-    border-radius: var(--border-radius-base);
-    margin-top: 30px;
-}
-@keyframes loadingPulse { /* Updated pulse animation */
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Prevent scrolling when modal is open */
-body.no-scroll {
-    overflow: hidden;
-}
-
-/* Toast/Snackbar Notifications */
-#toast-container {
-    position: fixed;
-    bottom: 40px; /* Sedikit lebih tinggi */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Jarak antar toast */
-    align-items: center;
-    max-width: 95%;
-    pointer-events: none;
-}
-.toast-notification {
-    background-color: #3b4d5a; /* Darker, more refined background */
+.modal-product-info .modal-add-to-favorite.favorited {
+    background-color: #e74c3c;
     color: #fff;
-    padding: 20px 40px; /* Padding lebih besar */
-    border-radius: 18px; /* Lebih bulat */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(60px); /* Mulai dari lebih bawah */
-    transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.6s ease-out; /* Transisi lebih halus dan bouncy */
-    min-width: 350px; /* Min lebar lebih besar */
-    text-align: center;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    font-size: 1.15rem;
-    font-weight: 500;
-    pointer-events: auto;
+    border-color: #e74c3c;
 }
-.toast-notification.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.modal-product-info .modal-add-to-favorite.favorited i {
+    color: #fff;
 }
-/* Tipe notifikasi */
-.toast-notification.success { background-color: var(--secondary-color); }
-.toast-notification.error { background-color: #e74c3c; }
-.toast-notification.warning { background-color: var(--accent-color); }
-.toast-notification.info { background-color: var(--primary-color); }
 
-/* Confirmation Modal */
-#confirmation-modal {
-    z-index: 1001;
-}
+/* Confirmation Modal Styling */
 #confirmation-modal .modal-content {
-    background-color: var(--surface-color);
-    margin: auto;
-    padding: 60px;
-    border-radius: 25px;
-    width: 90%;
-    max-width: 600px; /* Lebih lebar */
-    box-shadow: 0 20px 50px var(--shadow-deep);
+    max-width: 500px;
     text-align: center;
-    transform: translateY(-100px) scale(0.92);
-    opacity: 0;
-    animation: dropInScale 0.7s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 2px solid var(--primary-light);
+    padding: 40px;
 }
-#confirmation-modal .modal-content p {
-    margin-bottom: 40px;
-    font-size: 1.5rem; /* Ukuran font lebih besar */
+#confirmation-modal #confirm-message {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
     color: var(--text-color);
-    font-weight: 500;
-    line-height: 1.7;
+    font-weight: 600;
 }
-.modal-actions {
+#confirmation-modal .modal-actions {
     display: flex;
     justify-content: center;
-    gap: 40px; /* Jarak antar tombol lebih besar */
+    gap: 20px;
 }
-.modal-actions button {
-    padding: 18px 45px; /* Padding lebih besar */
-    border: none;
+#confirmation-modal .modal-actions .btn {
+    flex: 1;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+}
+
+/* Toast Notification Styling */
+#toast-container {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.toast-notification {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    padding: 18px 25px;
     border-radius: var(--border-radius-base);
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.4s var(--transition-timing-function);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-.modal-actions .btn-danger {
-    background-color: #e74c3c;
-}
-.modal-actions .btn-danger:hover {
-    background-color: #c0392b;
-    transform: translateY(-5px);
-}
-.modal-actions .btn-secondary {
-    background-color: #95a5a6;
-}
-.modal-actions .btn-secondary:hover {
-    background-color: #7f8c8d;
-    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    font-size: 1.05rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    border-left: 6px solid;
 }
 
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .container {
-        padding: 0 30px;
-    }
-    #hero h2 {
-        font-size: 4.5rem;
-    }
-    #hero p {
-        font-size: 1.6rem;
-    }
-    .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 50px;
-    }
-    .product-card img {
-        height: 300px;
-    }
-    .modal-content {
-        max-width: 900px;
-        padding: 50px;
-    }
-    .modal-body {
-        gap: 50px;
-    }
-    .modal-product-info h3 {
-        font-size: 2.8rem;
-    }
-    .modal-product-info .price {
-        font-size: 2.4rem;
-    }
-    .cart-item img {
-        width: 110px;
-        height: 110px;
-    }
-    .cart-item .item-details h4 {
-        font-size: 1.35rem;
-    }
-    .cart-item .item-price {
-        font-size: 1.45rem;
-    }
-    .checkout-form-container {
-        padding: 60px;
-    }
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
 }
 
-@media (max-width: 992px) {
+.toast-notification.info {
+    border-color: var(--primary-color);
+    background-color: #eaf1f7;
+}
+.toast-notification.success {
+    border-color: var(--secondary-color);
+    background-color: #e6f7f0;
+}
+.toast-notification.error {
+    border-color: #e74c3c;
+    background-color: #ffe6e6;
+}
+.toast-notification.warning {
+    border-color: var(--accent-color);
+    background-color: #fff4e6;
+}
+
+.toast-notification i {
+    font-size: 1.3em;
+    color: inherit; /* Inherit color from border-color type */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
     .container {
         padding: 0 25px;
     }
-    header .logo h1 {
-        font-size: 2.5rem;
-    }
     header nav ul {
-        gap: 1.8rem;
+        gap: 1.5rem;
     }
     header nav a {
         font-size: 1.05rem;
     }
     #hero {
-        padding: 10rem 30px;
-        min-height: 65vh;
+        padding: 8rem 25px;
+        min-height: 60vh;
     }
     #hero h2 {
-        font-size: 3.8rem;
+        font-size: 4rem;
     }
     #hero p {
-        font-size: 1.4rem;
-        margin-bottom: 3rem;
-    }
-    #hero .btn {
-        padding: 18px 45px;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
     section {
-        padding: 6rem 0;
+        padding: 5rem 0;
         margin-top: 3.5rem;
     }
     h2 {
         font-size: 2.5rem;
         margin-bottom: 2.5rem;
-        padding-bottom: 0.7rem;
     }
     h2::after {
         width: 100px;
         height: 5px;
     }
-    .search-bar {
-        flex-direction: column;
-        gap: 20px;
-    }
-    .search-bar input, .search-bar button {
-        width: 100%;
-        max-width: none;
-        font-size: 1.15rem;
-    }
     .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 40px;
     }
-    .product-card {
-        max-width: 400px;
-        margin: 0 auto;
-    }
     .product-card img {
-        height: 280px;
+        height: 300px;
     }
     .product-info {
         padding: 2.5rem;
@@ -1311,213 +1300,192 @@ body.no-scroll {
         font-size: 1.6rem;
     }
     .product-info .price {
-        font-size: 1.5rem;
-    }
-    .size-option {
-        padding: 12px 22px;
-        font-size: 1.05rem;
-    }
-    .cart-items-container {
-        padding: 40px;
-    }
-    .cart-item {
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-        padding: 30px 0;
+        font-size: 1.6rem;
     }
     .cart-item img {
-        margin-bottom: 15px;
-        margin-right: 0;
         width: 100px;
         height: 100px;
+        margin-right: 25px;
     }
-    .cart-item .item-details,
-    .cart-item .quantity-controls,
-    .cart-item .item-price {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        margin-left: 0;
-        margin-right: 0;
+    .cart-item .item-details h4 {
+        font-size: 1.3rem;
     }
-    .cart-item .quantity-controls {
-        justify-content: center;
+    .cart-item .item-details p {
+        font-size: 1rem;
     }
     .cart-item .quantity-controls button {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         font-size: 1.4rem;
     }
-    .cart-summary {
-        padding: 40px;
-    }
-    .cart-summary h3 {
-        font-size: 2.2rem;
+    .cart-item .item-price {
+        font-size: 1.4rem;
     }
     .checkout-form-container {
         padding: 50px;
     }
     .checkout-form-container h3 {
-        font-size: 2.3rem;
+        font-size: 2.2rem;
+    }
+    .form-group label {
+        font-size: 1.1rem;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 16px 20px;
+        font-size: 1.1rem;
     }
     .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
         gap: 50px;
     }
-    .footer-section p {
-        justify-content: center;
+    .footer-section h3 {
+        font-size: 1.6rem;
+    }
+    .footer-section p, .footer-section a {
+        font-size: 1rem;
     }
     .back-to-top {
-        width: 65px;
-        height: 65px;
-        bottom: 40px;
-        right: 40px;
-        font-size: 2rem;
-    }
-    .modal-content {
-        width: 90%;
-        padding: 45px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        bottom: 30px;
+        right: 30px;
     }
     .modal-body {
         flex-direction: column;
-        gap: 45px;
         align-items: center;
     }
     .modal-body img {
-        max-width: 90%;
-        flex-basis: auto;
+        width: 80%;
+        max-height: 300px;
+        margin-bottom: 30px;
     }
     .modal-product-info {
-        flex-basis: auto;
         text-align: center;
-    }
-    .modal-product-info h3 {
-        font-size: 2.5rem;
-    }
-    .modal-product-info .price {
-        font-size: 2.2rem;
     }
     .modal-product-info .size-options {
         justify-content: center;
     }
-    .modal-product-info .btn {
-        padding: 18px 40px;
-        font-size: 1.25rem;
-    }
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 0 20px;
-    }
     header .container {
         flex-direction: column;
-        gap: 15px;
+        gap: 1.5rem;
     }
     header nav ul {
-        margin-top: 1rem;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.2rem;
     }
-    header nav a {
-        font-size: 1rem;
+    header .logo h1 {
+        font-size: 2.5rem;
     }
     #hero {
-        padding: 8rem 20px;
-        min-height: 55vh;
+        padding: 6rem 20px;
+        min-height: 50vh;
+        margin-top: 2rem;
     }
     #hero h2 {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
     #hero p {
         font-size: 1.2rem;
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem;
     }
     #hero .btn {
         padding: 16px 40px;
         font-size: 1.2rem;
     }
     section {
-        padding: 5rem 0;
-        margin-top: 3rem;
+        padding: 4rem 0;
+        margin-top: 2.5rem;
     }
     h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
         margin-bottom: 2rem;
-        padding-bottom: 0.6rem;
     }
     h2::after {
         width: 80px;
         height: 4px;
     }
-    .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-    }
-    .product-card {
-        max-width: 350px;
-        margin: 0 auto;
-    }
-    .product-card img {
-        height: 250px;
-    }
-    .product-info {
-        padding: 2rem;
-    }
-    .product-info h3 {
-        font-size: 1.45rem;
-    }
-    .product-info .price {
-        font-size: 1.35rem;
-    }
-    .size-option {
-        padding: 10px 18px;
-        font-size: 0.95rem;
-    }
-    .toast-notification {
-        min-width: unset;
-        width: 90%;
-        padding: 18px 30px;
-        font-size: 1.05rem;
-    }
-    #confirmation-modal .modal-content {
-        width: 90%;
-        padding: 40px;
-    }
-    #confirmation-modal .modal-content p {
-        font-size: 1.3rem;
-    }
-    .modal-actions {
+    .search-bar {
         flex-direction: column;
         gap: 20px;
     }
-    .modal-actions button {
-        padding: 14px 30px;
-        font-size: 1.1rem;
+    .search-bar input, .search-bar button {
         width: 100%;
     }
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .product-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .cart-item {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+    .cart-item img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    .cart-item .item-details, .cart-item .quantity-controls, .cart-item .item-price {
+        flex-basis: 100%;
+        margin: 0;
+    }
+    .cart-item .quantity-controls {
+        justify-content: center;
+        margin: 15px 0;
+    }
+    .cart-summary {
+        padding: 30px;
+    }
+    .checkout-form-container {
+        padding: 30px;
+    }
+    .checkout-form-container h3 {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+    .form-actions {
+        flex-direction: column;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    .footer-section p {
+        justify-content: center;
+    }
     .back-to-top {
-        width: 60px;
-        height: 60px;
-        bottom: 35px;
-        right: 35px;
-        font-size: 1.8rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 20px;
+        right: 20px;
     }
     .modal-content {
-        padding: 40px;
+        padding: 30px;
     }
-    .modal-product-info h3 {
-        font-size: 2.2rem;
+    .modal-content .close-button {
+        font-size: 2.5rem;
+        top: 10px;
+        right: 15px;
     }
-    .modal-product-info .price {
-        font-size: 1.9rem;
+    .modal-body img {
+        width: 90%;
     }
-    .modal-product-info .btn {
-        padding: 16px 35px;
-        font-size: 1.15rem;
+    .toast-notification {
+        font-size: 0.9rem;
+        padding: 15px 20px;
+    }
+    #toast-container {
+        top: 20px;
+        right: 20px;
     }
 }
 
@@ -1573,32 +1541,134 @@ body.no-scroll {
         height: 220px;
     }
     .product-info {
-        padding: 1.5rem;
+        padding: 2rem;
     }
     .product-info h3 {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
     }
     .product-info .price {
-        font-size: 1.15rem;
+        font-size: 1.4rem;
     }
-    .back-to-top {
-        width: 50px;
-        height: 50px;
-        bottom: 25px;
-        right: 25px;
+    .size-option {
+        padding: 10px 18px;
+        font-size: 0.95rem;
+    }
+    .product-actions .btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+    .cart-items-container {
+        padding: 25px;
+    }
+    .cart-item {
+        padding: 20px 0;
+    }
+    .cart-item img {
+        width: 80px;
+        height: 80px;
+    }
+    .cart-item .item-details h4 {
+        font-size: 1.1rem;
+    }
+    .cart-item .quantity-controls button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+    .cart-item .item-price {
+        font-size: 1.2rem;
+    }
+    .cart-summary {
+        padding: 25px;
+    }
+    .cart-summary h3 {
+        font-size: 1.8rem;
+    }
+    .cart-summary .btn {
+        padding: 16px 30px;
+        font-size: 1.1rem;
+    }
+    .checkout-form-container {
+        padding: 20px;
+    }
+    .checkout-form-container h3 {
         font-size: 1.6rem;
     }
+    .form-group label {
+        font-size: 1rem;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    .form-group small {
+        font-size: 0.9rem;
+    }
+    .checkout-form-container .btn-primary {
+        padding: 18px;
+        font-size: 1.2rem;
+    }
+    footer {
+        padding: 4rem 0;
+        margin-top: 5rem;
+    }
+    .footer-section h3 {
+        font-size: 1.4rem;
+    }
+    .footer-section p, .footer-section a {
+        font-size: 0.9rem;
+    }
+    .copyright {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        font-size: 0.85rem;
+    }
     .modal-content {
-        padding: 30px;
+        padding: 20px;
+    }
+    .modal-content .close-button {
+        font-size: 2rem;
+    }
+    .modal-body img {
+        width: 100%;
     }
     .modal-product-info h3 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
     .modal-product-info .price {
         font-size: 1.6rem;
     }
     .modal-product-info .btn {
-        padding: 14px 28px;
-        font-size: 1.05rem;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    .toast-notification {
+        font-size: 0.8rem;
+        padding: 12px 15px;
+    }
+    #toast-container {
+        top: 15px;
+        right: 15px;
+    }
+    .checkout-progress-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 2rem;
+    }
+    .checkout-progress-bar .progress-line {
+        display: none; /* Hide line on small screens */
+    }
+    .checkout-progress-bar .progress-step {
+        flex: 0 0 auto;
+        margin: 0 5px;
+    }
+    .checkout-progress-bar .progress-step .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .checkout-progress-bar .progress-step .step-name {
+        font-size: 0.8rem;
     }
 }
