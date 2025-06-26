@@ -19,10 +19,10 @@
                     <li><a href="#koleksi">Koleksi</a></li>
                     <li><a href="#baju-hitam">Baju Hitam</a></li>
                     <li><a href="#baju-putih">Baju Putih</a></li>
-                    <li><a href="#keranjang">
+                    <li><a href="#keranjang" class="cart-link">
                         <i class="fas fa-shopping-cart"></i> Keranjang <span id="cart-count">0</span>
                     </a></li>
-                    <li><a href="#favorit">
+                    <li><a href="#favorit" class="favorite-link">
                         <i class="far fa-heart"></i> Favorit <span id="favorite-count">0</span>
                     </a></li>
                     <li><a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer">
@@ -33,9 +33,15 @@
         </div>
     </header>
 
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="#hero">Home</a> &gt; <span id="current-page">Koleksi</span>
+        </div>
+    </div>
+
     <main>
         <section id="hero" class="animated-section">
-            <div class="container">
+            <div class="container" id="hero-content">
                 <h2>T-Shirt Terbaik untuk Gaya Anda</h2>
                 <p>Temukan koleksi pakaian stylish dan nyaman yang membuat Anda tampil percaya diri setiap hari.</p>
                 <a href="#koleksi" class="btn btn-primary">Belanja Sekarang</a>
@@ -60,6 +66,8 @@
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <section id="baju-hitam" class="animated-section">
             <div class="container">
                 <h2>Koleksi Baju Hitam</h2>
@@ -69,6 +77,8 @@
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <section id="baju-putih" class="animated-section">
             <div class="container">
                 <h2>Koleksi Baju Putih</h2>
@@ -77,6 +87,8 @@
                 <p id="no-white-clothing" class="info-message" style="display: none;">Belum ada koleksi baju putih saat ini.</p>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <section id="keranjang" class="animated-section">
             <div class="container">
@@ -92,61 +104,105 @@
                 </div>
 
                 <div id="checkout-form-container" class="checkout-form-container" style="display: none;">
+                    <div class="checkout-progress-bar">
+                        <div class="progress-step active" data-step="1">
+                            <span class="step-number">1</span>
+                            <span class="step-name">Kontak & Alamat</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <span class="step-number">2</span>
+                            <span class="step-name">Ekspedisi</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <span class="step-number">3</span>
+                            <span class="step-name">Ringkasan</span>
+                        </div>
+                    </div>
+
                     <h3>Informasi Pengiriman</h3>
                     <form id="checkout-form">
-                        <div class="form-group">
-                            <label for="customer-name">Nama Lengkap:</label>
-                            <input type="text" id="customer-name" name="customer-name" required>
+                        <div class="form-section active" id="contact-info-section">
+                            <div class="form-group">
+                                <label for="customer-name">Nama Lengkap:</label>
+                                <input type="text" id="customer-name" name="customer-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Nomor WhatsApp:</label>
+                                <input type="tel" id="customer-phone" name="customer-phone" placeholder="Contoh: 6281234567890" pattern="[0-9]{10,15}" required>
+                                <small>Format: 10-15 digit angka (diawali kode negara, cth: 62)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-address">Alamat Lengkap:</label>
+                                <textarea id="customer-address" name="customer-address" rows="4" required></textarea>
+                            </div>
+                            <button type="button" id="next-to-expedition" class="btn btn-primary">Selanjutnya</button>
                         </div>
-                        <div class="form-group">
-                            <label for="customer-phone">Nomor WhatsApp:</label>
-                            <input type="tel" id="customer-phone" name="customer-phone" placeholder="Contoh: 6281234567890" pattern="[0-9]{10,15}" required>
-                            <small>Format: 10-15 digit angka (diawali kode negara, cth: 62)</small>
+
+                        <div class="form-section" id="expedition-section">
+                            <div class="form-group">
+                                <label for="expedition-method">Metode Ekspedisi:</label>
+                                <select id="expedition-method" name="expedition-method" required>
+                                    <option value="">Pilih Metode Ekspedisi</option>
+                                    <option value="jne">JNE</option>
+                                    <option value="jnt">J&T Express</option>
+                                    <option value="sicepat">SiCepat</option>
+                                    <option value="anteraja">AnterAja</option>
+                                    <option value="lion-parcel">Lion Parcel</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" id="prev-to-contact" class="btn btn-secondary">Kembali</button>
+                                <button type="button" id="next-to-summary" class="btn btn-primary">Selanjutnya</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="customer-address">Alamat Lengkap:</label>
-                            <textarea id="customer-address" name="customer-address" rows="4" required></textarea>
+
+                        <div class="form-section" id="summary-section">
+                            <h3>Ringkasan Pesanan</h3>
+                            <div id="order-summary-details">
+                                </div>
+                            <div class="form-actions">
+                                <button type="button" id="prev-to-expedition" class="btn btn-secondary">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Konfirmasi Pesanan</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="expedition-method">Metode Ekspedisi:</label>
-                            <select id="expedition-method" name="expedition-method" required>
-                                <option value="">Pilih Ekspedisi</option>
-                                <option value="jnt">J&T</option>
-                                <option value="lion-parcel">Lion Parcel</option>
-                                <option value="jne">JNE</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Buat Pesanan via WhatsApp</button>
                     </form>
                 </div>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <section id="favorit" class="animated-section">
             <div class="container">
                 <h2>Produk Favorit Anda</h2>
                 <div id="favorite-products-list" class="product-grid">
                     </div>
-                <p id="empty-favorites-message" class="info-message" style="display: none;">Anda belum menambahkan produk favorit apapun.</p>
+                <p id="empty-favorites-message" class="info-message" style="display: none;">Anda belum menambahkan produk ke favorit.</p>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container footer-content">
+            <div class="footer-section about-us">
+                <h3>Tentang Luxuliver Shop</h3>
+                <p>Luxuliver Shop berkomitmen untuk menyediakan T-Shirt berkualitas tinggi dengan desain stylish untuk menunjang gaya Anda setiap hari. Kenyamanan dan kepuasan pelanggan adalah prioritas kami.</p>
+            </div>
             <div class="footer-section contact-info">
-                <h3>Hubungi Kami</h3>
+                <h3>Kontak Kami</h3>
                 <p><i class="fas fa-map-marker-alt"></i> <span id="seller-address"></span></p>
                 <p><i class="fas fa-phone"></i> <span id="seller-phone"></span></p>
                 <p><i class="fas fa-envelope"></i> <span id="seller-email"></span></p>
             </div>
             <div class="footer-section social-media">
                 <h3>Ikuti Kami</h3>
-                <p><i class="fab fa-instagram"></i> Ikuti kami di <a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                <a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
-            <div class="footer-section copyright">
-                <p>&copy; <span id="current-year"></span> Luxuliver. Semua Hak Cipta Dilindungi.</p>
-            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="current-year"></span> Luxuliver Shop. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -167,7 +223,6 @@
                         </div>
                     <button class="btn add-to-cart" id="modal-add-to-cart-btn" data-id=""><i class="fas fa-shopping-cart"></i> Tambah ke Keranjang</button>
                     <button class="btn btn-secondary modal-add-to-favorite" data-id=""><i class="far fa-heart"></i> Tambah ke Favorit</button>
-                    <button class="btn btn-secondary modal-share-product-btn" data-id=""><i class="fas fa-share-alt"></i> Bagikan Produk</button>
                 </div>
             </div>
         </div>
