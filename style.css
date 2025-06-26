@@ -348,7 +348,7 @@ header nav a i {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(var(--primary-color-rgb-values), 0.85); /* Corrected RGBA usage */
+    background: rgba(62, 90, 125, 0.85); /* Menggunakan nilai RGB dari --primary-color */
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -636,7 +636,7 @@ header nav a i {
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb-values), 0.2); /* Corrected RGBA usage */
+    box-shadow: 0 0 0 3px rgba(62, 90, 125, 0.2); /* Menggunakan nilai RGB dari --primary-color */
     outline: none;
 }
 
@@ -755,7 +755,7 @@ footer .container {
 }
 
 
-/* Gaya untuk Modal (Quick View dan Konfirmasi) */
+/* --- Gaya Hanya untuk Modal (Quick View dan Konfirmasi) --- */
 .modal {
     display: none; /* Tersembunyi secara default */
     position: fixed; /* Tetap di viewport */
@@ -778,11 +778,12 @@ footer .container {
     max-width: 800px; /* Lebar maksimal */
     box-shadow: 0 4px 20px rgba(0,0,0,0.2); /* Bayangan */
     position: relative;
-    transform: translateY(-20px); /* Efek masuk (opsional) */
-    transition: transform 0.3s ease-out; /* Transisi untuk efek masuk */
+    /* Anda bisa tambahkan animasi masuk jika mau: */
+    /* transform: translateY(-20px); */
+    /* transition: transform 0.3s ease-out; */
 }
 
-/* Jika Anda ingin efek transisi saat modal muncul, uncomment ini di JS juga */
+/* Jika Anda ingin efek transisi saat modal muncul */
 /* .modal.show .modal-content {
     transform: translateY(0);
 } */
@@ -794,7 +795,7 @@ footer .container {
 }
 
 .modal-body img {
-    max-width: 40%;
+    max-width: 40%; /* Sesuaikan ukuran gambar di modal */
     height: auto;
     border-radius: 8px;
     object-fit: cover;
@@ -806,20 +807,20 @@ footer .container {
 
 .modal-product-info h3 {
     font-size: 1.8rem;
-    color: var(--text-color);
+    color: var(--text-color); /* Sesuaikan dengan warna teks judul Anda */
     margin-bottom: 10px;
 }
 
 .modal-product-info .description {
     font-size: 1rem;
-    color: var(--light-text);
+    color: var(--light-text); /* Sesuaikan dengan warna teks deskripsi Anda */
     margin-bottom: 15px;
 }
 
 .modal-product-info .price {
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--accent-color); /* Sesuaikan dengan warna aksen harga Anda */
     margin-bottom: 20px;
 }
 
@@ -832,17 +833,18 @@ footer .container {
 
 .modal-product-info .size-option {
     padding: 8px 15px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color); /* Sesuaikan warna border */
     border-radius: 5px;
-    background-color: var(--surface-color);
-    color: var(--text-color);
+    background-color: var(--background-color); /* Sesuaikan warna latar belakang tombol ukuran */
+    color: var(--text-color); /* Sesuaikan warna teks tombol ukuran */
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 0.9rem;
 }
 
-.modal-product-info .size-option:hover {
-    background-color: var(--primary-light);
+.modal-product-info .size-option:hover,
+.modal-product-info .size-option.active { /* Tambahkan .active untuk warna ukuran yang dipilih */
+    background-color: var(--primary-light); /* Sesuaikan dengan warna hover primer Anda */
     color: #fff;
     border-color: var(--primary-light);
 }
@@ -852,11 +854,12 @@ footer .container {
     display: inline-block; /* Agar bisa berdampingan jika ada beberapa tombol */
     margin-right: 10px; /* Jarak antar tombol */
     margin-top: 5px; /* Jarak dari atas jika flex-wrap */
+    /* Pastikan gaya tombol 'add-to-cart' dan 'btn-secondary' sudah Anda definisikan di CSS utama Anda */
 }
 
 /* Gaya tombol tutup modal */
 .close-button {
-    color: var(--light-text);
+    color: var(--light-text); /* Sesuaikan dengan warna teks ringan Anda */
     font-size: 28px;
     font-weight: bold;
     position: absolute;
@@ -868,7 +871,7 @@ footer .container {
 
 .close-button:hover,
 .close-button:focus {
-    color: var(--text-color);
+    color: var(--text-color); /* Sesuaikan dengan warna teks utama Anda */
     text-decoration: none;
     cursor: pointer;
 }
@@ -891,7 +894,6 @@ footer .container {
     justify-content: center;
     gap: 15px;
 }
-
 
 /* Responsive Styles */
 @media (max-width: 992px) {
