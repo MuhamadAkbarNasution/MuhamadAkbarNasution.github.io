@@ -6,7 +6,7 @@
     <title>Luxuliver Stylish</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -16,16 +16,16 @@
             <a href="#" class="logo"><h1>LUXULIVER SHOP</h1></a>
             <nav>
                 <ul>
-                    <li><a href="#koleksi">Koleksi</a></li>
-                    <li><a href="#baju-hitam">Baju Hitam</a></li>
-                    <li><a href="#baju-putih">Baju Putih</a></li>
-                    <li><a href="#keranjang" class="cart-link">
+                    <li><a href="#koleksi" class="nav-link">Koleksi</a></li>
+                    <li><a href="#baju-hitam" class="nav-link">Baju Hitam</a></li>
+                    <li><a href="#baju-putih" class="nav-link">Baju Putih</a></li>
+                    <li><a href="#keranjang" class="nav-link">
                         <i class="fas fa-shopping-cart"></i> Keranjang <span id="cart-count">0</span>
                     </a></li>
-                    <li><a href="#favorit" class="favorite-link">
+                    <li><a href="#favorit" class="nav-link">
                         <i class="far fa-heart"></i> Favorit <span id="favorite-count">0</span>
                     </a></li>
-                    <li><a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer">
+                    <li><a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer" class="nav-link">
                         <i class="fab fa-instagram"></i> Instagram
                     </a></li>
                 </ul>
@@ -33,11 +33,14 @@
         </div>
     </header>
 
-    <div class="breadcrumbs">
+    <nav class="breadcrumbs">
         <div class="container">
-            <a href="#hero">Home</a> &gt; <span id="current-page">Koleksi</span>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li class="current-page">Koleksi</li>
+            </ul>
         </div>
-    </div>
+       </nav>
 
     <main>
         <section id="hero" class="animated-section">
@@ -89,18 +92,44 @@
         </section>
 
         <div class="section-divider"></div>
-
-        <section id="keranjang" class="animated-section">
+        
+            <section id="keranjang" class="animated-section">
             <div class="container">
                 <h2>Keranjang Belanja</h2>
-                <div id="cart-items" class="cart-items-container">
+                
+                <div class="checkout-progress">
+                    <div class="checkout-progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Keranjang</div>
                     </div>
-                <p id="empty-cart-message" class="info-message" style="display: none;">Keranjang Anda kosong.</p>
-                <div class="cart-summary">
-                    <p>Subtotal: <span id="subtotal-price">Rp0</span></p>
-                    <p>Diskon: <span id="discount-amount">Rp0</span></p>
-                    <h3>Total: <span id="total-price">Rp0</span></h3>
-                    <button id="checkout-btn" class="btn btn-primary" style="display: none;">Lanjutkan ke Checkout</button>
+                    <div class="checkout-progress-step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Informasi</div>
+                    </div>
+                    <div class="checkout-progress-step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Pembayaran</div>
+                    </div>
+                    <div class="checkout-progress-step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Selesai</div>
+                    </div>
+                </div>
+
+                <input type="checkbox" id="order-summary-toggle" class="order-summary-toggle" checked>
+                <label for="order-summary-toggle" class="order-summary-header">
+                    <h4>Ringkasan Pesanan</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </label>
+                <div class="order-summary-content">
+                    <div id="cart-items" class="cart-items-container"></div>
+                    <p id="empty-cart-message" class="info-message" style="display: none;">Keranjang Anda kosong.</p>
+                    <div class="cart-summary">
+                        <p>Subtotal: <span id="subtotal-price">Rp0</span></p>
+                        <p>Diskon: <span id="discount-amount">Rp0</span></p>
+                        <h3>Total: <span id="total-price">Rp0</span></h3>
+                        <button id="checkout-btn" class="btn btn-primary" style="display: none;">Lanjutkan ke Checkout</button>
+                    </div>
                 </div>
 
                 <div id="checkout-form-container" class="checkout-form-container" style="display: none;">
@@ -236,8 +265,16 @@
                 <button id="confirm-no" class="btn btn-secondary">Tidak</button>
             </div>
         </div>
+       <div id="add-to-cart-confirmation" class="add-to-cart-confirmation">
+        <h3>Ditambahkan ke Keranjang!</h3>
+        <img id="confirmation-product-image" src="" alt="Produk">
+        <p id="confirmation-product-name"></p>
+        <div class="confirmation-buttons">
+            <button class="btn btn-secondary" id="continue-shopping">Lanjut Belanja</button>
+            <a href="#keranjang" class="btn btn-primary">Lihat Keranjang</a>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script1.js"></script>
 </body>
 </html>
