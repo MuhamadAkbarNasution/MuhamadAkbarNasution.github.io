@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dummy Data Produk (Pastikan data ini lengkap dengan id, name, image, description, basePrice, sizes, color)
+    // Dummy Data Produk
     const products = [
         {
             id: 'baju-001',
@@ -99,9 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');
     const backToTopBtn = document.getElementById('back-to-top');
-    const productList = document.getElementById('product-list');
-    const blackClothingList = document.getElementById('baju-hitam').querySelector('.product-grid');
-    const whiteClothingList = document.getElementById('baju-putih').querySelector('.product-grid');
+    const productList = document.getElementById('product-list'); // Untuk koleksi utama
+    const blackClothingList = document.getElementById('baju-hitam').querySelector('.product-grid'); // Untuk baju hitam
+    const whiteClothingList = document.getElementById('baju-putih').querySelector('.product-grid'); // Untuk baju putih
     const filterButtons = document.querySelectorAll('.filter-btn');
 
     // Shopping Cart & Favorites Elements
@@ -112,15 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const favoriteCountSpan = document.getElementById('favorite-count');
     const checkoutBtn = document.getElementById('checkout-btn');
     const checkoutForm = document.getElementById('checkout-form');
+    
+    // Quick View Modal Elements
+    const quickViewModal = document.getElementById('quick-view-modal');
+    const closeButtons = document.querySelectorAll('.close-button'); // Untuk semua modal
+    
+    // Confirmation Modal Elements
     const confirmModal = document.getElementById('confirmation-modal');
     const confirmMessage = document.getElementById('confirm-message');
     const confirmYesBtn = document.getElementById('confirm-yes');
     const confirmNoBtn = document.getElementById('confirm-no');
     let confirmCallback = null;
 
-    // Quick View Modal Elements
-    const quickViewModal = document.getElementById('quick-view-modal');
-    const closeButtons = document.querySelectorAll('.close-button'); // Untuk semua modal
+    // Footer Elements
+    const currentYearSpan = document.getElementById('current-year');
+    const sellerAddressSpan = document.getElementById('seller-address');
+    const sellerPhoneSpan = document.getElementById('seller-phone');
+    const sellerEmailSpan = document.getElementById('seller-email');
 
     // --- Helper Functions ---
 
@@ -177,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Product Rendering & Filtering ---
 
-    // Skeleton loader function
+    // Skeleton loader function (sesuai tampilan awal Anda)
     const renderSkeletonLoaders = (container, count) => {
         container.innerHTML = '';
         for (let i = 0; i < count; i++) {
@@ -198,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Render product cards
+    // Render product cards (sesuai tampilan awal Anda)
     const renderProductShowcase = (container, productsToRender, isFiltered = false) => {
         container.innerHTML = ''; // Clear existing products or skeletons
         if (productsToRender.length === 0 && isFiltered) {
@@ -209,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productsToRender.forEach(product => {
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
-            productCard.dataset.id = product.id;
+            productCard.dataset.id = product.id; // Penting untuk Quick View dan Add to Cart/Favorite
             productCard.innerHTML = `
                 <div class="product-image-container">
                     <img src="img/produk/${product.image}" alt="${product.name}">
@@ -236,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Attach event listeners for Add to Cart, Add to Favorite, and Quick View
+        // Pastikan ini dipanggil setiap kali produk dirender ulang
         container.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', (e) => handleAddToCart(e.currentTarget.dataset.id));
         });
@@ -421,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const product = products.find(p => p.id === productId);
         if (!product) return;
 
-        // Jika produk memiliki ukuran dan belum dipilih
+        // Jika produk memiliki ukuran dan belum dipilih (dari Quick View)
         if (product.sizes && product.sizes.length > 0 && !selectedSize) {
             alert('Silakan pilih ukuran terlebih dahulu.'); // Atau tampilkan UI pilihan ukuran
             return; // Hentikan eksekusi
@@ -465,20 +474,25 @@ document.addEventListener('DOMContentLoaded', () => {
             modalSizeOptions.innerHTML = ''; // Bersihkan opsi ukuran sebelumnya
             let selectedSizeForModal = null; // Untuk melacak ukuran yang dipilih di modal
 
-            product.sizes.forEach(size => {
-                const button = document.createElement('button');
-                button.classList.add('size-option');
-                button.textContent = size;
-                button.dataset.size = size;
-                button.addEventListener('click', () => {
-                    // Hapus 'active' dari semua tombol ukuran
-                    modalSizeOptions.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('active'));
-                    // Tambahkan 'active' ke tombol yang diklik
-                    button.classList.add('active');
-                    selectedSizeForModal = size; // Simpan ukuran yang dipilih
+            if (product.sizes && product.sizes.length > 0) {
+                product.sizes.forEach(size => {
+                    const button = document.createElement('button');
+                    button.classList.add('size-option');
+                    button.textContent = size;
+                    button.dataset.size = size;
+                    button.addEventListener('click', () => {
+                        // Hapus 'active' dari semua tombol ukuran
+                        modalSizeOptions.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('active'));
+                        // Tambahkan 'active' ke tombol yang diklik
+                        button.classList.add('active');
+                        selectedSizeForModal = size; // Simpan ukuran yang dipilih
+                    });
+                    modalSizeOptions.appendChild(button);
                 });
-                modalSizeOptions.appendChild(button);
-            });
+            } else {
+                modalSizeOptions.innerHTML = '<span class="size">One Size</span>'; // Tampilkan "One Size" jika tidak ada ukuran spesifik
+            }
+
 
             // Update gambar modal
             const modalProductImage = quickViewModal.querySelector('.modal-body img');
@@ -498,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Silakan pilih ukuran terlebih dahulu untuk menambahkan ke keranjang.');
                     return;
                 }
-                handleAddToCart(product.id, selectedSizeForModal);
+                handleAddToCart(product.id, selectedSizeForModal || 'One Size'); // Kirim One Size jika tidak ada pilihan ukuran
                 closeAllModals(); // Tutup modal setelah menambahkan ke keranjang
             };
 
@@ -565,11 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
         instagram: 'https://www.instagram.com/luxuliver'
     };
 
-    const currentYearSpan = document.getElementById('current-year');
-    const sellerAddressSpan = document.getElementById('seller-address');
-    const sellerPhoneSpan = document.getElementById('seller-phone');
-    const sellerEmailSpan = document.getElementById('seller-email');
-
 
     // --- Inisialisasi Aplikasi ---
     const initializeApp = () => {
@@ -587,16 +596,18 @@ document.addEventListener('DOMContentLoaded', () => {
             updateFavoriteCount(); // Pastikan jumlah favorit diperbarui di awal
 
             // Update tahun saat ini di footer
-            currentYearSpan.textContent = new Date().getFullYear();
+            if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
 
             // Update informasi penjual di footer
-            sellerAddressSpan.textContent = sellerInfo.address;
-            sellerPhoneSpan.textContent = sellerInfo.phone;
-            sellerEmailSpan.textContent = sellerInfo.email;
+            if (sellerAddressSpan) sellerAddressSpan.textContent = sellerInfo.address;
+            if (sellerPhoneSpan) sellerPhoneSpan.textContent = sellerInfo.phone;
+            if (sellerEmailSpan) sellerEmailSpan.textContent = sellerInfo.email;
 
             // Update link Instagram di header dan footer
-            document.querySelector('nav ul li a[href*="instagram.com"]').href = sellerInfo.instagram;
-            document.querySelector('footer a[href*="instagram.com"]').href = sellerInfo.instagram;
+            const instagramLinkNav = document.querySelector('nav ul li a[href*="instagram.com"]');
+            if (instagramLinkNav) instagramLinkNav.href = sellerInfo.instagram;
+            const instagramLinkFooter = document.querySelector('footer a[href*="instagram.com"]');
+            if (instagramLinkFooter) instagramLinkFooter.href = sellerInfo.instagram;
 
             // Hapus kelas no-scroll dari body setelah semua konten dimuat
             body.classList.remove('no-scroll');
