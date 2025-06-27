@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -33,19 +33,12 @@
         </div>
     </header>
 
-    <div class="breadcrumbs container" style="display: none;">
-        <ul id="breadcrumb-list">
-            <li><a href="#hero">Beranda</a></li>
-            <li>Keranjang Belanja</li>
-        </ul>
-    </div>
-
     <main>
         <section id="hero" class="animated-section">
             <div class="container">
                 <h2>T-Shirt Terbaik untuk Gaya Anda</h2>
                 <p>Temukan koleksi pakaian stylish dan nyaman yang membuat Anda tampil percaya diri setiap hari.</p>
-                <a href="#koleksi" class="btn btn-primary">Belanja Sekarang</a>
+                <a href="#koleksi" class="btn btn-primary">Ayo Belanja Sekarang!</a>
             </div>
         </section>
 
@@ -87,28 +80,6 @@
 
         <section id="keranjang" class="animated-section">
             <div class="container">
-                <div id="checkout-progress-bar" class="checkout-progress-bar" style="display: none;">
-                    <div class="progress-step active" id="step-cart">
-                        <span class="step-number">1</span>
-                        <span class="step-name">Keranjang</span>
-                    </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" id="step-info">
-                        <span class="step-number">2</span>
-                        <span class="step-name">Informasi</span>
-                    </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" id="step-confirm">
-                        <span class="step-number">3</span>
-                        <span class="step-name">Konfirmasi</span>
-                    </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" id="step-done">
-                        <span class="step-number">4</span>
-                        <span class="step-name">Selesai</span>
-                    </div>
-                </div>
-
                 <h2>Keranjang Belanja</h2>
                 <div id="cart-items" class="cart-items-container">
                     </div>
@@ -122,16 +93,6 @@
 
                 <div id="checkout-form-container" class="checkout-form-container" style="display: none;">
                     <h3>Informasi Pengiriman</h3>
-                    <div id="order-summary-interactive" class="order-summary-interactive" style="display: none;">
-                        <h4>Ringkasan Pesanan</h4>
-                        <div id="summary-items-list">
-                            </div>
-                        <div class="summary-totals">
-                            <p>Subtotal: <span id="summary-subtotal">Rp0</span></p>
-                            <p>Diskon: <span id="summary-discount">Rp0</span></p>
-                            <p class="summary-total-price">Total: <span id="summary-total">Rp0</span></p>
-                        </div>
-                    </div>
                     <form id="checkout-form">
                         <div class="form-group">
                             <label for="customer-name">Nama Lengkap:</label>
@@ -206,12 +167,14 @@
                         </div>
                     <button class="btn add-to-cart" id="modal-add-to-cart-btn" data-id=""><i class="fas fa-shopping-cart"></i> Tambah ke Keranjang</button>
                     <button class="btn btn-secondary modal-add-to-favorite" data-id=""><i class="far fa-heart"></i> Tambah ke Favorit</button>
+                    <button class="btn btn-secondary modal-share-product-btn" data-id=""><i class="fas fa-share-alt"></i> Bagikan Produk</button>
+                    <button class="btn btn-secondary" id="modal-size-guide-btn"><i class="fas fa-ruler-horizontal"></i> Panduan Ukuran</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="confirmation-modal" class="modal">
+   <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <p id="confirm-message">Apakah Anda yakin?</p>
             <div class="modal-actions">
@@ -221,6 +184,28 @@
         </div>
     </div>
 
+    <div id="size-guide-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Panduan Ukuran</h3>
+            <p>Ukuran dalam centimeter (cm).</p>
+            <div class="size-guide-table-container">
+                <table id="size-chart-table">
+                    <thead>
+                        <tr>
+                            <th>Ukuran</th>
+                            <th>Panjang Baju</th>
+                            <th>Lebar Dada</th>
+                            <th>Panjang Lengan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <p class="notes">*Toleransi ukuran +/- 1-2 cm karena proses produksi.</p>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
