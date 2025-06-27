@@ -16,16 +16,16 @@
             <a href="#" class="logo"><h1>LUXULIVER SHOP</h1></a>
             <nav>
                 <ul>
-                    <li><a href="#koleksi" class="nav-link">Koleksi</a></li>
-                    <li><a href="#baju-hitam" class="nav-link">Baju Hitam</a></li>
-                    <li><a href="#baju-putih" class="nav-link">Baju Putih</a></li>
-                    <li><a href="#keranjang" class="nav-link">
+                    <li><a href="#koleksi">Koleksi</a></li>
+                    <li><a href="#baju-hitam">Baju Hitam</a></li>
+                    <li><a href="#baju-putih">Baju Putih</a></li>
+                    <li><a href="#keranjang">
                         <i class="fas fa-shopping-cart"></i> Keranjang <span id="cart-count">0</span>
                     </a></li>
-                    <li><a href="#favorit" class="nav-link">
+                    <li><a href="#favorit">
                         <i class="far fa-heart"></i> Favorit <span id="favorite-count">0</span>
                     </a></li>
-                    <li><a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer" class="nav-link">
+                    <li><a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-instagram"></i> Instagram
                     </a></li>
                 </ul>
@@ -33,18 +33,16 @@
         </div>
     </header>
 
-    <nav class="breadcrumbs">
-        <div class="container">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li class="current-page">Koleksi</li>
-            </ul>
-        </div>
-       </nav>
+    <div class="breadcrumbs container" style="display: none;">
+        <ul id="breadcrumb-list">
+            <li><a href="#hero">Beranda</a></li>
+            <li>Keranjang Belanja</li>
+        </ul>
+    </div>
 
     <main>
         <section id="hero" class="animated-section">
-            <div class="container" id="hero-content">
+            <div class="container">
                 <h2>T-Shirt Terbaik untuk Gaya Anda</h2>
                 <p>Temukan koleksi pakaian stylish dan nyaman yang membuat Anda tampil percaya diri setiap hari.</p>
                 <a href="#koleksi" class="btn btn-primary">Belanja Sekarang</a>
@@ -69,8 +67,6 @@
             </div>
         </section>
 
-        <div class="section-divider"></div>
-
         <section id="baju-hitam" class="animated-section">
             <div class="container">
                 <h2>Koleksi Baju Hitam</h2>
@@ -79,8 +75,6 @@
                 <p id="no-black-clothing" class="info-message" style="display: none;">Belum ada koleksi baju hitam saat ini.</p>
             </div>
         </section>
-
-        <div class="section-divider"></div>
 
         <section id="baju-putih" class="animated-section">
             <div class="container">
@@ -91,147 +85,107 @@
             </div>
         </section>
 
-        <div class="section-divider"></div>
-        
-            <section id="keranjang" class="animated-section">
+        <section id="keranjang" class="animated-section">
             <div class="container">
-                <h2>Keranjang Belanja</h2>
-                
-                <div class="checkout-progress">
-                    <div class="checkout-progress-step completed">
-                        <div class="step-number">1</div>
-                        <div class="step-label">Keranjang</div>
+                <div id="checkout-progress-bar" class="checkout-progress-bar" style="display: none;">
+                    <div class="progress-step active" id="step-cart">
+                        <span class="step-number">1</span>
+                        <span class="step-name">Keranjang</span>
                     </div>
-                    <div class="checkout-progress-step">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Informasi</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step-info">
+                        <span class="step-number">2</span>
+                        <span class="step-name">Informasi</span>
                     </div>
-                    <div class="checkout-progress-step">
-                        <div class="step-number">3</div>
-                        <div class="step-label">Pembayaran</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step-confirm">
+                        <span class="step-number">3</span>
+                        <span class="step-name">Konfirmasi</span>
                     </div>
-                    <div class="checkout-progress-step">
-                        <div class="step-number">4</div>
-                        <div class="step-label">Selesai</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step-done">
+                        <span class="step-number">4</span>
+                        <span class="step-name">Selesai</span>
                     </div>
                 </div>
 
-                <input type="checkbox" id="order-summary-toggle" class="order-summary-toggle" checked>
-                <label for="order-summary-toggle" class="order-summary-header">
-                    <h4>Ringkasan Pesanan</h4>
-                    <i class="fas fa-chevron-down"></i>
-                </label>
-                <div class="order-summary-content">
-                    <div id="cart-items" class="cart-items-container"></div>
-                    <p id="empty-cart-message" class="info-message" style="display: none;">Keranjang Anda kosong.</p>
-                    <div class="cart-summary">
-                        <p>Subtotal: <span id="subtotal-price">Rp0</span></p>
-                        <p>Diskon: <span id="discount-amount">Rp0</span></p>
-                        <h3>Total: <span id="total-price">Rp0</span></h3>
-                        <button id="checkout-btn" class="btn btn-primary" style="display: none;">Lanjutkan ke Checkout</button>
+                <h2>Keranjang Belanja</h2>
+                <div id="cart-items" class="cart-items-container">
                     </div>
+                <p id="empty-cart-message" class="info-message" style="display: none;">Keranjang Anda kosong.</p>
+                <div class="cart-summary">
+                    <p>Subtotal: <span id="subtotal-price">Rp0</span></p>
+                    <p>Diskon: <span id="discount-amount">Rp0</span></p>
+                    <h3>Total: <span id="total-price">Rp0</span></h3>
+                    <button id="checkout-btn" class="btn btn-primary" style="display: none;">Lanjutkan ke Checkout</button>
                 </div>
 
                 <div id="checkout-form-container" class="checkout-form-container" style="display: none;">
-                    <div class="checkout-progress-bar">
-                        <div class="progress-step active" data-step="1">
-                            <span class="step-number">1</span>
-                            <span class="step-name">Kontak & Alamat</span>
-                        </div>
-                        <div class="progress-line"></div>
-                        <div class="progress-step" data-step="2">
-                            <span class="step-number">2</span>
-                            <span class="step-name">Ekspedisi</span>
-                        </div>
-                        <div class="progress-line"></div>
-                        <div class="progress-step" data-step="3">
-                            <span class="step-number">3</span>
-                            <span class="step-name">Ringkasan</span>
+                    <h3>Informasi Pengiriman</h3>
+                    <div id="order-summary-interactive" class="order-summary-interactive" style="display: none;">
+                        <h4>Ringkasan Pesanan</h4>
+                        <div id="summary-items-list">
+                            </div>
+                        <div class="summary-totals">
+                            <p>Subtotal: <span id="summary-subtotal">Rp0</span></p>
+                            <p>Diskon: <span id="summary-discount">Rp0</span></p>
+                            <p class="summary-total-price">Total: <span id="summary-total">Rp0</span></p>
                         </div>
                     </div>
-
-                    <h3>Informasi Pengiriman</h3>
                     <form id="checkout-form">
-                        <div class="form-section active" id="contact-info-section">
-                            <div class="form-group">
-                                <label for="customer-name">Nama Lengkap:</label>
-                                <input type="text" id="customer-name" name="customer-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="customer-phone">Nomor WhatsApp:</label>
-                                <input type="tel" id="customer-phone" name="customer-phone" placeholder="Contoh: 6281234567890" pattern="[0-9]{10,15}" required>
-                                <small>Format: 10-15 digit angka (diawali kode negara, cth: 62)</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="customer-address">Alamat Lengkap:</label>
-                                <textarea id="customer-address" name="customer-address" rows="4" required></textarea>
-                            </div>
-                            <button type="button" id="next-to-expedition" class="btn btn-primary">Selanjutnya</button>
+                        <div class="form-group">
+                            <label for="customer-name">Nama Lengkap:</label>
+                            <input type="text" id="customer-name" name="customer-name" required>
                         </div>
-
-                        <div class="form-section" id="expedition-section">
-                            <div class="form-group">
-                                <label for="expedition-method">Metode Ekspedisi:</label>
-                                <select id="expedition-method" name="expedition-method" required>
-                                    <option value="">Pilih Metode Ekspedisi</option>
-                                    <option value="jne">JNE</option>
-                                    <option value="jnt">J&T Express</option>
-                                    <option value="sicepat">SiCepat</option>
-                                    <option value="anteraja">AnterAja</option>
-                                    <option value="lion-parcel">Lion Parcel</option>
-                                </select>
-                            </div>
-                            <div class="form-actions">
-                                <button type="button" id="prev-to-contact" class="btn btn-secondary">Kembali</button>
-                                <button type="button" id="next-to-summary" class="btn btn-primary">Selanjutnya</button>
-                            </div>
+                        <div class="form-group">
+                            <label for="customer-phone">Nomor WhatsApp:</label>
+                            <input type="tel" id="customer-phone" name="customer-phone" placeholder="Contoh: 6281234567890" pattern="[0-9]{10,15}" required>
+                            <small>Format: 10-15 digit angka (diawali kode negara, cth: 62)</small>
                         </div>
-
-                        <div class="form-section" id="summary-section">
-                            <h3>Ringkasan Pesanan</h3>
-                            <div id="order-summary-details">
-                                </div>
-                            <div class="form-actions">
-                                <button type="button" id="prev-to-expedition" class="btn btn-secondary">Kembali</button>
-                                <button type="submit" class="btn btn-primary">Konfirmasi Pesanan</button>
-                            </div>
+                        <div class="form-group">
+                            <label for="customer-address">Alamat Lengkap:</label>
+                            <textarea id="customer-address" name="customer-address" rows="4" required></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="expedition-method">Metode Ekspedisi:</label>
+                            <select id="expedition-method" name="expedition-method" required>
+                                <option value="">Pilih Ekspedisi</option>
+                                <option value="jnt">J&T</option>
+                                <option value="lion-parcel">Lion Parcel</option>
+                                <option value="jne">JNE</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Buat Pesanan via WhatsApp</button>
                     </form>
                 </div>
             </div>
         </section>
-
-        <div class="section-divider"></div>
 
         <section id="favorit" class="animated-section">
             <div class="container">
                 <h2>Produk Favorit Anda</h2>
                 <div id="favorite-products-list" class="product-grid">
                     </div>
-                <p id="empty-favorites-message" class="info-message" style="display: none;">Anda belum menambahkan produk ke favorit.</p>
+                <p id="empty-favorites-message" class="info-message" style="display: none;">Anda belum menambahkan produk favorit apapun.</p>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container footer-content">
-            <div class="footer-section about-us">
-                <h3>Tentang Luxuliver Shop</h3>
-                <p>Luxuliver Shop berkomitmen untuk menyediakan T-Shirt berkualitas tinggi dengan desain stylish untuk menunjang gaya Anda setiap hari. Kenyamanan dan kepuasan pelanggan adalah prioritas kami.</p>
-            </div>
             <div class="footer-section contact-info">
-                <h3>Kontak Kami</h3>
+                <h3>Hubungi Kami</h3>
                 <p><i class="fas fa-map-marker-alt"></i> <span id="seller-address"></span></p>
                 <p><i class="fas fa-phone"></i> <span id="seller-phone"></span></p>
                 <p><i class="fas fa-envelope"></i> <span id="seller-email"></span></p>
             </div>
             <div class="footer-section social-media">
                 <h3>Ikuti Kami</h3>
-                <a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+                <p><i class="fab fa-instagram"></i> Ikuti kami di <a href="https://www.instagram.com/luxuliver" target="_blank" rel="noopener noreferrer">Instagram</a></p>
             </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; <span id="current-year"></span> Luxuliver Shop. All Rights Reserved.</p>
+            <div class="footer-section copyright">
+                <p>&copy; <span id="current-year"></span> Luxuliver. Semua Hak Cipta Dilindungi.</p>
+            </div>
         </div>
     </footer>
 
@@ -264,14 +218,6 @@
                 <button id="confirm-yes" class="btn btn-danger">Ya</button>
                 <button id="confirm-no" class="btn btn-secondary">Tidak</button>
             </div>
-        </div>
-       <div id="add-to-cart-confirmation" class="add-to-cart-confirmation">
-        <h3>Ditambahkan ke Keranjang!</h3>
-        <img id="confirmation-product-image" src="" alt="Produk">
-        <p id="confirmation-product-name"></p>
-        <div class="confirmation-buttons">
-            <button class="btn btn-secondary" id="continue-shopping">Lanjut Belanja</button>
-            <a href="#keranjang" class="btn btn-primary">Lihat Keranjang</a>
         </div>
     </div>
 
