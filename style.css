@@ -23,7 +23,7 @@
     --border-color: #e0e6ec; /* Lighter, subtle border */
 
     /* Bayangan: Lebih halus, lebih tersebar, dan sedikit kebiruan */
-    --shadow-extra-light: rgba(62, 90, 125, 0.05); /* Even lighter shadow */
+    --shadow-extra-light: rgba(62, 90, 125, 0.05); /* NEW: Even lighter shadow */
     --shadow-light: rgba(62, 90, 125, 0.1); /* Subtle shadow with primary hue */
     --shadow-medium: rgba(62, 90, 125, 0.2);
     --shadow-strong: rgba(62, 90, 125, 0.35);
@@ -58,9 +58,13 @@ body {
     background-attachment: fixed;
     background-size: cover;
     /* Ganti dengan gambar JPG Anda yang berkualitas tinggi */
+    background-image: url('your-stunning-background-image.jpg'); /* Pastikan path benar */
+    background-position: center top; /* Sesuaikan posisi agar gambar fokus di bagian atas/tengah */
+    background-repeat: no-repeat;
+    /* NEW: Layer background noise untuk tekstur premium */
     background-image:
         linear-gradient(rgba(240,244,247,0.8), rgba(240,244,247,0.8)), /* Lapisan overlay warna untuk kontras teks */
-        url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg"><circle fill="%23e5e9ed" cx="1" cy="1" r="0.5"/></svg>'), /* Lapisan noise/tekstur SVG halus */
+        url('data:image/svg+xml;utf8,<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="6.5" numOctaves="3" stitchTiles="stitch" result="turbulence"/><feComposite operator="in" in="turbulence" in2="SourceGraphic" result="compositeNoise"/><feBlend mode="multiply" in="SourceGraphic" in2="compositeNoise"/></filter><rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.03"/></svg>'), /* Lapisan noise/tekstur SVG halus */
         url('AA.jpg'); /* <-- Ini adalah tempat gambar JPG Anda */
     background-blend-mode: overlay, normal, normal; /* Cara lapisan-lapisan ini bercampur */
     background-size: cover, auto, cover; /* Cara ukuran background diatur */
@@ -163,7 +167,7 @@ a:hover {
     transform: perspective(1px) translateZ(0); /* For consistent 3D transforms */
     -webkit-tap-highlight-color: transparent; /* Remove highlight on touch */
 }
-/* Shine effect on hover */
+/* NEW: Shine effect on hover */
 .btn::before {
     content: '';
     position: absolute;
@@ -196,7 +200,7 @@ a:hover {
     transform: translateY(-7px) scale(1.02); /* Efek lift dan sedikit scale */
     box-shadow: 0 15px 35px rgba(62, 90, 125, 0.6); /* Bayangan hover lebih dalam */
 }
-.btn-primary:active { /* Press down effect */
+.btn-primary:active { /* NEW: Press down effect */
     transform: translateY(-2px) scale(0.99);
     box-shadow: 0 5px 10px rgba(62, 90, 125, 0.3);
 }
@@ -241,13 +245,13 @@ header {
     z-index: 999;
     backdrop-filter: blur(12px); /* Blur lebih kuat */
     border-bottom: 1px solid var(--border-color); /* Border bawah halus */
-    transition: all 0.3s ease-in-out; /* Add transition for sticky header */
+    transition: padding 0.3s ease, box-shadow 0.3s ease; /* Transisi untuk sticky effect */
 }
 
 /* Sticky Header Effect */
-header.scrolled {
-    padding: 1rem 0; /* Smaller padding when scrolled */
-    box-shadow: 0 8px 30px var(--shadow-medium); /* More prominent shadow when scrolled */
+header.sticky {
+    padding: 1rem 0; /* Mengurangi padding saat sticky */
+    box-shadow: 0 8px 30px var(--shadow-medium); /* Bayangan lebih kuat saat sticky */
 }
 
 header .container {
@@ -281,114 +285,101 @@ header nav a {
     padding-bottom: 8px; /* Ruang untuk underline */
     letter-spacing: 0.4px;
     transition: all var(--transition-duration) var(--transition-timing-function);
-    text-shadow: 0 0 2px rgba(0,0,0,0.02);
+    text-shadow: 0 0; /* Remove text shadow */
 }
+header nav a:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+/* Underline effect for navigation */
 header nav a::after {
     content: '';
     position: absolute;
     width: 0;
-    height: 4px; /* Underline lebih tebal */
-    bottom: 0;
+    height: 4px; /* Ketebalan underline */
+    background-color: var(--accent-color); /* Warna underline aksen */
     left: 50%;
+    bottom: 0;
     transform: translateX(-50%);
-    background: var(--primary-color);
     border-radius: 2px;
-    transition: width 0.4s var(--transition-timing-function);
+    transition: width 0.3s ease-in-out; /* Transisi untuk lebar */
 }
 header nav a:hover::after,
-header nav a.active::after {
+header nav a.active::after { /* NEW: Highlight active category */
     width: 100%;
 }
-header nav a:hover,
 header nav a.active {
-    color: var(--primary-color);
-    text-shadow: 0 0 8px rgba(62, 90, 125, 0.3);
+    color: var(--primary-color); /* Warna teks untuk kategori aktif */
+    font-weight: 700; /* Sedikit lebih tebal */
 }
-header nav a i {
-    color: var(--light-text);
-    transition: color var(--transition-duration);
-    margin-right: 0.4em;
-    font-size: 1.1em;
-}
-header nav a:hover i,
-header nav a.active i {
-    color: var(--primary-color);
-}
+
 
 /* Breadcrumbs */
 .breadcrumbs {
-    background-color: var(--background-color);
-    padding: 1.2rem 0;
+    padding: 1rem 0;
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-extra-light);
+    margin-top: 0px; /* Menempel di bawah header */
+    z-index: 900; /* Di bawah header tapi di atas konten lain */
+    position: relative;
+}
+
+.breadcrumbs ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
     font-size: 0.95rem;
     color: var(--light-text);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 10px var(--shadow-extra-light);
-    position: sticky;
-    top: 6.5rem; /* Adjust based on header height */
-    z-index: 900;
-    backdrop-filter: blur(8px);
 }
-.breadcrumbs .container {
+
+.breadcrumbs ul li {
     display: flex;
     align-items: center;
 }
-.breadcrumbs a {
+
+.breadcrumbs ul li:not(:last-child)::after {
+    content: '\f105'; /* FontAwesome chevron right */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin: 0 0.6rem;
+    color: var(--border-color);
+}
+
+.breadcrumbs ul li a {
     color: var(--primary-color);
-    margin-right: 0.5rem;
+    text-decoration: none;
     font-weight: 500;
 }
-.breadcrumbs a:hover {
+
+.breadcrumbs ul li a:hover {
     text-decoration: underline;
 }
-.breadcrumbs span {
+
+.breadcrumbs ul li:last-child {
     color: var(--text-color);
     font-weight: 600;
 }
 
+
 /* Hero Section */
 #hero {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.65) 100%),
-                url('hero-bg.jpg') no-repeat center center/cover; /* Gradient lebih gelap & menarik */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('hero-bg.jpg'); /* Pastikan gambar hero-bg.jpg ada */
+    background-size: cover;
+    background-position: center;
     color: #fff;
     text-align: center;
-    padding: 12rem 40px; /* Padding sangat besar */
-    min-height: 75vh; /* Tinggi minimal lebih tinggi */
-    border-radius: var(--border-radius-base);
-    margin-top: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    background-size: 115%; /* Mulai lebih zoom */
-    animation: zoomOutHero 25s infinite alternate ease-in-out; /* Animasi lebih lambat dan halus */
-    box-shadow: 0 20px 50px var(--shadow-deep); /* Bayangan dalam dan kuat */
+    padding: 8rem 0; /* Padding lebih besar */
+    min-height: 60vh; /* Tinggi minimum */
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(255,255,255,0.1); /* Subtle white border */
+    position: relative; /* Untuk animasi */
+    overflow: hidden; /* Pastikan tidak ada yang keluar dari batas */
 }
-@keyframes zoomOutHero {
-    from { background-size: 115%; }
-    to { background-size: 105%; }
-}
-#hero::before { /* Overlay gradient lembut pada hero */
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.4) 100%);
-    z-index: 1;
-}
-
-#hero-content {
-    max-width: 950px;
-    z-index: 2;
-    position: relative;
-}
-
 #hero h2 {
-    font-size: 5.5rem; /* Ukuran font super besar */
-    margin-bottom: 2rem;
+    font-size: 4.5rem; /* Lebih besar dan berdampak */
+    margin-bottom: 1.5rem;
     color: #fff;
     text-shadow: 0 10px 20px rgba(0,0,0,0.7); /* Bayangan teks lebih kuat dan dalam */
     line-height: 1.1;
@@ -396,189 +387,513 @@ header nav a.active i {
 }
 #hero p {
     font-size: 1.8rem; /* Lebih besar */
-    margin-bottom: 4rem; /* Margin lebih besar */
-    max-width: 850px;
+    margin-bottom: 3.5rem; /* Margin lebih besar */
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 #hero .btn {
-    font-size: 1.5rem; /* Lebih besar */
-    padding: 20px 55px;
-    border-radius: 50px; /* Tombol bulat penuh */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(145deg, var(--accent-color) 0%, var(--accent-dark-hover) 100%);
-}
-#hero .btn:hover {
-    transform: translateY(-10px); /* Efek lift lebih dramatis */
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
-    background: linear-gradient(145deg, var(--accent-dark-hover) 0%, var(--accent-color) 100%);
+    padding: 18px 45px;
+    font-size: 1.3rem;
 }
 
-
-/* Sections General */
-section {
-    padding: 7rem 0; /* Padding vertikal lebih besar */
-    background-color: var(--surface-color);
-    margin-top: 4.5rem; /* Margin antar section lebih besar */
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 15px 45px var(--shadow-medium); /* Bayangan lebih halus dan luas */
+/* Animations for sections */
+.animated-section {
     opacity: 0;
-    transform: translateY(100px); /* Efek masuk lebih jelas */
-    transition: opacity 1.2s var(--transition-timing-function), transform 1.2s var(--transition-timing-function); /* Transisi lebih lambat dan fluid */
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border-color); /* Border halus */
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
-section.visible {
+.animated-section.fade-in {
     opacity: 1;
     transform: translateY(0);
-}
-/* Section divider with a softer gradient */
-.section-divider {
-    height: 70px; /* Tinggi divider */
-    background: linear-gradient(to right, transparent, rgba(62, 90, 125, 0.15), transparent); /* Gradien lembut */
-    margin: 4rem 0;
-    border-radius: 8px;
-    opacity: 0.8;
 }
 
 
 /* Search Section */
 #search-section {
-    padding: 4rem 0; /* Padding lebih besar */
+    padding: 3.5rem 0; /* Padding lebih */
     background-color: var(--surface-color);
-    margin-top: 0;
-    box-shadow: 0 10px 30px var(--shadow-light);
-    border-radius: var(--border-radius-base);
-    text-align: center;
+    box-shadow: 0 5px 20px var(--shadow-extra-light);
+    margin-top: -60px; /* Mengisi ruang di bawah hero */
+    position: relative;
+    z-index: 10; /* Pastikan di atas elemen lain */
+    border-radius: var(--border-radius-base); /* Sudut membulat */
 }
 .search-bar {
     display: flex;
-    justify-content: center;
-    gap: 30px; /* Jarak antar elemen lebih besar */
-    max-width: 900px; /* Lebar max lebih besar */
+    max-width: 700px;
     margin: 0 auto;
-}
-.search-bar input[type="text"] {
-    flex-grow: 1;
-    padding: 20px 30px; /* Padding lebih besar */
-    border: 2px solid var(--border-color); /* Border lebih tebal */
+    background-color: #fff;
     border-radius: var(--border-radius-base);
-    font-size: 1.25rem; /* Lebih besar */
-    transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
-    background-color: var(--background-color); /* Warna background input */
+    box-shadow: 0 8px 25px var(--shadow-light); /* Bayangan yang lebih menonjol */
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.search-bar input {
+    flex-grow: 1;
+    padding: 18px 25px; /* Padding lebih */
+    border: none;
+    font-size: 1.15rem; /* Lebih besar */
+    outline: none;
     color: var(--text-color);
 }
-.search-bar input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 8px rgba(62, 90, 125, 0.28); /* Glow yang lebih jelas dan sesuai warna */
-    background-color: var(--surface-color); /* White background on focus */
+.search-bar input::placeholder {
+    color: var(--light-text);
 }
 .search-bar button {
-    padding: 20px 45px; /* Padding lebih besar */
+    border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0; /* Hanya sudut kanan membulat */
+    padding: 15px 30px;
+    font-size: 1.15rem;
+    box-shadow: none; /* Hilangkan bayangan bawaan tombol */
+    border-left: 1px solid var(--border-color); /* Border di kiri tombol */
+}
+.search-bar button:hover {
+    transform: none; /* Hilangkan transformasi hover */
+    box-shadow: none;
 }
 
-/* Product Grid */
+
+/* Product Grid & Cards */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Ukuran card sedikit lebih besar */
-    gap: 60px; /* Jarak antar card sangat besar */
-    padding-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px; /* Jarak antar produk lebih besar */
 }
+
 .product-card {
     background-color: var(--surface-color);
     border-radius: var(--border-radius-base);
-    box-shadow: 0 18px 45px var(--shadow-medium); /* Bayangan lebih kuat dan terdistribusi */
     overflow: hidden;
-    transition: transform var(--transition-duration) var(--transition-timing-function), box-shadow var(--transition-duration) var(--transition-timing-function);
+    box-shadow: 0 10px 30px var(--shadow-light); /* Bayangan kartu lebih dalam */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-color); /* Tambah border halus */
-    position: relative;
 }
-/* Subtle inner shadow for depth */
-.product-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.05); /* Inner shadow */
-    border-radius: var(--border-radius-base);
-    pointer-events: none;
-}
-.product-card::before { /* Subtle overlay effect on hover */
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 50%);
-    opacity: 0;
-    transition: opacity var(--transition-duration);
-    z-index: 0;
-}
-.product-card:hover::before {
-    opacity: 1;
-}
-
 .product-card:hover {
-    transform: translateY(-20px) scale(1.03); /* Efek lift dan scale lebih dramatis */
-    box-shadow: 0 28px 60px var(--shadow-strong); /* Bayangan hover lebih dalam */
+    transform: translateY(-10px) scale(1.03); /* Efek lift dan scale lebih menonjol */
+    box-shadow: 0 18px 45px var(--shadow-medium); /* Bayangan hover lebih dramatis */
 }
 .product-card img {
     width: 100%;
-    height: 350px; /* Tinggi gambar lebih besar */
+    height: 280px; /* Tinggi gambar lebih proporsional */
     object-fit: cover;
     border-bottom: 1px solid var(--border-color);
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); /* Animasi zoom gambar lebih halus */
 }
-.product-card:hover img {
-    transform: scale(1.1); /* Zoom gambar saat hover lebih jelas */
-}
-.product-info {
-    padding: 3rem; /* Padding lebih besar */
+.product-card-info {
+    padding: 25px; /* Padding lebih */
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    position: relative;
-    z-index: 1;
 }
-.product-info h3 {
-    font-size: 1.8rem; /* Ukuran font lebih besar */
-    margin-top: 0;
-    margin-bottom: 1.2rem;
+.product-card-info h3 {
+    font-size: 1.8rem; /* Lebih besar */
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+}
+.product-card-info p {
+    font-size: 1rem;
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Deskripsi mengisi ruang yang tersedia */
+}
+.product-card-info .price {
+    font-size: 1.6rem; /* Ukuran harga lebih besar */
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+}
+.product-card-info .btn-quick-view {
+    margin-top: auto; /* Dorong tombol ke bawah */
+    background-color: var(--primary-light);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    box-shadow: none;
+    transition: background-color 0.3s ease;
+}
+.product-card-info .btn-quick-view:hover {
+    background-color: var(--primary-color);
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Info Messages (No products, empty cart, etc.) */
+.info-message {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-base);
+    margin-top: 2rem;
+    color: var(--light-text);
+    font-style: italic;
+    box-shadow: 0 5px 15px var(--shadow-extra-light);
+}
+
+
+/* Cart Section */
+#keranjang {
+    padding: 5rem 0;
+}
+.cart-items-container {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-base);
+    padding: 30px; /* Padding lebih */
+    box-shadow: 0 10px 30px var(--shadow-light);
+    margin-bottom: 3rem;
+}
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.cart-item:last-child {
+    border-bottom: none;
+}
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius-base);
+    margin-right: 20px;
+    box-shadow: 0 4px 12px var(--shadow-extra-light);
+}
+.cart-item .item-details {
     flex-grow: 1;
-    color: var(--text-color);
-    line-height: 1.3;
 }
-.product-info .price {
-    font-size: 1.75rem; /* Ukuran font harga lebih besar */
+.cart-item .item-details h4 {
+    font-size: 1.3rem; /* Lebih besar */
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+.cart-item .item-details p {
+    font-size: 1.1rem;
+    color: var(--light-text);
+    margin-bottom: 0;
+}
+.cart-item .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak lebih besar */
+    margin: 0 40px; /* Margin lebih besar */
+}
+.cart-item .quantity-controls button {
+    background-color: #eaf1f7; /* Warna biru muda */
+    border: 1px solid #d8e2ed; /* Border lembut */
+    border-radius: 50%;
+    width: 48px; /* Ukuran tombol lebih besar */
+    height: 48px; /* Ukuran tombol lebih besar */
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    box-shadow: 0 3px 10px rgba(62, 90, 125, 0.25);
+    transition: all 0.3s var(--transition-timing-function);
+}
+.cart-item .quantity-controls button:hover {
+    background-color: var(--primary-light);
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(62, 90, 125, 0.35);
+}
+.cart-item .quantity-controls span {
+    font-size: 1.4rem; /* Ukuran angka quantity lebih besar */
+    font-weight: 600;
+    color: var(--text-color);
+    min-width: 30px; /* Lebar minimum untuk angka */
+    text-align: center;
+}
+.cart-item .item-total-price {
+    font-size: 1.5rem; /* Ukuran total harga item lebih besar */
+    font-weight: 700;
+    color: var(--accent-color);
+    min-width: 120px; /* Lebar minimum untuk harga total */
+    text-align: right;
+}
+.cart-item .remove-item {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: transform 0.2s ease-in-out, color 0.2s ease;
+}
+.cart-item .remove-item:hover {
+    color: #c0392b;
+    transform: scale(1.1);
+}
+
+.cart-summary {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-base);
+    padding: 30px;
+    box-shadow: 0 10px 30px var(--shadow-light);
+    text-align: right;
+}
+.cart-summary p {
+    font-size: 1.25rem; /* Ukuran teks summary lebih besar */
+    margin-bottom: 0.8rem;
+    color: var(--light-text);
+}
+.cart-summary h3 {
+    font-size: 2rem; /* Ukuran total summary lebih besar */
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+.cart-summary span {
+    font-weight: 700;
+    color: var(--text-color);
+}
+.cart-summary h3 span {
+    color: var(--accent-color);
+}
+.cart-summary .btn-primary {
+    padding: 16px 30px;
+    font-size: 1.2rem;
+}
+
+
+/* Checkout Form */
+.checkout-form-container {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-base);
+    padding: 40px; /* Padding lebih besar */
+    box-shadow: 0 10px 30px var(--shadow-medium);
+    margin-top: 4rem; /* Jarak dari keranjang */
+}
+.checkout-form-container h3 {
+    text-align: center;
+    margin-bottom: 3.5rem; /* Margin lebih besar */
+    font-size: 2.2rem;
+    color: var(--primary-color);
+}
+.form-group {
+    margin-bottom: 2.5rem; /* Jarak antar group form lebih besar */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 16px 20px; /* Padding lebih besar */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-base);
+    font-size: 1.1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--background-color); /* Background input */
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 4px rgba(62, 90, 125, 0.15); /* Shadow fokus yang halus */
+    outline: none;
+}
+.form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--light-text);
+    font-size: 0.9rem;
+}
+.checkout-form-container .btn-primary {
+    width: 100%;
+    padding: 24px; /* Padding lebih besar */
+    font-size: 1.5rem; /* Lebih besar */
+    box-shadow: 0 12px 30px rgba(62, 90, 125, 0.5);
+}
+
+
+/* Favorit Section */
+#favorit {
+    padding: 5rem 0;
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 3rem 0;
+    font-size: 0.95rem;
+    margin-top: 5rem;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+.footer-section h3 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+.footer-section p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+}
+.footer-section a {
+    color: #fff;
+    text-decoration: underline;
+}
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+.footer-section .fab {
+    margin-right: 8px;
+}
+.copyright {
+    text-align: center;
+    width: 100%;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1.5rem;
+}
+
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(62, 90, 125, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s var(--transition-timing-function);
+    z-index: 99;
+}
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top:hover {
+    background-color: var(--primary-dark-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(62, 90, 125, 0.6);
+}
+
+
+/* Quick View Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+    backdrop-filter: blur(8px); /* Blur background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: var(--surface-color);
+    padding: 35px; /* Padding lebih besar */
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 15px 40px var(--shadow-deep); /* Bayangan lebih dalam */
+    position: relative;
+    width: 90%;
+    max-width: 1000px; /* Lebar maksimal modal */
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+.modal.open .modal-content {
+    transform: translateY(0);
+}
+.modal-body {
+    display: flex;
+    gap: 40px; /* Jarak antar kolom lebih besar */
+    flex-wrap: wrap; /* Izinkan wrap pada layar kecil */
+}
+.modal-body img {
+    flex: 1 1 40%; /* Fleksibel, ambil 40% lebar */
+    max-width: 400px; /* Batas lebar gambar */
+    height: auto;
+    border-radius: var(--border-radius-base);
+    object-fit: cover;
+    box-shadow: 0 8px 20px var(--shadow-light);
+}
+.modal-product-info {
+    flex: 1 1 50%; /* Fleksibel, ambil 50% lebar */
+    display: flex;
+    flex-direction: column;
+}
+.modal-product-info h3 {
+    font-size: 3.2rem; /* Ukuran font lebih besar */
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    letter-spacing: -1.5px;
+}
+.modal-product-info p#modal-product-description {
+    font-size: 1.35rem;
+    color: var(--light-text);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+}
+.modal-product-info .price {
+    font-size: 2.8rem; /* Ukuran font harga lebih besar */
+    margin-bottom: 3.5rem;
     color: var(--primary-color);
     font-weight: 700;
-    margin-bottom: 2rem;
     letter-spacing: -0.8px;
 }
 .size-options {
     display: flex;
-    gap: 18px; /* Jarak antar ukuran lebih besar */
-    margin-bottom: 2rem;
+    gap: 15px; /* Jarak antar opsi size */
+    margin-bottom: 3.5rem; /* Margin lebih besar */
     flex-wrap: wrap;
-    justify-content: center;
 }
 .size-option {
-    display: inline-block;
-    padding: 14px 25px; /* Padding lebih besar */
-    border: 2px solid var(--border-color); /* Border lebih tebal */
+    padding: 14px 22px; /* Padding lebih */
+    border: 2px solid var(--border-color);
     border-radius: var(--border-radius-base);
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.4s var(--transition-timing-function);
-    background-color: var(--background-color);
-    color: var(--light-text);
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    background-color: #f7fafd; /* Background opsi size */
+    user-select: none; /* Disable text selection */
 }
 .size-option:hover {
     background-color: #eaf1f7;
@@ -596,596 +911,48 @@ section.visible {
 .product-actions {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Jarak antar tombol lebih besar */
-    margin-top: auto;
-}
-.product-actions .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 18px 30px;
-    font-size: 1.15rem;
-}
-.product-actions .btn.added {
-    background-color: var(--secondary-color);
-    color: #fff;
-}
-.product-actions .add-to-favorite {
-    background-color: var(--background-color);
-    color: var(--light-text);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px var(--shadow-extra-light); /* Lebih ada bayangan */
-}
-.product-actions .add-to-favorite:hover {
-    background-color: #eaf1f7;
-    color: var(--primary-dark-hover);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.1);
-}
-.product-actions .add-to-favorite.favorited {
-    background-color: #e74c3c; /* Warna merah kuat */
-    color: #fff;
-    border-color: #e74c3c;
-    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
-}
-.product-actions .add-to-favorite.favorited i {
-    color: #fff;
-}
-
-
-/* Info Message */
-.info-message {
-    text-align: center;
-    font-style: italic;
-    color: var(--light-text);
-    padding: 40px; /* Padding lebih besar */
-    border: 3px dashed var(--border-color); /* Border lebih tebal */
-    border-radius: var(--border-radius-base);
-    margin-top: 4rem;
-    background-color: var(--surface-color);
-    box-shadow: 0 8px 20px var(--shadow-light);
-    font-size: 1.2rem; /* Ukuran font lebih besar */
-    line-height: 1.6;
-}
-
-/* Cart Section */
-.cart-items-container {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 15px 45px var(--shadow-medium);
-    padding: 50px; /* Padding lebih besar */
-    margin-bottom: 4rem;
-    border: 1px solid var(--border-color);
-}
-.cart-item {
-    display: flex;
-    align-items: center;
-    padding: 35px 0; /* Padding lebih besar */
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-out;
-}
-.cart-item:hover {
-    background-color: #fcfdfe; /* Perubahan warna saat hover */
-    transform: translateY(-4px); /* Sedikit lift */
-}
-.cart-item:last-child {
-    border-bottom: none;
-}
-.cart-item img {
-    width: 130px; /* Ukuran gambar lebih besar */
-    height: 130px; /* Ukuran gambar lebih besar */
-    object-fit: cover;
-    border-radius: var(--border-radius-base);
-    margin-right: 35px;
-    box-shadow: 0 5px 15px var(--shadow-light);
-    border: 1px solid var(--border-color);
-}
-.cart-item .item-details {
-    flex-grow: 1;
-}
-.cart-item .item-details h4 {
-    margin: 0 0 15px 0;
-    font-size: 1.5rem; /* Lebih besar */
-    color: var(--text-color);
-    line-height: 1.3;
-}
-.cart-item .item-details p {
-    margin: 0;
-    font-size: 1.15rem;
-    color: var(--light-text);
-}
-.cart-item .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Jarak lebih besar */
-    margin: 0 40px; /* Margin lebih besar */
-}
-.cart-item .quantity-controls button {
-    background-color: #eaf1f7; /* Warna biru muda */
-    border: 1px solid #d8e2ed; /* Border lembut */
-    border-radius: 50%;
-    width: 48px; /* Ukuran tombol lebih besar */
-    height: 48px; /* Ukuran tombol lebih besar */
-    font-size: 1.6rem;
-    color: var(--primary-color);
-    box-shadow: 0 3px 10px rgba(62, 90, 125, 0.25);
-    transition: all 0.3s var(--transition-timing-function);
-}
-.cart-item .quantity-controls button:hover {
-    background-color: #d8e2ed;
-    transform: scale(1.15) translateY(-2px); /* Lebih bouncy */
-    box-shadow: 0 6px 15px rgba(62, 90, 125, 0.35);
-}
-.cart-item .item-price {
-    font-weight: 700;
-    font-size: 1.6rem; /* Lebih besar */
-    color: var(--primary-color);
-    letter-spacing: -0.8px;
-}
-.cart-summary {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 15px 45px var(--shadow-medium);
-    padding: 50px;
-    text-align: right;
-    margin-top: 4.5rem;
-    border: 1px solid var(--border-color);
-}
-.cart-summary p {
-    margin-bottom: 20px;
-    color: var(--light-text);
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-.cart-summary h3 {
-    margin-top: 35px;
-    font-size: 2.5rem; /* Lebih besar */
-    color: var(--primary-color);
-    letter-spacing: -1.2px;
-}
-.cart-summary .btn {
-    margin-top: 40px;
-    width: auto;
-    padding: 20px 50px;
-    font-size: 1.35rem;
-}
-
-/* Checkout Form */
-.checkout-form-container {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 18px 50px var(--shadow-strong); /* Bayangan lebih kuat */
-    padding: 70px; /* Padding lebih besar */
-    margin-top: 5rem;
-    max-width: 800px; /* Lebar max lebih besar */
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid var(--border-color);
-}
-.checkout-form-container h3 {
-    text-align: center;
-    margin-bottom: 3.5rem;
-    color: var(--primary-color);
-    font-size: 2.8rem;
-    letter-spacing: -1.5px;
-}
-.form-group {
-    margin-bottom: 2.8rem; /* Margin antar group lebih besar */
-}
-.form-group label {
-    display: block;
-    margin-bottom: 18px;
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 1.2rem; /* Lebih besar */
-}
-.form-group input[type="text"],
-.form-group input[type="tel"],
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 20px 25px; /* Padding lebih besar */
-    border: 2px solid var(--border-color); /* Border lebih tebal */
-    border-radius: var(--border-radius-base);
-    font-size: 1.2rem;
-    transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-.form-group input[type="text"]:focus,
-.form-group input[type="tel"]:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 8px rgba(62, 90, 125, 0.3);
-    background-color: #ffffff; /* Putih bersih saat fokus */
-}
-.form-group textarea {
-    resize: vertical;
-    min-height: 180px; /* Tinggi textarea lebih besar */
-}
-.form-group small {
-    display: block;
-    margin-top: 12px;
-    font-size: 1.05rem; /* Sedikit lebih besar */
-    color: var(--light-text);
-}
-.checkout-form-container .btn-primary {
-    width: 100%;
-    padding: 24px; /* Padding lebih besar */
-    font-size: 1.5rem; /* Lebih besar */
-    box-shadow: 0 12px 30px rgba(62, 90, 125, 0.4);
-}
-
-/* Checkout Progress Bar */
-.checkout-progress-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4rem;
-    position: relative;
-    padding: 0 20px;
-}
-
-.checkout-progress-bar .progress-line {
-    position: absolute;
-    height: 4px;
-    background-color: var(--border-color);
-    width: calc(100% - 40px); /* Adjust width to fit between steps */
-    left: 20px;
-    z-index: 0;
-}
-
-.checkout-progress-bar .progress-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.checkout-progress-bar .progress-step .step-number {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--background-color);
-    border: 3px solid var(--border-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--light-text);
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.checkout-progress-bar .progress-step .step-name {
-    margin-top: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--light-text);
-    white-space: nowrap;
-    transition: color 0.3s ease-in-out;
-}
-
-.checkout-progress-bar .progress-step.active .step-number {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(62, 90, 125, 0.4);
-}
-
-.checkout-progress-bar .progress-step.active .step-name {
-    color: var(--primary-color);
-}
-
-.checkout-progress-bar .progress-step.completed .step-number {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(107, 176, 151, 0.4);
-}
-
-.checkout-progress-bar .progress-step.completed .step-name {
-    color: var(--secondary-color);
-}
-
-/* Form Sections for multi-step checkout */
-.form-section {
-    display: none;
-    animation: fadeIn 0.6s ease-out;
-}
-
-.form-section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 3rem;
     gap: 20px;
 }
-.form-actions .btn {
-    flex: 1;
+.modal .btn {
+    width: 100%; /* Tombol memenuhi lebar modal info */
+    font-size: 1.25rem;
+    padding: 18px;
+    box-shadow: 0 10px 25px rgba(62, 90, 125, 0.4); /* Bayangan tombol lebih menonjol */
 }
-
-/* Order Summary Details */
-#order-summary-details {
-    padding: 30px;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-base);
-    border: 1px solid var(--border-color);
-    margin-bottom: 2.5rem;
-    font-size: 1.1rem;
-    color: var(--text-color);
+.modal .btn.btn-secondary {
+    background-color: var(--secondary-color);
+    box-shadow: 0 10px 25px rgba(107, 176, 151, 0.4);
 }
-#order-summary-details p {
-    margin-bottom: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed var(--border-color);
+.modal .btn.btn-secondary:hover {
+    background-color: var(--secondary-dark-hover);
+    box-shadow: 0 15px 35px rgba(107, 176, 151, 0.6);
 }
-#order-summary-details p:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    font-weight: 700;
-    color: var(--primary-color);
-    font-size: 1.3rem;
-    margin-top: 1.5rem;
-}
-#order-summary-details strong {
-    color: var(--text-color);
-}
-#order-summary-details span.value {
-    color: var(--primary-dark-hover);
-    font-weight: 600;
-}
-
-
-/* Footer */
-footer {
-    background-color: #1a2228; /* Abu-abu sangat gelap, mendekati hitam pekat */
-    color: #bdc3c7; /* Teks sangat terang */
-    padding: 6rem 0; /* Padding lebih besar */
-    margin-top: 10rem; /* Margin lebih besar */
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    position: relative;
-    overflow: hidden;
-}
-/* Subtle radial gradient in footer */
-footer::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(62, 90, 125, 0.08) 0%, rgba(0,0,0,0) 70%);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 0;
-}
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 70px; /* Jarak antar section sangat besar */
-    position: relative;
-    z-index: 1;
-}
-.footer-section h3 {
-    color: #ffffff; /* Putih murni */
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
-    letter-spacing: 0.8px;
-    font-weight: 700;
-}
-.footer-section p {
-    color: rgba(255, 255, 255, 0.8); /* Teks sedikit transparan */
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: flex-start; /* Align text to top */
-    gap: 1.5em; /* Jarak antar teks dan ikon */
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-.footer-section a {
-    color: #e0e6ec;
-    text-decoration: none;
-    transition: color var(--transition-duration);
-}
-.footer-section a:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
-}
-.footer-section .fab, .footer-section .fas { /* Font Awesome brand icons */
-    font-size: 1.6em;
-    color: var(--secondary-color); /* Warna sekunder untuk ikon */
-}
-.copyright {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin-top: 5rem;
-    padding-top: 3.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.75);
-}
-
-/* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 45px;
-    right: 45px;
-    background: linear-gradient(45deg, var(--accent-color), var(--accent-dark-hover));
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 70px; /* Lebih besar */
-    height: 70px; /* Lebih besar */
-    font-size: 2.2rem; /* Lebih besar */
-    box-shadow: 0 10px 25px rgba(255, 145, 77, 0.45);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1.2); /* Efek bounce lebih kuat */
-    z-index: 998;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.back-to-top.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
-.back-to-top:hover {
-    transform: translateY(-8px) scale(1.05); /* Further lift and scale on hover */
-    box-shadow: 0 15px 35px rgba(255, 145, 77, 0.6);
-}
-
-/* Quick View Modal */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
-    backdrop-filter: blur(8px); /* Blur background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-}
-.modal.show {
-    opacity: 1;
-}
-
-.modal-content {
-    background-color: var(--surface-color);
-    margin: auto;
-    padding: 50px;
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 20px 60px var(--shadow-strong);
-    max-width: 900px; /* Larger modal */
-    width: 90%;
-    position: relative;
-    transform: translateY(-50px); /* Initial slide up effect */
-    transition: transform 0.3s ease-out;
-    border: 1px solid var(--border-color);
-}
-.modal.show .modal-content {
-    transform: translateY(0);
-}
-
-.modal-content .close-button {
-    color: var(--light-text);
-    font-size: 3rem;
-    font-weight: bold;
+.close-button {
     position: absolute;
     top: 20px;
-    right: 30px;
+    right: 20px;
+    color: var(--light-text);
+    font-size: 2.5rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.2s ease;
 }
-.modal-content .close-button:hover,
-.modal-content .close-button:focus {
-    color: var(--primary-color);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-body {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-}
-.modal-body img {
-    width: 45%; /* Image takes more space */
-    height: auto;
-    max-height: 450px; /* Limit image height */
-    object-fit: cover;
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 10px 30px var(--shadow-medium);
-    border: 1px solid var(--border-color);
-}
-.modal-product-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-.modal-product-info h3 {
-    font-size: 2.2rem;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-}
-.modal-product-info p {
-    font-size: 1.15rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
+.close-button:hover,
+.close-button:focus {
     color: var(--text-color);
 }
-.modal-product-info .price {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent-color);
-    margin-bottom: 2rem;
-}
-.modal-product-info .size-options {
-    margin-bottom: 2.5rem;
-    justify-content: flex-start; /* Align sizes to left */
-}
-.modal-product-info .btn {
-    margin-top: 15px; /* Spacing between buttons */
-    width: auto;
-    padding: 16px 30px;
-    font-size: 1.1rem;
-}
-.modal-product-info .modal-add-to-favorite {
-    background-color: var(--background-color);
-    color: var(--light-text);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px var(--shadow-extra-light);
-}
-.modal-product-info .modal-add-to-favorite:hover {
-    background-color: #eaf1f7;
-    color: var(--primary-dark-hover);
-}
-.modal-product-info .modal-add-to-favorite.favorited {
-    background-color: #e74c3c;
-    color: #fff;
-    border-color: #e74c3c;
-}
-.modal-product-info .modal-add-to-favorite.favorited i {
-    color: #fff;
-}
 
-/* Confirmation Modal Styling */
+
+/* Confirmation Modal */
 #confirmation-modal .modal-content {
     max-width: 500px;
     text-align: center;
-    padding: 40px;
+    padding: 30px;
 }
 #confirmation-modal #confirm-message {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
     color: var(--text-color);
-    font-weight: 600;
 }
 #confirmation-modal .modal-actions {
     display: flex;
@@ -1193,216 +960,403 @@ footer::before {
     gap: 20px;
 }
 #confirmation-modal .modal-actions .btn {
-    flex: 1;
-    padding: 15px 25px;
-    font-size: 1.1rem;
+    padding: 12px 25px;
+    font-size: 1.05rem;
+    box-shadow: none;
 }
+#confirmation-modal .modal-actions .btn-danger {
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+#confirmation-modal .modal-actions .btn-secondary {
+    box-shadow: 0 5px 15px rgba(127, 140, 141, 0.3);
+}
+
 
 /* Toast Notification Styling */
 #toast-container {
     position: fixed;
-    top: 30px;
-    right: 30px;
-    z-index: 1050;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    align-items: center; /* Pusatkan toast */
 }
 
 .toast-notification {
-    background-color: var(--surface-color);
-    color: var(--text-color);
-    padding: 18px 25px;
+    background-color: var(--text-color); /* Warna dasar gelap untuk kontras */
+    color: #fff;
+    padding: 15px 25px;
     border-radius: var(--border-radius-base);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    font-size: 1.05rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 15px;
     opacity: 0;
-    transform: translateX(100%);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    border-left: 6px solid;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    min-width: 250px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    font-size: 1.15rem;
+    font-weight: 500;
+    pointer-events: auto; /* Memungkinkan interaksi jika diperlukan */
 }
 
 .toast-notification.show {
     opacity: 1;
-    transform: translateX(0);
+    visibility: visible;
+    transform: translateY(0);
 }
 
+/* Specific toast types */
 .toast-notification.info {
-    border-color: var(--primary-color);
-    background-color: #eaf1f7;
+    background-color: var(--primary-light);
 }
 .toast-notification.success {
-    border-color: var(--secondary-color);
-    background-color: #e6f7f0;
+    background-color: var(--secondary-color);
 }
 .toast-notification.error {
-    border-color: #e74c3c;
-    background-color: #ffe6e6;
+    background-color: var(--btn-danger); /* Menggunakan warna danger dari variabel */
 }
 .toast-notification.warning {
-    border-color: var(--accent-color);
-    background-color: #fff4e6;
+    background-color: var(--accent-color);
 }
 
-.toast-notification i {
-    font-size: 1.3em;
-    color: inherit; /* Inherit color from border-color type */
+/* Skeleton Loader Styles */
+.skeleton-card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    animation: pulse 1.5s infinite ease-in-out;
 }
 
-/* Responsive adjustments */
+.skeleton-image {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-info {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.skeleton-text {
+    height: 1.2em;
+    background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.skeleton-text-lg {
+    width: 80%;
+    height: 1.5em;
+}
+
+.skeleton-text-sm {
+    width: 90%;
+}
+
+.skeleton-text-xs {
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+.skeleton-button {
+    width: 70%;
+    height: 40px;
+    background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: var(--border-radius-base);
+    margin-top: auto;
+}
+
+@keyframes loading {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+
+/* Checkout Progress Bar */
+.checkout-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 5px 15px var(--shadow-extra-light);
+    position: relative;
+    z-index: 1;
+}
+
+.checkout-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--border-color);
+    transform: translateY(-50%);
+    z-index: -1;
+    margin: 0 20px; /* Sesuaikan dengan padding step */
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    color: var(--light-text);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.progress-step .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border: 3px solid var(--border-color);
+    transition: all 0.3s ease;
+    z-index: 2; /* Agar di atas garis */
+}
+
+.progress-step.active .step-number {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-dark-hover);
+    box-shadow: 0 4px 15px rgba(62, 90, 125, 0.4);
+}
+
+.progress-step.active {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Line between steps - handled by ::before on container */
+
+/* Interactive Order Summary */
+.order-summary-interactive {
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-base);
+    padding: 30px;
+    margin-bottom: 3rem;
+    box-shadow: inset 0 0 15px var(--shadow-extra-light); /* Inset shadow */
+    border: 1px solid var(--border-color);
+}
+
+.order-summary-interactive h4 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+.order-summary-interactive h4::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+#summary-items-list {
+    margin-bottom: 2rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 1.05rem;
+    color: var(--text-color);
+}
+
+.summary-item span:first-child {
+    font-weight: 500;
+}
+
+.summary-item .item-qty {
+    color: var(--light-text);
+    font-size: 0.95rem;
+    margin-left: 10px;
+}
+
+.summary-item .item-price {
+    font-weight: 600;
+}
+
+.summary-totals {
+    text-align: right;
+}
+
+.summary-totals p {
+    font-size: 1.15rem;
+    margin-bottom: 0.8rem;
+    color: var(--light-text);
+}
+
+.summary-totals .summary-total-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+}
+
+.summary-totals span {
+    color: var(--text-color);
+}
+
+.summary-totals .summary-total-price span {
+    color: var(--accent-color);
+}
+
+
+/* Responsive Design */
 @media (max-width: 1024px) {
     .container {
-        padding: 0 25px;
+        padding: 0 30px;
     }
     header nav ul {
-        gap: 1.5rem;
+        gap: 1.8rem;
     }
     header nav a {
         font-size: 1.05rem;
-    }
-    #hero {
-        padding: 8rem 25px;
-        min-height: 60vh;
-    }
-    #hero h2 {
-        font-size: 4rem;
-    }
-    #hero p {
-        font-size: 1.5rem;
-    }
-    section {
-        padding: 5rem 0;
-        margin-top: 3.5rem;
-    }
-    h2 {
-        font-size: 2.5rem;
-        margin-bottom: 2.5rem;
-    }
-    h2::after {
-        width: 100px;
-        height: 5px;
-    }
-    .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px;
-    }
-    .product-card img {
-        height: 300px;
-    }
-    .product-info {
-        padding: 2.5rem;
-    }
-    .product-info h3 {
-        font-size: 1.6rem;
-    }
-    .product-info .price {
-        font-size: 1.6rem;
-    }
-    .cart-item img {
-        width: 100px;
-        height: 100px;
-        margin-right: 25px;
-    }
-    .cart-item .item-details h4 {
-        font-size: 1.3rem;
-    }
-    .cart-item .item-details p {
-        font-size: 1rem;
-    }
-    .cart-item .quantity-controls button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.4rem;
-    }
-    .cart-item .item-price {
-        font-size: 1.4rem;
-    }
-    .checkout-form-container {
-        padding: 50px;
-    }
-    .checkout-form-container h3 {
-        font-size: 2.2rem;
-    }
-    .form-group label {
-        font-size: 1.1rem;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 16px 20px;
-        font-size: 1.1rem;
-    }
-    .footer-content {
-        gap: 50px;
-    }
-    .footer-section h3 {
-        font-size: 1.6rem;
-    }
-    .footer-section p, .footer-section a {
-        font-size: 1rem;
-    }
-    .back-to-top {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8rem;
-        bottom: 30px;
-        right: 30px;
-    }
-    .modal-body {
-        flex-direction: column;
-        align-items: center;
-    }
-    .modal-body img {
-        width: 80%;
-        max-height: 300px;
-        margin-bottom: 30px;
-    }
-    .modal-product-info {
-        text-align: center;
-    }
-    .modal-product-info .size-options {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    header nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1.2rem;
-    }
-    header .logo h1 {
-        font-size: 2.5rem;
-    }
-    #hero {
-        padding: 6rem 20px;
-        min-height: 50vh;
-        margin-top: 2rem;
     }
     #hero h2 {
         font-size: 3.5rem;
     }
     #hero p {
-        font-size: 1.2rem;
-        margin-bottom: 3rem;
+        font-size: 1.5rem;
     }
-    #hero .btn {
-        padding: 16px 40px;
-        font-size: 1.2rem;
+    h2 {
+        font-size: 2.5rem;
     }
-    section {
-        padding: 4rem 0;
-        margin-top: 2.5rem;
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+    .modal-body {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .modal-body img,
+    .modal-product-info {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    .modal-product-info h3 {
+        font-size: 2.5rem;
+    }
+    .modal-product-info .price {
+        font-size: 2.2rem;
+    }
+    .cart-item {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+    }
+    .cart-item img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    .cart-item .item-details,
+    .cart-item .quantity-controls,
+    .cart-item .item-total-price,
+    .cart-item .remove-item {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .cart-item .quantity-controls {
+        justify-content: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .checkout-progress-bar {
+        padding: 15px;
+    }
+    .progress-step .step-name {
+        font-size: 0.9rem;
+    }
+    .order-summary-interactive {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    header {
+        padding: 1rem 0;
+    }
+    header .logo h1 {
+        font-size: 2.2rem;
+    }
+    header nav {
+        display: none; /* Sembunyikan navigasi untuk mobile, bisa diganti dengan hamburger menu jika diinginkan */
+    }
+    #hero {
+        padding: 6rem 0;
+        min-height: 40vh;
+    }
+    #hero h2 {
+        font-size: 3rem;
+    }
+    #hero p {
+        font-size: 1.2rem;
     }
     h2 {
         font-size: 2rem;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
     }
     h2::after {
         width: 80px;
@@ -1410,56 +1364,57 @@ footer::before {
     }
     .search-bar {
         flex-direction: column;
-        gap: 20px;
     }
-    .search-bar input, .search-bar button {
-        width: 100%;
-    }
-    .product-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    .product-card {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-    .cart-item {
-        flex-wrap: wrap;
-        justify-content: center;
+    .search-bar input {
+        border-radius: var(--border-radius-base);
+        margin-bottom: 15px;
         text-align: center;
     }
-    .cart-item img {
-        margin-right: 0;
-        margin-bottom: 15px;
+    .search-bar button {
+        border-radius: var(--border-radius-base);
+        border-left: none;
+        width: 100%;
     }
-    .cart-item .item-details, .cart-item .quantity-controls, .cart-item .item-price {
-        flex-basis: 100%;
-        margin: 0;
+    .product-card-info h3 {
+        font-size: 1.6rem;
     }
-    .cart-item .quantity-controls {
-        justify-content: center;
-        margin: 15px 0;
+    .product-card-info .price {
+        font-size: 1.4rem;
     }
     .cart-summary {
-        padding: 30px;
+        padding: 20px;
+    }
+    .cart-summary p, .cart-summary h3 {
+        font-size: 1.1rem;
+    }
+    .cart-summary h3 {
+        font-size: 1.6rem;
     }
     .checkout-form-container {
         padding: 30px;
     }
     .checkout-form-container h3 {
-        font-size: 2rem;
-        margin-bottom: 2.5rem;
+        font-size: 1.8rem;
     }
-    .form-actions {
-        flex-direction: column;
+    .form-group {
+        margin-bottom: 1.8rem;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
+    .checkout-form-container .btn-primary {
+        padding: 18px;
+        font-size: 1.2rem;
     }
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
     }
-    .footer-section p {
-        justify-content: center;
+    .footer-section {
+        min-width: unset;
+        width: 100%;
     }
     .back-to-top {
         width: 50px;
@@ -1469,23 +1424,41 @@ footer::before {
         right: 20px;
     }
     .modal-content {
-        padding: 30px;
+        padding: 20px;
     }
-    .modal-content .close-button {
-        font-size: 2.5rem;
-        top: 10px;
-        right: 15px;
+    .modal-product-info h3 {
+        font-size: 2rem;
     }
-    .modal-body img {
-        width: 90%;
+    .modal-product-info .price {
+        font-size: 1.8rem;
+    }
+    .size-option {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    .modal .btn {
+        font-size: 1.1rem;
+        padding: 14px;
     }
     .toast-notification {
-        font-size: 0.9rem;
-        padding: 15px 20px;
+        min-width: unset;
+        width: 90%;
+        max-width: 300px;
+        padding: 12px 20px;
+        font-size: 1rem;
     }
-    #toast-container {
-        top: 20px;
-        right: 20px;
+    .checkout-progress-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .progress-step {
+        flex: none;
+        width: 45%; /* Dua kolom */
+        margin-bottom: 15px;
+    }
+    .checkout-progress-bar::before {
+        display: none; /* Sembunyikan garis di mobile jika layout wrap */
     }
 }
 
@@ -1540,466 +1513,40 @@ footer::before {
     .product-card img {
         height: 220px;
     }
-    .product-info {
-        padding: 2rem;
-    }
-    .product-info h3 {
-        font-size: 1.4rem;
-    }
-    .product-info .price {
-        font-size: 1.4rem;
-    }
-    .size-option {
-        padding: 10px 18px;
-        font-size: 0.95rem;
-    }
-    .product-actions .btn {
-        padding: 14px 20px;
-        font-size: 1rem;
-    }
-    .cart-items-container {
-        padding: 25px;
-    }
-    .cart-item {
-        padding: 20px 0;
-    }
-    .cart-item img {
-        width: 80px;
-        height: 80px;
-    }
-    .cart-item .item-details h4 {
-        font-size: 1.1rem;
-    }
-    .cart-item .quantity-controls button {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2rem;
-    }
-    .cart-item .item-price {
-        font-size: 1.2rem;
-    }
-    .cart-summary {
-        padding: 25px;
-    }
-    .cart-summary h3 {
-        font-size: 1.8rem;
-    }
-    .cart-summary .btn {
-        padding: 16px 30px;
-        font-size: 1.1rem;
-    }
-    .checkout-form-container {
-        padding: 20px;
-    }
-    .checkout-form-container h3 {
-        font-size: 1.6rem;
-    }
-    .form-group label {
-        font-size: 1rem;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 12px 15px;
-        font-size: 1rem;
-    }
-    .form-group small {
-        font-size: 0.9rem;
-    }
-    .checkout-form-container .btn-primary {
-        padding: 18px;
-        font-size: 1.2rem;
-    }
-    footer {
-        padding: 4rem 0;
-        margin-top: 5rem;
-    }
-    .footer-section h3 {
-        font-size: 1.4rem;
-    }
-    .footer-section p, .footer-section a {
-        font-size: 0.9rem;
-    }
-    .copyright {
-        margin-top: 3rem;
-        padding-top: 2rem;
-        font-size: 0.85rem;
-    }
-    .modal-content {
-        padding: 20px;
-    }
-    .modal-content .close-button {
-        font-size: 2rem;
-    }
-    .modal-body img {
-        width: 100%;
-    }
-    .modal-product-info h3 {
-        font-size: 1.6rem;
-    }
-    .modal-product-info .price {
-        font-size: 1.6rem;
-    }
-    .modal-product-info .btn {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-    .toast-notification {
-        font-size: 0.8rem;
-        padding: 12px 15px;
-    }
-    #toast-container {
-        top: 15px;
-        right: 15px;
-    }
     .checkout-progress-bar {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 2rem;
-    }
-    .checkout-progress-bar .progress-line {
-        display: none; /* Hide line on small screens */
-    }
-    .checkout-progress-bar .progress-step {
-        flex: 0 0 auto;
-        margin: 0 5px;
-    }
-    .checkout-progress-bar .progress-step .step-number {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    .checkout-progress-bar .progress-step .step-name {
-        font-size: 0.8rem;
-    }
-    
-}
-    /* ==================== */
-/* FITUR TAMBAHAN */
-/* ==================== */
-
-/* Breadcrumbs */
-.breadcrumbs {
-    background-color: rgba(255,255,255,0.97);
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 80px;
-    z-index: 900;
-    backdrop-filter: blur(5px);
-}
-
-.breadcrumbs ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-}
-
-.breadcrumbs li {
-    margin-right: 0.8rem;
-    font-size: 0.95rem;
-    color: var(--light-text);
-    display: flex;
-    align-items: center;
-}
-
-.breadcrumbs li:after {
-    content: '›';
-    margin-left: 0.8rem;
-    color: var(--light-text);
-    font-size: 1.2rem;
-}
-
-.breadcrumbs li:last-child:after {
-    content: '';
-}
-
-.breadcrumbs li.current-page {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* Active Navigation Highlight */
-nav ul li a.active-category {
-    color: var(--primary-color);
-    position: relative;
-}
-
-nav ul li a.active-category::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 3px;
-    animation: navUnderline 0.3s ease-out;
-}
-
-@keyframes navUnderline {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-}
-
-/* Sticky Header Effects */
-header {
-    position: sticky;
-    top: 0;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-header.scrolled {
-    padding: 0.8rem 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
-    background-color: rgba(255,255,255,0.96);
-}
-
-/* Checkout Progress Bar */
-.checkout-progress {
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0 3rem;
-    position: relative;
-}
-
-.checkout-progress:before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--border-color);
-    z-index: 0;
-    border-radius: 2px;
-}
-
-.checkout-progress-step {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    width: 25%;
-}
-
-.checkout-progress-step.completed .step-number {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-dark-hover);
-}
-
-.checkout-progress-step.active .step-number {
-    background: var(--primary-color);
-    color: white;
-    transform: scale(1.1);
-    border-color: var(--primary-dark-hover);
-    box-shadow: 0 0 0 3px rgba(62, 90, 125, 0.2);
-}
-
-.step-number {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--background-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.5rem;
-    font-weight: bold;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    border: 2px solid var(--border-color);
-}
-
-.step-label {
-    font-size: 0.9rem;
-    color: var(--light-text);
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.checkout-progress-step.completed .step-label,
-.checkout-progress-step.active .step-label {
-    color: var(--text-color);
-    font-weight: 600;
-}
-
-/* Interactive Order Summary */
-.order-summary-toggle {
-    display: none;
-}
-
-.order-summary-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 1.5rem;
-    background: var(--background-color);
-    border-radius: var(--border-radius-base);
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.order-summary-header:hover {
-    background: #f5f9fd;
-}
-
-.order-summary-header h4 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-.order-summary-header i {
-    transition: transform 0.3s ease;
-    color: var(--light-text);
-}
-
-.order-summary-toggle:checked ~ .order-summary-header i {
-    transform: rotate(180deg);
-}
-
-.order-summary-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.order-summary-toggle:checked ~ .order-summary-content {
-    max-height: 2000px;
-}
-
-/* Enhanced Add to Cart Confirmation */
-.add-to-cart-confirmation {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
-    background: var(--surface-color);
-    padding: 2.5rem;
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 20px 50px var(--shadow-deep);
-    z-index: 1001;
-    display: none;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    border: 1px solid var(--border-color);
-}
-
-.add-to-cart-confirmation.show {
-    display: block;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.add-to-cart-confirmation h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.add-to-cart-confirmation img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    margin: 1rem auto;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.add-to-cart-confirmation p {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    margin: 1.5rem 0;
-    line-height: 1.5;
-}
-
-.confirmation-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--background-color);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary-light);
-    border-radius: 5px;
-    border: 2px solid var(--background-color);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .breadcrumbs {
-        top: 70px;
-        padding: 0.8rem 0;
-    }
-    
-    .checkout-progress {
-        margin: 1.5rem 0;
-    }
-    
-    .step-number {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
-    }
-    
-    .step-label {
-        font-size: 0.8rem;
-    }
-    
-    .order-summary-header {
-        padding: 1rem;
-    }
-    
-    .add-to-cart-confirmation {
-        padding: 2rem 1.5rem;
-    }
-    
-    .confirmation-buttons {
         flex-direction: column;
-        gap: 0.8rem;
     }
-}
-
-@media (max-width: 480px) {
-    .breadcrumbs {
-        top: 60px;
+    .progress-step {
+        width: 100%;
+        margin-bottom: 10px;
     }
-    
-    .breadcrumbs li {
-        font-size: 0.85rem;
+    .progress-line {
+        width: 2px;
+        height: 30px;
+        background-color: var(--border-color);
+        margin: 5px 0;
     }
-    
-    .checkout-progress-step {
-        width: 23%;
+    .checkout-progress-bar::before {
+        display: block; /* Tampilkan garis vertikal */
+        height: calc(100% - 40px); /* Sesuaikan tinggi garis */
+        width: 4px; /* Ketebalan garis */
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px; /* Mulai setelah nomor langkah pertama */
+        background-image: linear-gradient(to bottom, var(--border-color) 50%, var(--primary-color) 50%);
+        background-size: 100% 200%;
+        background-position: bottom;
     }
-    
-    .add-to-cart-confirmation img {
-        width: 100px;
-        height: 100px;
+    .progress-step.active + .progress-line {
+        background-color: var(--primary-color);
+    }
+    .order-summary-interactive {
+        padding: 20px;
+    }
+    .order-summary-interactive h4 {
+        font-size: 1.5rem;
+    }
+    .summary-totals .summary-total-price {
+        font-size: 1.5rem;
     }
 }
