@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAHCBFPng_45SXYJ0101F0Jp9vo_7ZTCHg",
+      apiKey: "AIzaSyAHCBFPng_45SXYJ010IF0Jp9vo_7ZTCHg",
       authDomain: "luxuliver-shop.firebaseapp.com",
       projectId: "luxuliver-shop",
       storageBucket: "luxuliver-shop.firebasestorage.app",
