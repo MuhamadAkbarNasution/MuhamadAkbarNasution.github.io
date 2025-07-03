@@ -2352,3 +2352,53 @@ video::-webkit-media-controls-enclosure {
 video::-webkit-media-controls-panel {
     display: none !important;
 }
+ /* [BARU] Styling untuk Modal Login */
+.login-form-container {
+    text-align: center;
+}
+
+.login-form-container h3 {
+    font-size: 2rem;
+    color: var(--primary-dark-hover);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-form-container p {
+    color: var(--light-text);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+#login-form .form-group {
+    text-align: left;
+    margin-bottom: 1.8rem;
+}
+
+#login-form .form-group label {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+#login-form input[type="email"],
+#login-form input[type="password"] {
+    width: 100%;
+    padding: 18px 22px;
+    font-size: 1.15rem;
+    border-radius: var(--border-radius-base);
+    border: 2px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+#login-form input[type="email"]:focus,
+#login-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 6px rgba(62, 90, 125, 0.25);
+    background-color: var(--surface-color);
+}
