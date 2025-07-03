@@ -1,13 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAHCBFPng_45SXYJ010IF0Jp9vo_7ZTCHg",
-      authDomain: "luxuliver-shop.firebaseapp.com",
-      projectId: "luxuliver-shop",
-      storageBucket: "luxuliver-shop.firebasestorage.app",
-      messagingSenderId: "1025115790378",
-      appId: "1:1025115790378:web:dafa69c23224be40fe3753"
-    };
 
     // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
