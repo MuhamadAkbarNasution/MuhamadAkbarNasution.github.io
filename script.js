@@ -1635,4 +1635,3 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         startApp();
     }
-});
