@@ -2042,11 +2042,6 @@ body.no-scroll {
 #size-guide-modal .modal-content {
     max-width: 700px;
 }
-
- #calculator-result-modal .modal-content {
-    padding: 40px;
-}
-
 #size-guide-modal h3 {
     text-align: center;
     font-size: 2.2rem;
@@ -2925,43 +2920,6 @@ body.sidebar-open #sidebar {
 body.sidebar-open #sidebar-overlay {
     opacity: 1;
     visibility: visible;
-}
-
-.fit-ship-container {
-    padding: 1rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.fit-ship-container .luxury-form-group {
-    margin-bottom: 0;
-}
-
-.fit-ship-container .form-input {
-    background-color: var(--surface-color);
-}
-
-.fit-ship-container .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 0.95rem;
-}
-
-.fit-ship-header {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin: 1rem 0 0.5rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.fit-ship-divider {
-    border: none;
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 1.5rem 0;
 }
 
 .sidebar-header {
@@ -5449,6 +5407,62 @@ body.dark-mode .order-actions-ultra .btn:disabled {
     color: var(--primary-color);
     margin-right: 8px;
 }
+
+#ulasan h2 {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.all-reviews-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.review-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-base);
+    padding: 2rem;
+    box-shadow: 0 10px 30px var(--shadow-light);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px var(--shadow-medium);
+}
+
+.review-card-product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--border-radius-base);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.review-card-content {
+    flex-grow: 1;
+}
+
+.review-card-product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--light-text);
+    margin: 0 0 1rem 0;
+}
+
+.review-card .review-item {
+    padding: 0;
+    border: none;
+}
+
 
 #return-confirmation-modal h3 {
     text-align: center; 
