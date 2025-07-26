@@ -185,7 +185,27 @@ document.addEventListener('DOMContentLoaded', () => {
             follow_instagram: 'Instagram',
             follow_tiktok: 'TikTok',
             nav_reviews: 'Ulasan',
-        reviews_page_title: 'Ulasan Terbaru dari Pelanggan',
+            reviews_page_title: 'Ulasan Terbaru dari Pelanggan',
+            compare_now: 'Bandingkan Sekarang',
+            clear_comparison: 'Bersihkan',
+            comparison_title: 'Perbandingan Produk',
+            toast_max_compare_items: 'Maksimal 2 produk dapat dibandingkan sekaligus.',
+            nav_loyalty: 'Poin Loyalty',
+loyalty_title: 'Poin Loyalty Anda',
+loyalty_current_points_label: 'Poin Anda Saat Ini:',
+loyalty_next_tier_progress: (pointsNeeded, tierName) => `Dapatkan ${pointsNeeded} poin lagi untuk level ${tierName} Premium!`,
+loyalty_next_tier_unlocked_all: 'Selamat! Anda telah membuka semua level premium!',
+loyalty_tier_500_title: 'Loyalty Level: Perunggu',
+loyalty_tier_500_message: 'Selamat! Anda mendapatkan akses awal ke koleksi baru.',
+loyalty_tier_1000_title: 'Loyalty Level: Perak',
+loyalty_tier_1000_message: 'Selamat! Nikmati diskon eksklusif 5% untuk semua pembelian.',
+loyalty_tier_1500_title: 'Loyalty Level: Emas',
+loyalty_tier_1500_message: 'Selamat! Dapatkan pengiriman gratis seumur hidup!',
+loyalty_tier_locked: 'Terkunci',
+loyalty_tier_unlocked: 'Terbuka!',
+empty_loyalty: 'Mulai belanja untuk mengumpulkan poin loyalty!',
+
+  
         },
         en: {
             nav_home: 'Home',
@@ -361,7 +381,26 @@ document.addEventListener('DOMContentLoaded', () => {
             follow_instagram: 'Instagram',
             follow_tiktok: 'TikTok',
             nav_reviews: 'Reviews',
-        reviews_page_title: 'Latest Customer Reviews',
+            reviews_page_title: 'Latest Customer Reviews',
+            compare_now: 'Compare Now',
+            clear_comparison: 'Clear All',
+            comparison_title: 'Product Comparison',
+            toast_max_compare_items: 'A maximum of 2 products can be compared at once.',
+            nav_loyalty: 'Loyalty Points',
+loyalty_title: 'Your Loyalty Points',
+loyalty_current_points_label: 'Your Current Points:',
+loyalty_next_tier_progress: (pointsNeeded, tierName) => `Earn ${pointsNeeded} more points for ${tierName} Premium Level!`,
+loyalty_next_tier_unlocked_all: 'Congratulations! You have unlocked all premium levels!',
+loyalty_tier_500_title: 'Loyalty Level: Bronze',
+loyalty_tier_500_message: 'Congratulations! You get early access to new collections.',
+loyalty_tier_1000_title: 'Loyalty Level: Silver',
+loyalty_tier_1000_message: 'Congratulations! Enjoy an exclusive 5% discount on all purchases.',
+loyalty_tier_1500_title: 'Loyalty Level: Gold',
+loyalty_tier_1500_message: 'Congratulations! Get free lifetime shipping!',
+loyalty_tier_locked: 'Locked',
+loyalty_tier_unlocked: 'Unlocked!',
+empty_loyalty: 'Start shopping to collect loyalty points!'
+   
         }
     };
 
@@ -377,6 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             design: 'abstrak',
             stock: 15,
             status: 'preorder', 
+            points: 100,
             reviews: [
                 { author: 'Muhammad Ricky', rating: 5, text: 'Kainnya adem banget, sablonnya rapi dan kualitasnya premium, keren juga desain nya bro', date: '2025-06-29' },
                 { author: 'Subhan Saputro', rating: 5, text: 'Ukurannya pas sesuai size char dan warnanya juga putih bersih, tidak menerawang, inti nya baju nya okey recommended!', date: '2025-06-29' },
@@ -397,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             design: 'abstrak',
             stock: 15,
             status: 'preorder', 
+            points: 100,
             reviews: [
                 { author: 'Dian Maulana Solihin', rating: 5, text: 'Asli bagus nih bahan nya adem banget', date: '2025-06-28' },
                 { author: 'Eko Rahman', rating: 5, text: 'Bahan untuk baju nya sih nyaman dipakai seharian ya, sablonnya pun juga tahan lama setelah beberapa kali cuci', date: '2025-07-01' }, 
@@ -415,6 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
             design: 'abstrak',
             stock: 15,
             status: 'preorder', 
+            points: 100,
             reviews: [
                 { author: 'Fahmi Rizky Dermawan', rating: 5, text: 'Keren abis bro, fans nya Travis Scott wajib sih ini mah punya, kualitasnya juga mantap, kaga bikin kecewa dah beli di sini', date: '2025-06-24' }, 
                 { author: 'Yoga Wijayanto', rating: 5, text: 'cocok buat cauaca panas', date: '2025-06-24' },
@@ -437,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
             design: 'abstrak',
             stock: 15,
             status: 'preorder', 
+            points: 100,
             reviews: [
                 { author: 'Farhan Mahendra', rating: 4, text: 'Jujur bahan nya bagus banget, desain nya juga okey kalo menurut gua', date: '2025-06-20' }, 
                 { author: 'Akbar Wirawan', rating: 5, text: 'sudah beli 2x, gak kecewain emang di sini', date: '2025-06-22' }, 
@@ -454,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
             design: 'classy',
             stock: 5,
             status: 'preorder', 
+            points: 125,
             reviews: [
                 { author: 'Candha Mahardika', rating: 5, text: 'Anjir bagus cuy classy nya', date: '2025-07-09' },
                 { author: 'Sandi', rating: 5, text: 'Gak expect sebagus ini', date: '2025-07-09' }, 
@@ -534,6 +578,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = getLocalStorageItem('favorites', []);
     let savedForLater = getLocalStorageItem('savedForLater', []);
     let recentlyViewed = getLocalStorageItem('recentlyViewed', []);
+    let comparisonList = getLocalStorageItem('comparisonList', []);
+const MAX_COMPARISON_ITEMS = 2;
+ let userLoyaltyPoints = getLocalStorageItem('userLoyaltyPoints', 0);
+const loyaltyTiers = [
+    { points: 500, message: 'loyalty_tier_500_message', class: 'loyalty-tier-500' },
+    { points: 1000, message: 'loyalty_tier_1000_message', class: 'loyalty-tier-1000' },
+    { points: 1500, message: 'loyalty_tier_1500_message', class: 'loyalty-tier-1500' }
+];
+
 
     let orderCounter = parseInt(localStorage.getItem('orderCounter')) || 1000;
     let pendingOrder = null;
@@ -546,100 +599,146 @@ document.addEventListener('DOMContentLoaded', () => {
         design: 'all'
     };
 
-    const body = document.body;
-    const productList = document.getElementById('product-list');
-    const cartItemsContainer = document.getElementById('cart-items-container');
-    const cartCountSpan = document.getElementById('cart-count');
-    const subtotalPriceSpan = document.getElementById('subtotal-price');
-    const discountAmountSpan = document.getElementById('discount-amount');
-    const totalPriceSpan = document.getElementById('total-price');
-    const emptyCartMessage = document.getElementById('empty-cart-message');
-    const noResultsMessage = document.getElementById('no-results-message');
-    const checkoutBtn = document.getElementById('checkout-btn');
-    const cartSummary = document.getElementById('cart-summary');
-    const checkoutFormContainer = document.getElementById('checkout-form-container');
-    const checkoutForm = document.getElementById('checkout-form');
-    const currentYearSpan = document.getElementById('current-year');
-    const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-button');
-    const searchSuggestionsContainer = document.getElementById('search-suggestions-container');
-    const backToTopButton = document.getElementById('back-to-top');
-    const toastContainer = document.getElementById('toast-container');
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const loadingScreen = document.getElementById('loading-screen');
-    const loadingVideo = document.getElementById('loading-video');
-    const quickViewModal = document.getElementById('quick-view-modal');
-    const modalSizeOptions = document.getElementById('modal-size-options');
-    const sizeGuideModal = document.getElementById('size-guide-modal');
-    const modalSizeGuideBtn = document.getElementById('modal-size-guide-btn');
-    const sizeChartTableBody = document.getElementById('size-chart-table').querySelector('tbody');
-    const sellerAddressSpan = document.getElementById('seller-address');
-    const sellerPhoneSpan = document.getElementById('seller-phone');
-    const sellerEmailSpan = document.getElementById('seller-email');
-    const sellerPhoneLink = document.getElementById('seller-phone-link');
-    const sellerEmailLink = document.getElementById('seller-email-link');
-    const favoriteCountSpan = document.getElementById('favorite-count');
-    const favoriteProductsList = document.getElementById('favorite-products-list');
-    const emptyFavoritesMessage = document.getElementById('empty-favorites-message');
-    const progressBar = document.getElementById('progress-bar');
-    const checkoutSteps = document.querySelectorAll('.checkout-step');
-    const prevStepBtn = document.getElementById('prev-step-btn');
-    const nextStepBtn = document.getElementById('next-step-btn');
-    const submitOrderBtn = document.getElementById('submit-order-btn');
-    const finalOrderSummaryContainer = document.getElementById('final-order-summary');
-    let currentStep = 1;
-    const confirmationModal = document.getElementById('confirmation-modal');
-    const confirmMessage = document.getElementById('confirm-message');
-    const confirmYesBtn = document.getElementById('confirm-yes');
-    const confirmNoBtn = document.getElementById('confirm-no');
-    const promoUpsellMessage = document.getElementById('promo-upsell-message');
-    const whatsappConfirmationModal = document.getElementById('whatsapp-confirmation-modal');
-    const whatsappConfirmYesBtn = document.getElementById('whatsapp-confirm-yes');
-    const whatsappConfirmNoBtn = document.getElementById('whatsapp-confirm-no');
-    const orderHistoryList = document.getElementById('order-history-list');
-    const emptyHistoryMessage = document.getElementById('empty-history-message');
-    const allReviewsList = document.getElementById('all-reviews-list');
-    const emptyAllReviewsMessage = document.getElementById('empty-all-reviews-message');
-   
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
-    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    const resetFiltersBtn = document.getElementById('reset-filters-btn');
-    const videoGalleryBtn = document.getElementById('video-gallery-btn');
-    const videoGalleryModal = document.getElementById('video-gallery-modal');
-    const languageToggleButtons = document.getElementById('language-toggle-buttons');
-    const cartCountSidebar = document.getElementById('cart-count-sidebar');
-    const favoriteCountSidebar = document.getElementById('favorite-count-sidebar');
-    const useSavedAddressBtn = document.getElementById('use-saved-address-btn');
-    const savedForLaterContainer = document.getElementById('saved-for-later-container');
-    const savedForLaterSection = document.getElementById('saved-for-later-section');
-    const recentlyViewedContainer = document.getElementById('recently-viewed-container');
-    const emptyRecentlyViewedMessage = document.getElementById('empty-recently-viewed-message');
-    const sidebarSubmenus = document.querySelectorAll('.sidebar-submenu');
 
-    const notificationSidebarBtn = document.getElementById('notification-sidebar-btn');
-    const notificationModal = document.getElementById('notification-modal');
-    const notificationListContainer = document.getElementById('notification-list');
-    const notificationTabs = document.querySelector('.notification-tabs');
-    const emptyNotificationMessage = document.getElementById('empty-notification-message');
+const body = document.body;
+const productList = document.getElementById('product-list');
+const cartItemsContainer = document.getElementById('cart-items-container');
+const currentLoyaltyPointsSpan = document.getElementById('current-loyalty-points'); // Ini adalah variabel loyalty yang baru
+const loyaltyNextTierDiv = document.getElementById('loyalty-next-tier'); // Ini adalah variabel loyalty yang baru
+const loyaltyTiersContainer = document.getElementById('loyalty-tiers-container'); // Ini adalah variabel loyalty yang baru
+const emptyLoyaltyMessage = document.getElementById('empty-loyalty-message'); // Ini adalah variabel loyalty yang baru
+const cartCountSpan = document.getElementById('cart-count');
+const subtotalPriceSpan = document.getElementById('subtotal-price');
+const discountAmountSpan = document.getElementById('discount-amount');
+const totalPriceSpan = document.getElementById('total-price');
+const emptyCartMessage = document.getElementById('empty-cart-message');
+const noResultsMessage = document.getElementById('no-results-message');
+const checkoutBtn = document.getElementById('checkout-btn');
+const cartSummary = document.getElementById('cart-summary');
+const checkoutFormContainer = document.getElementById('checkout-form-container');
+const checkoutForm = document.getElementById('checkout-form');
+const currentYearSpan = document.getElementById('current-year');
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+const searchSuggestionsContainer = document.getElementById('search-suggestions-container');
+const backToTopButton = document.getElementById('back-to-top');
+const toastContainer = document.getElementById('toast-container');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const loadingScreen = document.getElementById('loading-screen');
+const loadingVideo = document.getElementById('loading-video');
+const quickViewModal = document.getElementById('quick-view-modal');
+const modalSizeOptions = document.getElementById('modal-size-options');
+const sizeGuideModal = document.getElementById('size-guide-modal');
+const modalSizeGuideBtn = document.getElementById('modal-size-guide-btn');
+const sizeChartTableBody = document.getElementById('size-chart-table').querySelector('tbody');
+const sellerAddressSpan = document.getElementById('seller-address');
+const sellerPhoneSpan = document.getElementById('seller-phone');
+const sellerEmailSpan = document.getElementById('seller-email');
+const sellerPhoneLink = document.getElementById('seller-phone-link');
+const sellerEmailLink = document.getElementById('seller-email-link');
+const favoriteCountSpan = document.getElementById('favorite-count');
+const favoriteProductsList = document.getElementById('favorite-products-list');
+const emptyFavoritesMessage = document.getElementById('empty-favorites-message');
+const progressBar = document.getElementById('progress-bar');
+const checkoutSteps = document.querySelectorAll('.checkout-step');
+const prevStepBtn = document.getElementById('prev-step-btn');
+const nextStepBtn = document.getElementById('next-step-btn');
+const submitOrderBtn = document.getElementById('submit-order-btn');
+const finalOrderSummaryContainer = document.getElementById('final-order-summary');
+let currentStep = 1;
+const confirmationModal = document.getElementById('confirmation-modal');
+const confirmMessage = document.getElementById('confirm-message');
+const confirmYesBtn = document.getElementById('confirm-yes');
+const confirmNoBtn = document.getElementById('confirm-no');
+const promoUpsellMessage = document.getElementById('promo-upsell-message');
+const whatsappConfirmationModal = document.getElementById('whatsapp-confirmation-modal');
+const whatsappConfirmYesBtn = document.getElementById('whatsapp-confirm-yes');
+const whatsappConfirmNoBtn = document.getElementById('whatsapp-confirm-no');
+const orderHistoryList = document.getElementById('order-history-list');
+const emptyHistoryMessage = document.getElementById('empty-history-message');
+const allReviewsList = document.getElementById('all-reviews-list');
+const emptyAllReviewsMessage = document.getElementById('empty-all-reviews-message');
 
+const sidebar = document.getElementById('sidebar');
+const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+const resetFiltersBtn = document.getElementById('reset-filters-btn');
+const videoGalleryBtn = document.getElementById('video-gallery-btn');
+const videoGalleryModal = document.getElementById('video-gallery-modal');
+const languageToggleButtons = document.getElementById('language-toggle-buttons');
+const cartCountSidebar = document.getElementById('cart-count-sidebar');
+const favoriteCountSidebar = document.getElementById('favorite-count-sidebar');
+const useSavedAddressBtn = document.getElementById('use-saved-address-btn');
+const savedForLaterContainer = document.getElementById('saved-for-later-container');
+const savedForLaterSection = document.getElementById('saved-for-later-section');
+const recentlyViewedContainer = document.getElementById('recently-viewed-container');
+const emptyRecentlyViewedMessage = document.getElementById('empty-recently-viewed-message');
+const sidebarSubmenus = document.querySelectorAll('.sidebar-submenu');
 
-    const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+const notificationSidebarBtn = document.getElementById('notification-sidebar-btn');
+const notificationModal = document.getElementById('notification-modal');
+const notificationListContainer = document.getElementById('notification-list');
+const notificationTabs = document.querySelector('.notification-tabs');
+const emptyNotificationMessage = document.getElementById('empty-notification-message');
+const comparisonTray = document.getElementById('comparison-tray');
+const sortProductsDropdown = document.getElementById('sort-products-dropdown');
 
-    function animateValue(obj, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const currentValue = Math.floor(progress * (end - start) + start);
-            obj.innerHTML = formatRupiah(currentValue);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            }
-        };
-        window.requestAnimationFrame(step);
+const comparisonItemsContainer = document.getElementById('comparison-items');
+const compareNowBtn = document.getElementById('compare-now-btn');
+const clearComparisonBtn = document.getElementById('clear-comparison-btn');
+const comparisonModal = document.getElementById('comparison-modal');
+const comparisonTableContainer = document.getElementById('comparison-table-container');
+// --- AKHIR DARI DEKLARASI KONSTAN ELEMEN DOM ---
+
+// --- TEMPATKAN SELURUH FUNGSI addToCart DI SINI ---
+// START: FUNGSI addToCart (Jika belum ada di script Anda)
+const addToCart = (productId, size, quantity, triggerElement) => {
+    if (checkoutFormContainer.style.display === 'block') {
+        showToast('checkout_in_progress_warning', 'warning');
+        return;
     }
+    const product = products.find(p => p.id === productId);
+    if (!product || quantity <= 0) return;
+    const cartItemIdentifier = `${productId}-${size}`;
+    const existingItem = cart.find(item => item.cartId === cartItemIdentifier);
+    const totalStock = product.stock;
+    const currentQtyInCart = existingItem ? existingItem.quantity : 0;
+    if (currentQtyInCart + quantity > totalStock) {
+        showToast('toast_stock_not_enough', "error", { name: product.name, size: size });
+        return;
+    }
+    const price = getPriceBySize(product.basePrice, size);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+        showToast('toast_quantity_updated', 'info', { name: product.name, size: size });
+    } else {
+        cart.push({ ...product, price, size, quantity, cartId: cartItemIdentifier });
+    }
+    showToast('toast_added_to_cart', 'success', { name: product.name, size: size, qty: quantity });
+    saveCart();
+    refreshAllCartViews();
+    if (triggerElement) flyToCartAnimation(triggerElement);
+    // No loyalty points are added here. Points are added upon successful order completion.
+};
+// END: FUNGSI addToCart
+
+// --- FUNGSI-FUNGSI UTILITY UMUM BERIKUTNYA ---
+const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentValue = Math.floor(progress * (end - start) + start);
+        obj.innerHTML = formatRupiah(currentValue);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
 
     const formatNotificationTimestamp = (isoString) => {
         const now = new Date();
@@ -767,7 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartItemsContainer.innerHTML = '';
 
         if (cart.length === 0) {
-            emptyCartMessage.style.display = 'block';
+            emptyCartMessage.style.display = 'flex'; 
             cartSummary.style.display = 'none';
             checkoutFormContainer.style.display = 'none';
             cartItemsContainer.style.display = 'none';
@@ -864,8 +963,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             card.querySelector('.quick-view-btn').addEventListener('click', () => openQuickViewModal(productId));
             card.querySelector('.add-to-favorite').addEventListener('click', e => toggleFavorite(productId, e.currentTarget));
+                card.querySelector('.compare-btn').addEventListener('click', () => {
+   
+    toggleCompare(productId); 
+});
+            
         });
-    }
+}
 
     const renderRecommendations = (currentProduct) => {
         const recommendationsContainer = document.getElementById('modal-recommendations');
@@ -1233,16 +1337,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const addressData = { name: document.getElementById('customer-name').value, phone: document.getElementById('customer-phone').value, address: document.getElementById('customer-address').value };
         if (addressData.name && addressData.phone && addressData.address) localStorage.setItem('savedAddress', JSON.stringify(addressData));
     };
-
-    const loadSavedAddress = () => {
-        const savedAddress = JSON.parse(localStorage.getItem('savedAddress'));
-        if (savedAddress) {
-            document.getElementById('customer-name').value = savedAddress.name;
-            document.getElementById('customer-phone').value = savedAddress.phone;
-            document.getElementById('customer-address').value = savedAddress.address;
-            showToast('toast_address_loaded', 'success');
-        }
-    };
+    
+   
+const loadSavedAddress = () => {
+    const userProfile = getLocalStorageItem('luxuliverUser', null);
+    if (userProfile && userProfile.address) {
+        document.getElementById('customer-name').value = userProfile.name;
+        document.getElementById('customer-phone').value = userProfile.phone;
+        document.getElementById('customer-address').value = userProfile.address;
+        showToast('toast_address_loaded', 'success');
+    }
+};
 
     const renderSavedForLater = () => {
         savedForLaterContainer.innerHTML = '';
@@ -1308,24 +1413,53 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(whatsappConfirmationModal);
     });
 
-    whatsappConfirmYesBtn.addEventListener('click', () => {
-        if (pendingOrder) {
-            let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
-            orderHistory.unshift(pendingOrder);
-            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
-            orderCounter++;
-            localStorage.setItem('orderCounter', orderCounter.toString());
-            saveAddress();
-            cart = [];
-            saveCart();
-            refreshAllCartViews();
-            renderOrderHistory();
-            checkoutForm.reset();
-            closeModal(whatsappConfirmationModal);
-            showToast("toast_order_confirmed", "success");
-            pendingOrder = null;
-        }
-    });
+whatsappConfirmYesBtn.addEventListener('click', () => {
+    if (pendingOrder) {
+
+        let userProfile = getLocalStorageItem('luxuliverUser', {
+            name: '',
+            phone: '',
+            address: '',
+            history: []
+        });
+
+        // Hitung poin dari pesanan yang selesai
+        let pointsEarned = 0;
+        pendingOrder.items.forEach(item => {
+            const product = products.find(p => p.id === item.id);
+            if (product && product.points) { // Pastikan produk memiliki properti 'points'
+                pointsEarned += (product.points * item.quantity); // Poin dikalikan dengan kuantitas
+            }
+        });
+        userLoyaltyPoints += pointsEarned; // Tambahkan ke total poin loyalty pengguna
+        localStorage.setItem('userLoyaltyPoints', userLoyaltyPoints); // Simpan poin loyalty yang diperbarui
+        updateLoyaltyPremiumVisuals(); // Perbarui visual premium segera
+
+        const formData = new FormData(checkoutForm);
+        userProfile.name = formData.get('customer-name');
+        userProfile.phone = formData.get('customer-phone');
+        userProfile.address = formData.get('customer-address');
+
+        userProfile.history.unshift(pendingOrder);
+
+        localStorage.setItem('luxuliverUser', JSON.stringify(userProfile));
+        localStorage.removeItem('savedAddress');
+        localStorage.removeItem('orderHistory'); // Baris ini sepertinya redundan jika riwayat disimpan di luxuliverUser
+
+        orderCounter++;
+        localStorage.setItem('orderCounter', orderCounter.toString());
+
+        cart = [];
+        saveCart();
+        refreshAllCartViews();
+        renderOrderHistory();
+        checkoutForm.reset();
+        closeModal(whatsappConfirmationModal);
+        showToast("toast_order_confirmed", "success");
+        pendingOrder = null;
+        renderLoyaltySection(); // Render ulang bagian loyalty untuk menampilkan poin yang baru
+    }
+});
 
     whatsappConfirmNoBtn.addEventListener('click', () => {
         pendingOrder = null;
@@ -1360,21 +1494,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const averageRating = totalReviews > 0 ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / totalReviews : 0;
         const ratingHTML = `<div class="product-rating" title="${averageRating.toFixed(1)} dari 5 bintang">${generateStarsHTML(Math.round(averageRating))}<span class="rating-count">(${totalReviews})</span></div>`;
         return `
-    <div class="product-card" data-product-id="${product.id}">
-        ${preOrderBadge}${lowStockLabel}${outOfStockLabel}
-        <div class="product-image-container"><img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='placeholder.jpg';"></div>
-                <div class="product-info">
-                    <h3>${product.name}</h3>
-                    ${ratingHTML}
-                    <p class="price">${formatRupiah(price)}</p>
-                    <div class="size-options">${product.sizes.map(size => `<span class="size-option" data-size="${size}">${size}</span>`).join('')}</div>
-                    <div class="product-actions">
-                        <button class="btn btn-primary add-to-cart" ${product.stock === 0 ? 'disabled' : ''}><i class="fas fa-shopping-cart"></i> <span data-lang-key="${product.stock === 0 ? 'stock_out' : 'add_button'}">${product.stock === 0 ? translations[currentLanguage].stock_out : translations[currentLanguage].add_button}</span></button>
-                        <button class="btn quick-view-btn"><i class="fas fa-eye"></i></button>
-                        <button class="btn add-to-favorite ${isFavorited ? 'favorited' : ''}"><i class="${isFavorited ? 'fas' : 'far'} fa-heart"></i></button>
-                    </div>
+<div class="product-card" data-product-id="${product.id}">
+    ${preOrderBadge}${lowStockLabel}${outOfStockLabel}
+    <div class="product-image-container"><img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='placeholder.jpg';"></div>
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                ${ratingHTML}
+                <p class="price">${formatRupiah(price)}</p>
+                <div class="size-options">${product.sizes.map(size => `<span class="size-option" data-size="${size}">${size}</span>`).join('')}</div>
+                <div class="product-actions">
+                    <button class="btn btn-primary add-to-cart" ${product.stock === 0 ? 'disabled' : ''}><i class="fas fa-shopping-cart"></i> <span data-lang-key="${product.stock === 0 ? 'stock_out' : 'add_button'}">${product.stock === 0 ? translations[currentLanguage].stock_out : translations[currentLanguage].add_button}</span></button>
+                    <button class="btn quick-view-btn" title="Lihat Cepat"><i class="fas fa-eye"></i></button>
+                    <button class="btn add-to-favorite ${isFavorited ? 'favorited' : ''}" title="Favorit"><i class="${isFavorited ? 'fas' : 'far'} fa-heart"></i></button>
+                    <button class="btn compare-btn" title="Bandingkan"><i class="fas fa-layer-group"></i></button>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
+        
     };
     
     const createFavoriteCardHTMLLuxury = (product) => {
@@ -1417,16 +1553,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSearchTerm = searchInput.value.trim().toLowerCase();
     if (currentSearchTerm) filteredProducts = filteredProducts.filter(p => p.name.toLowerCase().includes(currentSearchTerm));
     if (activeFilters.availability === 'ready') {
-        filteredProducts = filteredProducts.filter(p => p.status === 'ready');
+        filteredProducts = filteredProducts.filter(p => p.status !== 'preorder' && p.stock > 0);
     } else if (activeFilters.availability === 'preorder') {
         filteredProducts = filteredProducts.filter(p => p.status === 'preorder');
     }
     if (activeFilters.color !== 'all') filteredProducts = filteredProducts.filter(p => p.color === activeFilters.color);
     if (activeFilters.design !== 'all') filteredProducts = filteredProducts.filter(p => p.design === activeFilters.design);
-    
+
+
+    const sortDropdown = document.getElementById('sort-products-dropdown');
+    if (sortDropdown) { 
+        const sortValue = sortDropdown.value;
+        if (sortValue === 'popularity') {
+            filteredProducts.sort((a, b) => (b.reviews?.length || 0) - (a.reviews?.length || 0));
+        } else if (sortValue === 'price-asc') {
+            filteredProducts.sort((a, b) => getPriceBySize(a.basePrice, 'M') - getPriceBySize(b.basePrice, 'M'));
+        } else if (sortValue === 'price-desc') {
+            filteredProducts.sort((a, b) => getPriceBySize(b.basePrice, 'M') - getPriceBySize(a.basePrice, 'M'));
+        }
+    }
+
+
     const container = productList;
     const visibleProductIds = new Set(filteredProducts.map(p => p.id));
-    
+
     Array.from(container.children).forEach(card => {
         if (!visibleProductIds.has(card.dataset.productId) && !card.classList.contains('hidden')) card.classList.add('hidden');
     });
@@ -1444,20 +1594,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isFilterOrSearchActive = activeFilters.availability !== 'all' || activeFilters.color !== 'all' || activeFilters.design !== 'all' || currentSearchTerm;
 
-
-    const activeNav = document.querySelector('#main-nav a.active, .sidebar-menu a.active');
-    const currentViewHref = activeNav ? activeNav.getAttribute('href') : '#hero';
-
-    if (currentViewHref === '#hero') {
-        ['#keranjang', '.section-divider', '#favorit', '#riwayat-pesanan', '#faq'].forEach(sel => {
-            document.querySelectorAll(sel).forEach(el => el.style.display = isFilterOrSearchActive ? 'none' : 'block');
-        });
-    }
-
     const kolekasiH2 = document.querySelector('#koleksi h2');
     if (isFilterOrSearchActive) {
         let titleParts = [];
-        if (activeFilters.availability !== 'all') titleParts.push(translations[currentLanguage].sidebar_in_stock);
+        if (activeFilters.availability === 'in_stock') titleParts.push(translations[currentLanguage].sidebar_in_stock);
         if (activeFilters.color !== 'all') titleParts.push(`${translations[currentLanguage].sidebar_color} ${translations[currentLanguage]['color_' + activeFilters.color]}`);
         if (activeFilters.design !== 'all') titleParts.push(`${translations[currentLanguage].sidebar_design} ${translations[currentLanguage]['design_' + activeFilters.design]}`);
         if (currentSearchTerm) titleParts.push(`Pencarian "${searchInput.value.trim()}"`);
@@ -1523,7 +1663,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderFavorites = () => {
     const favProducts = products.filter(p => favorites.some(fav => fav.id === p.id));
     favoriteProductsList.innerHTML = '';
-    emptyFavoritesMessage.style.display = favProducts.length === 0 ? 'block' : 'none';
+    emptyFavoritesMessage.style.display = favProducts.length === 0 ? 'flex' : 'none'; 
 
     if (favProducts.length > 0) {
         favoriteProductsList.classList.remove('product-grid');
@@ -1732,7 +1872,9 @@ document.addEventListener('DOMContentLoaded', () => {
    
    
    const renderOrderHistory = () => {
-    const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    const userProfile = getLocalStorageItem('luxuliverUser', null);
+    const history = userProfile ? userProfile.history || [] : [];
+
 
     const returnedOrderIds = JSON.parse(localStorage.getItem('returnedOrderIds')) || [];
 
@@ -1913,6 +2055,232 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 };
 
+ const renderLoyaltySection = () => {
+    if (!currentLoyaltyPointsSpan) return;
+
+    currentLoyaltyPointsSpan.textContent = userLoyaltyPoints;
+    loyaltyTiersContainer.innerHTML = '';
+    emptyLoyaltyMessage.style.display = 'none'; // Assume not empty if points exist
+
+    let nextTierInfo = null;
+    let allUnlocked = true;
+
+    loyaltyTiers.forEach(tier => {
+        const tierCard = document.createElement('div');
+        tierCard.className = 'loyalty-tier-card';
+        let tierStatusText = '';
+        let unlockedMessage = '';
+        let tierClass = '';
+
+        if (userLoyaltyPoints >= tier.points) {
+            tierClass = 'unlocked-card';
+            tierStatusText = translations[currentLanguage].loyalty_tier_unlocked;
+            unlockedMessage = translations[currentLanguage][tier.message];
+        } else {
+            tierClass = 'locked-card';
+            tierStatusText = translations[currentLanguage].loyalty_tier_locked;
+            if (!nextTierInfo) { // Only set the next tier if not already set
+                nextTierInfo = {
+                    pointsNeeded: tier.points - userLoyaltyPoints,
+                    tierName: translations[currentLanguage][`${tier.class}_title`]
+                };
+            }
+            allUnlocked = false;
+        }
+
+        tierCard.classList.add(tierClass);
+        tierCard.innerHTML = `
+            <h3>${translations[currentLanguage][`${tier.class}_title`]}</h3>
+            <div class="points-threshold">${tier.points} Poin</div>
+            <p>${unlockedMessage}</p>
+            <span class="tier-status ${tierClass === 'unlocked-card' ? 'unlocked' : 'locked'}">${tierStatusText}</span>
+        `;
+        loyaltyTiersContainer.appendChild(tierCard);
+    });
+
+    if (allUnlocked) {
+        loyaltyNextTierDiv.textContent = translations[currentLanguage].loyalty_next_tier_unlocked_all;
+    } else if (nextTierInfo) {
+        loyaltyNextTierDiv.textContent = translations[currentLanguage].loyalty_next_tier_progress(nextTierInfo.pointsNeeded, nextTierInfo.tierName);
+    } else {
+        loyaltyNextTierDiv.textContent = ''; // Fallback, should not happen if tiers exist
+    }
+
+    if (userLoyaltyPoints === 0 && loyaltyTiers.length > 0) {
+        emptyLoyaltyMessage.style.display = 'block';
+        loyaltyTiersContainer.style.display = 'none';
+        loyaltyNextTierDiv.style.display = 'none';
+    } else {
+        emptyLoyaltyMessage.style.display = 'none';
+        loyaltyTiersContainer.style.display = 'grid';
+        loyaltyNextTierDiv.style.display = 'block';
+    }
+};
+
+ const updateLoyaltyPremiumVisuals = () => {
+    document.body.classList.remove('loyalty-tier-500', 'loyalty-tier-1000', 'loyalty-tier-1500');
+
+    if (userLoyaltyPoints >= 1500) {
+        document.body.classList.add('loyalty-tier-1500');
+    } else if (userLoyaltyPoints >= 1000) {
+        document.body.classList.add('loyalty-tier-1000');
+    } else if (userLoyaltyPoints >= 500) {
+        document.body.classList.add('loyalty-tier-500');
+    }
+};
+
+const saveComparisonList = () => localStorage.setItem('comparisonList', JSON.stringify(comparisonList));
+
+
+const toggleCompare = (productId) => {
+    const productIndex = comparisonList.indexOf(productId);
+
+    if (productIndex > -1) {
+
+        comparisonList.splice(productIndex, 1);
+    } else {
+
+        if (comparisonList.length >= MAX_COMPARISON_ITEMS) {
+            showToast('toast_max_compare_items', 'warning');
+            return;
+        }
+        comparisonList.push(productId);
+    }
+    
+    saveComparisonList();
+    renderComparisonTray();
+    updateAllCompareButtons();
+};
+
+
+const updateAllCompareButtons = () => {
+    document.querySelectorAll('.compare-btn').forEach(button => {
+        const productId = button.closest('.product-card').dataset.productId;
+        const isSelected = comparisonList.includes(productId);
+        button.classList.toggle('selected', isSelected);
+        
+        button.querySelector('i').className = isSelected ? 'fas fa-check' : 'fas fa-layer-group';
+    });
+};
+
+
+
+const renderComparisonTray = () => {
+    if (comparisonList.length === 0) {
+        comparisonTray.classList.remove('show');
+        return;
+    }
+
+    comparisonItemsContainer.innerHTML = '';
+    comparisonList.forEach(productId => {
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'comparison-item';
+            itemEl.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <span>${product.name}</span>
+                <button class="remove-comparison-item" data-product-id="${productId}" title="Hapus">&times;</button>
+            `;
+            comparisonItemsContainer.appendChild(itemEl);
+        }
+    });
+
+
+    comparisonItemsContainer.querySelectorAll('.remove-comparison-item').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            toggleCompare(e.currentTarget.dataset.productId);
+        });
+    });
+
+
+    compareNowBtn.disabled = comparisonList.length < 2;
+    compareNowBtn.textContent = `${translations[currentLanguage].compare_now} (${comparisonList.length})`;
+
+    comparisonTray.classList.add('show');
+};
+
+
+const renderComparisonModal = () => {
+    const productsToCompare = comparisonList.map(id => products.find(p => p.id === id)).filter(p => p);
+
+    let tableHTML = '<table class="comparison-table">';
+
+    tableHTML += '<thead><tr><th class="attribute-header">Produk</th>';
+    productsToCompare.forEach(product => {
+        tableHTML += `
+            <th>
+                <div class="product-header">
+                    <img src="${product.image}" alt="${product.name}">
+                    <p>${product.name}</p>
+                    
+                    <button class="btn btn-primary btn-sm btn-select-option" data-product-id="${product.id}">
+                        <i class="fas fa-shopping-cart"></i> Pilih Opsi
+                    </button>
+                    </div>
+            </th>`;
+    });
+    tableHTML += '</tr></thead>';
+
+
+    tableHTML += '<tbody>';
+    const attributes = [
+        { key: 'price', label: 'Harga' },
+        { key: 'design', label: 'Desain' },
+        { key: 'color', label: 'Warna' },
+        { key: 'stock', label: 'Ketersediaan' },
+        { key: 'rating', label: 'Rating' }
+    ];
+
+    attributes.forEach(attr => {
+        tableHTML += `<tr><td class="attribute-header">${attr.label}</td>`;
+        productsToCompare.forEach(product => {
+            let value = '';
+            switch (attr.key) {
+                case 'price':
+                    value = formatRupiah(getPriceBySize(product.basePrice, 'M'));
+                    break;
+                case 'design':
+                    value = product.design;
+                    break;
+                case 'color':
+                    value = product.color;
+                    break;
+                case 'stock':
+                    value = product.stock > 0 ? (product.status === 'preorder' ? 'Pre-Order' : 'Tersedia') : 'Habis';
+                    break;
+                case 'rating':
+                    const totalReviews = product.reviews ? product.reviews.length : 0;
+                    const avgRating = totalReviews > 0 ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews : 0;
+                    value = `<div class="rating-cell">${generateStarsHTML(Math.round(avgRating))} (${avgRating.toFixed(1)})</div>`;
+                    break;
+            }
+            tableHTML += `<td class="text-capitalize">${value}</td>`;
+        });
+        tableHTML += '</tr>';
+    });
+
+    tableHTML += '</tbody></table>';
+
+    comparisonTableContainer.innerHTML = tableHTML;
+    
+
+    comparisonTableContainer.querySelectorAll('.btn-select-option').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.currentTarget.dataset.productId;
+            
+            closeModal(comparisonModal);
+            
+            setTimeout(() => {
+                openQuickViewModal(productId);
+            }, 300); 
+        });
+    });
+    
+    openModal(comparisonModal);
+};
+
+
 
     const applyTheme = (theme) => {
     body.classList.toggle('dark-mode', theme === 'dark');
@@ -1944,58 +2312,51 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
 
-const showMainContentSection = (targetId) => {
-    const sections = ['#koleksi', '#keranjang', '#favorit', '#riwayat-pesanan', '#faq', '#ulasan'];
+ const showMainContentSection = (targetId) => {
+    document.body.classList.remove('single-section-view');
+
+    const homePageSections = ['#koleksi', '#faq'];
+    // ADD '#loyalty-points' here
+    const allSections = ['#koleksi', '#keranjang', '#favorit', '#riwayat-pesanan', '#ulasan', '#loyalty-points'];
+
     const dividers = document.querySelectorAll('.section-divider');
     const searchSection = document.getElementById('search-section');
-    const heroSection = document.getElementById('hero'); 
+    const heroSection = document.getElementById('hero');
+    const footer = document.querySelector('footer');
 
-
-    if (heroSection) {
-
-        if (targetId === '#hero') {
-            heroSection.style.display = 'flex'; 
-        } else {
-            heroSection.style.display = 'none';
-        }
-    }
-
-    if (searchSection) {
-        if (targetId === '#hero' || targetId === '#koleksi') {
-            searchSection.style.display = 'block';
-        } else {
-            searchSection.style.display = 'none';
-        }
-    }
-
-    sections.forEach(sel => {
-        const el = document.querySelector(sel);
-        if (el) {
-            el.style.display = sel === targetId ? 'block' : 'none';
-        }
+    [heroSection, searchSection, footer, ...dividers, ...allSections.map(sel => document.querySelector(sel))].forEach(el => {
+        if (el) el.style.display = 'none';
     });
-
-    const isDefaultView = ['#koleksi', '#keranjang', '#favorit', '#riwayat-pesanan', '#faq'].includes(targetId);
-    dividers.forEach(divider => {
-        divider.style.display = isDefaultView ? 'block' : 'none';
-    });
-
-    if(targetId === '#ulasan') {
-        renderAllReviews();
-    }
 
     if (targetId === '#hero') {
-        sections.forEach(sel => {
+        [searchSection, footer].forEach(el => {
+            if(el) el.style.display = 'block';
+        });
+        if(heroSection) heroSection.style.display = 'flex';
+
+        homePageSections.forEach(sel => {
             const el = document.querySelector(sel);
             if (el) el.style.display = 'block';
         });
+
         dividers.forEach(divider => divider.style.display = 'block');
-        document.querySelector('#ulasan').style.display = 'none';
+
+    } else {
+        document.body.classList.add('single-section-view');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.style.display = 'block';
+        }
+
+        if (targetId === '#ulasan') {
+            renderAllReviews();
+        } else if (targetId === '#loyalty-points') { // ADD THIS BLOCK
+            renderLoyaltySection();
+        }
     }
 };
 
-
-   const initializeNavigation = () => {
+ const initializeNavigation = () => {
     document.querySelectorAll('#main-nav a, .sidebar-menu a').forEach(link => {
         link.addEventListener('click', e => {
             const href = e.currentTarget.getAttribute('href'); 
@@ -2005,18 +2366,16 @@ const showMainContentSection = (targetId) => {
 
                 const targetElement = document.querySelector(href);
                 if (targetElement) {
-                    if (href === '#hero') {
-                        showMainContentSection('#hero'); 
-                    } else {
-                       showMainContentSection(href); 
-                    }
+                    showMainContentSection(href);
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
 
+               
                 document.querySelectorAll('#main-nav a, .sidebar-menu a').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll(`a[href="${href}"]`).forEach(l => l.classList.add('active'));
 
-                if (body.classList.contains('sidebar-open')) {
+               
+                if (document.body.classList.contains('sidebar-open')) {
                     toggleSidebar();
                 }
             }
@@ -2097,11 +2456,6 @@ const updateFilterUI = () => {
             }, 300);
         });
     };
-
-    document.getElementById('sidebar-contact-admin').addEventListener('click', e => {
-        e.preventDefault();
-        window.open(`https://wa.me/${sellerInfo.whatsappAdmin}`, '_blank');
-    });
 
     const setLanguage = (lang) => {
         currentLanguage = lang;
@@ -2344,48 +2698,173 @@ if (paymentMethodContainer) {
         if (target) setLanguage(target.dataset.lang);
     });
     useSavedAddressBtn.addEventListener('click', loadSavedAddress);
+    compareNowBtn.addEventListener('click', () => {
+        if (comparisonList.length >= 2) {
+            renderComparisonModal();
+        }
+    });
 
-    const initializeApp = () => {
-        applyTheme(localStorage.getItem('theme') || 'light');
-        handleScrollProgress();
-        initializeNavigation();
-        initializeSidebar();
-        initializeFAQ();
-        initializePolicyModals();
-        initializeNotifications();
-        renderRadioOptions('expedition-method', expeditionMethods, 'expeditionMethod');
-        renderRadioOptions('payment-method', paymentMethods, 'paymentMethod');
-        renderSkeletonLoaders(productList, 6);
-        updateResetButtonVisibility();
-        applyRippleEffect();
+    clearComparisonBtn.addEventListener('click', () => {
+        comparisonList = [];
+        saveComparisonList();
+        renderComparisonTray();
+        updateAllCompareButtons();
+        showToast('Daftar perbandingan dibersihkan.', 'info');
+    });
+    
+    
+    function initializeAccessibilityPanel() {
 
-        setTimeout(() => {
-            setLanguage(localStorage.getItem('language') || 'id');
-            renderRecentlyViewed();
-            renderOrderHistory();
-            updateAllFavoriteButtons();
-            currentYearSpan.textContent = new Date().getFullYear().toString();
-            if (sellerAddressSpan) sellerAddressSpan.textContent = sellerInfo.address;
-            if (sellerPhoneSpan) sellerPhoneSpan.textContent = sellerInfo.phone;
-            if (sellerEmailSpan) sellerEmailSpan.textContent = sellerInfo.email;
-            const sellerAddressLink = document.getElementById('seller-address-link');
-            if (sellerAddressLink) {
-                const encodedAddress = encodeURIComponent(sellerInfo.address);
-                sellerAddressLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-                
-            }
-            if (sellerPhoneLink) {
-                const phoneNumber = sellerInfo.phone.replace(/[\s-]/g, '');
-                sellerPhoneLink.href = `tel:${phoneNumber}`;
-                }
-            if (sellerEmailLink) {sellerEmailLink.href = `mailto:${sellerInfo.email}`;
-                
-            }
-            document.querySelectorAll('section, footer, .product-card:not(.visible)').forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight * 0.9) el.classList.add('visible');
+    const toggleBtn = document.getElementById('a11y-sidebar-btn');
+    const panel = document.getElementById('a11y-panel');
+    const closeBtn = document.getElementById('a11y-panel-close-btn');
+    const readingGuideElement = document.getElementById('reading-guide');
+
+
+    let prefs = getLocalStorageItem('a11yPrefs', { 
+        fontSizeMultiplier: 1.0, 
+        highContrast: false,
+        readableFont: false,     
+        underlineLinks: false,    
+        reduceMotion: false,      
+        readingGuide: false      
+    });
+
+
+    const applyPrefs = () => {
+        
+        document.documentElement.style.fontSize = `${16 * prefs.fontSizeMultiplier}px`;
+        
+       
+        document.body.classList.toggle('high-contrast', prefs.highContrast);
+        document.body.classList.toggle('readable-font', prefs.readableFont);
+        document.body.classList.toggle('underline-links', prefs.underlineLinks);
+        document.body.classList.toggle('reduce-motion', prefs.reduceMotion);
+        document.body.classList.toggle('reading-guide-active', prefs.readingGuide);
+
+
+        panel.querySelector('[data-action="toggle-contrast"]').checked = prefs.highContrast;
+        panel.querySelector('[data-action="toggle-readable-font"]').checked = prefs.readableFont;
+        panel.querySelector('[data-action="toggle-underline-links"]').checked = prefs.underlineLinks;
+        panel.querySelector('[data-action="toggle-reduce-motion"]').checked = prefs.reduceMotion;
+        panel.querySelector('[data-action="toggle-reading-guide"]').checked = prefs.readingGuide;
+    };
+
+
+    const savePrefs = () => {
+        localStorage.setItem('a11yPrefs', JSON.stringify(prefs));
+    };
+
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.classList.toggle('open');
+    });
+
+
+    closeBtn.addEventListener('click', () => {
+        panel.classList.remove('open');
+    });
+
+    
+    panel.addEventListener('click', (e) => {
+        const action = e.target.dataset.action;
+        if (!action) return;
+
+        switch (action) {
+            case 'font-increase':
+                prefs.fontSizeMultiplier = Math.min(1.5, prefs.fontSizeMultiplier * 1.1);
+                break;
+            case 'font-decrease':
+                prefs.fontSizeMultiplier = Math.max(0.8, prefs.fontSizeMultiplier * 0.9);
+                break;
+            case 'font-reset':
+                prefs.fontSizeMultiplier = 1.0;
+                break;
+            case 'toggle-contrast':
+                prefs.highContrast = e.target.checked;
+                break;
+            case 'toggle-readable-font': 
+                prefs.readableFont = e.target.checked;
+                break;
+            case 'toggle-underline-links': 
+                prefs.underlineLinks = e.target.checked;
+                break;
+            case 'toggle-reduce-motion': 
+                prefs.reduceMotion = e.target.checked;
+                break;
+            case 'toggle-reading-guide': 
+                prefs.readingGuide = e.target.checked;
+                break;
+        }
+        
+        applyPrefs();
+        savePrefs();
+    });
+    
+
+    document.addEventListener('mousemove', (e) => {
+        if (prefs.readingGuide && readingGuideElement) {
+
+            window.requestAnimationFrame(() => {
+                readingGuideElement.style.top = `${e.clientY}px`;
             });
-            body.classList.remove('no-scroll');
-        }, 1200);
+        }
+    });
+
+
+    applyPrefs();
+}
+    
+    
+    
+    const initializeApp = () => {
+    applyTheme(localStorage.getItem('theme') || 'light');
+    handleScrollProgress();
+    initializeNavigation();
+    initializeSidebar();
+    initializeFAQ();
+    initializePolicyModals();
+    initializeNotifications();
+    renderRadioOptions('expedition-method', expeditionMethods, 'expeditionMethod');
+    renderRadioOptions('payment-method', paymentMethods, 'paymentMethod');
+    renderSkeletonLoaders(productList, 6);
+    updateResetButtonVisibility();
+    applyRippleEffect();
+    renderComparisonTray();
+    updateAllCompareButtons();
+
+    setTimeout(() => {
+        setLanguage(localStorage.getItem('language') || 'id');
+        renderRecentlyViewed();
+        renderOrderHistory();
+        updateAllFavoriteButtons();
+        currentYearSpan.textContent = new Date().getFullYear().toString();
+        if (sellerAddressSpan) sellerAddressSpan.textContent = sellerInfo.address;
+        if (sellerPhoneSpan) sellerPhoneSpan.textContent = sellerInfo.phone;
+        if (sellerEmailSpan) sellerEmailSpan.textContent = sellerInfo.email;
+        const sellerAddressLink = document.getElementById('seller-address-link');
+        if (sellerAddressLink) {
+            const encodedAddress = encodeURIComponent(sellerInfo.address);
+            sellerAddressLink.href = `https://maps.google.com/?q=${encodedAddress}`;
+        }
+        if (sellerPhoneLink) {
+            const phoneNumber = sellerInfo.phone.replace(/[\s-]/g, '');
+            sellerPhoneLink.href = `tel:${phoneNumber}`;
+        }
+        if (sellerEmailLink) {sellerEmailLink.href = `mailto:${sellerInfo.email}`;
+        }
+        document.querySelectorAll('section, footer, .product-card:not(.visible)').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.9) el.classList.add('visible');
+        });
+        body.classList.remove('no-scroll');
+        updateLoyaltyPremiumVisuals(); // ADD THIS LINE
+        renderLoyaltySection(); // ADD THIS LINE
+        initializeAccessibilityPanel();
+        showMainContentSection('#hero');
+        
+    }, 1200);
+  };
 
 
 orderHistoryList.addEventListener('click', function(e) {
@@ -2521,25 +3000,63 @@ if (returnConfirmationModal) {
             }
         });
     }
-    };
 
     const startApp = () => {
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-            loadingScreen.addEventListener('transitionend', () => { loadingScreen.style.display = 'none'; }, { once: true });
-        }
-        initializeApp();
-    };
-
-    if (loadingVideo) {
-        loadingVideo.addEventListener('ended', startApp);
-        loadingVideo.addEventListener('error', () => {
-            console.error("Video loading screen gagal dimuat.");
-            startApp();
-        });
-    } else {
-        startApp();
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+        // Menambahkan fallback untuk memastikan display: none jika transisi tidak terjadi
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 800); // Sesuaikan durasi dengan transisi CSS Anda
+        loadingScreen.addEventListener('transitionend', () => { 
+            loadingScreen.style.display = 'none'; 
+        }, { once: true });
     }
+    initializeApp();
+};
+
+if (loadingVideo) {
+    let videoEndedOrError = false;
+
+    // Listener untuk video selesai
+    loadingVideo.addEventListener('ended', () => {
+        if (!videoEndedOrError) {
+            videoEndedOrError = true;
+            startApp();
+        }
+    }, { once: true });
+
+    // Listener untuk error video
+    loadingVideo.addEventListener('error', () => {
+        console.error("Video loading screen gagal dimuat atau diputar.");
+        if (!videoEndedOrError) {
+            videoEndedOrError = true;
+            startApp();
+        }
+    }, { once: true });
+
+    // Fallback jika video tidak memutar atau event 'ended' tidak terpicu
+    setTimeout(() => {
+        if (!videoEndedOrError) {
+            console.warn("Video loading screen tidak selesai dalam waktu yang diharapkan, melanjutkan ke aplikasi.");
+            startApp();
+        }
+    }, 5000); // Tunggu 5 detik. Sesuaikan durasi ini jika video Anda sangat panjang.
+
+    // Coba putar video
+    loadingVideo.play().catch(error => {
+        console.warn("Autoplay video loading screen diblokir atau gagal:", error);
+        // Jika autoplay diblokir, langsung jalankan startApp sebagai fallback cepat
+        if (!videoEndedOrError) {
+            videoEndedOrError = true;
+            startApp();
+        }
+    });
+
+} else {
+    // Jika elemen video tidak ada sama sekali
+    startApp();
+}
     
         const formGroups = document.querySelectorAll('.luxury-form-group');
 
@@ -2569,4 +3086,266 @@ if (returnConfirmationModal) {
             updateIconVisibility(group); 
         }
     });
-});
+
+   
+    const liveChatToggle = document.getElementById('live-chat-toggle');
+    const liveChatModal = document.getElementById('live-chat-modal');
+    const chatTabBtns = document.querySelectorAll('.chat-tab-btn');
+    const chatTabContents = document.querySelectorAll('.chat-tab-content');
+    const faqSearchInput = document.getElementById('faq-search');
+    const faqItems = document.querySelectorAll('.faq-item-chat');
+    const faqNotFound = document.querySelector('.faq-not-found');
+    const contactAdminFromFaq = document.getElementById('contact-admin-from-faq');
+    const whatsappAdminBtn = document.getElementById('whatsapp-admin-btn');
+    const emailAdminBtn = document.getElementById('email-admin-btn');
+    const quickContactForm = document.getElementById('quick-contact-form');
+
+   
+    if (liveChatToggle) {
+        liveChatToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            liveChatModal.style.display = 'block';
+            document.body.classList.add('modal-open');
+        });
+    }
+
+   
+    chatTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+            
+
+            chatTabBtns.forEach(b => b.classList.remove('active'));
+            chatTabContents.forEach(c => c.classList.remove('active'));
+            
+
+            btn.classList.add('active');
+            document.querySelector(`[data-tab="${targetTab}"].chat-tab-content`).classList.add('active');
+        });
+    });
+
+   
+    if (faqSearchInput) {
+        faqSearchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            let hasResults = false;
+
+            faqItems.forEach(item => {
+                const keywords = item.dataset.keywords.toLowerCase();
+                const questionText = item.querySelector('.faq-question-chat span').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer-chat p').textContent.toLowerCase();
+                
+                const isMatch = keywords.includes(searchTerm) || 
+                               questionText.includes(searchTerm) || 
+                               answerText.includes(searchTerm);
+                
+                if (isMatch || searchTerm === '') {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+           
+            if (faqNotFound) {
+                faqNotFound.style.display = (!hasResults && searchTerm !== '') ? 'block' : 'none';
+            }
+        });
+    }
+
+   
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question-chat');
+        question.addEventListener('click', () => {
+           
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            
+            item.classList.toggle('active');
+        });
+    });
+
+   
+    if (contactAdminFromFaq) {
+        contactAdminFromFaq.addEventListener('click', () => {
+
+            chatTabBtns.forEach(b => b.classList.remove('active'));
+            chatTabContents.forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('[data-tab="admin"]').classList.add('active');
+            document.querySelector('[data-tab="admin"].chat-tab-content').classList.add('active');
+        });
+    }
+
+
+    if (whatsappAdminBtn) {
+        whatsappAdminBtn.addEventListener('click', () => {
+            const message = "Halo, saya ingin bertanya tentang produk Luxuliver. Mohon bantuannya.";
+            const whatsappUrl = `https://wa.me/6287820843118??text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+
+
+    if (emailAdminBtn) {
+        emailAdminBtn.addEventListener('click', () => {
+            const subject = "Pertanyaan tentang Luxuliver";
+            const body = "Halo,\n\nSaya ingin bertanya tentang:\n\n\nTerima kasih.";
+            const emailUrl = `mailto:luxuliver@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(emailUrl, '_blank');
+        });
+    }
+
+   
+    if (quickContactForm) {
+        quickContactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('quick-name').value;
+            const topic = document.getElementById('quick-topic').value;
+            const message = document.getElementById('quick-message').value;
+            
+            if (!name || !topic || !message) {
+                showToast('Mohon lengkapi semua field', 'error');
+                return;
+            }
+            
+            const topicLabels = {
+                'order': 'Pertanyaan Pesanan',
+                'product': 'Informasi Produk',
+                'shipping': 'Pengiriman',
+                'return': 'Pengembalian',
+                'other': 'Lainnya'
+            };
+            
+            const whatsappMessage = `Halo, saya ${name}.\n\nTopik: ${topicLabels[topic]}\n\nPesan: ${message}\n\nMohon bantuannya. Terima kasih.`;
+            const whatsappUrl = `https://wa.me/6287820843118?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+
+            quickContactForm.reset();
+            showToast('Pesan telah disiapkan di WhatsApp', 'success');
+        });
+    }
+
+
+    const liveChatCloseBtn = liveChatModal?.querySelector('.close-button');
+    if (liveChatCloseBtn) {
+        liveChatCloseBtn.addEventListener('click', () => {
+            liveChatModal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        });
+    }
+
+
+    if (liveChatModal) {
+        liveChatModal.addEventListener('click', (e) => {
+            if (e.target === liveChatModal) {
+                liveChatModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+        });
+    }
+    
+    
+    const wrapper = document.querySelector('.custom-select-wrapper');
+    if (wrapper) {
+        const trigger = wrapper.querySelector('.custom-select-trigger');
+        const valueDisplay = wrapper.querySelector('#custom-select-value');
+        const optionsContainer = wrapper.querySelector('.custom-select-options');
+        const originalSelect = wrapper.querySelector('.original-select');
+
+        if (originalSelect && optionsContainer) {
+            Array.from(originalSelect.options).forEach(option => {
+                const customOption = document.createElement('div');
+                customOption.classList.add('custom-select-option');
+                customOption.textContent = option.textContent;
+                customOption.dataset.value = option.value;
+                if (option.selected) {
+                    customOption.classList.add('selected');
+                    if(valueDisplay) valueDisplay.textContent = option.textContent;
+                }
+                optionsContainer.appendChild(customOption);
+            });
+        }
+
+        const customOptions = optionsContainer ? optionsContainer.querySelectorAll('.custom-select-option') : [];
+
+        if(trigger) {
+            trigger.addEventListener('click', () => {
+                wrapper.classList.toggle('open');
+            });
+        }
+
+        customOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                if (option.classList.contains('selected')) {
+                    wrapper.classList.remove('open');
+                    return;
+                }
+
+                customOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                if(valueDisplay) valueDisplay.textContent = option.textContent;
+
+
+                if(originalSelect) originalSelect.value = option.dataset.value;
+
+                renderAllProductShowcases(searchInput.value.trim());
+
+                wrapper.classList.remove('open');
+            });
+        });
+
+
+        document.addEventListener('click', (e) => {
+            if (wrapper && !wrapper.contains(e.target)) {
+                wrapper.classList.remove('open');
+            }
+        });
+    }
+    
+
+const logoutMenuItem = document.getElementById('logout-menu-item');
+
+if (logoutMenuItem) {
+    const userProfile = getLocalStorageItem('luxuliverUser', null);
+
+    if (userProfile) {
+        logoutMenuItem.style.display = 'block';
+    }
+
+    const logoutBtn = logoutMenuItem.querySelector('#logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const confirmationMessage = 'Semua data sesi Anda (Keranjang, Favorit, Riwayat Pesanan, Poin Loyalty) akan dihapus dari peramban ini. Yakin ingin logout?';
+
+            showConfirmationModal(confirmationMessage, () => {
+
+                const userSessionKeys = [
+                    'luxuliverUser',
+                    'cart',
+                    'favorites',
+                    'savedForLater',
+                    'recentlyViewed',
+                    'comparisonList',
+                    'userLoyaltyPoints' // ADD THIS LINE
+                ];
+
+                userSessionKeys.forEach(key => localStorage.removeItem(key));
+
+                window.location.reload();
+            });
+        });
+    }
+}
+
+}); // <--- INI ADALAH BARIS PENUTUP YANG BENAR UNTUK document.addEventListener('DOMContentLoaded', ...)
