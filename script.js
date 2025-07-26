@@ -515,8 +515,6 @@ empty_loyalty: 'Start shopping to collect loyalty points!'
         instagram: "https://www.instagram.com/luxuliver",
         whatsappAdmin: "6287820843118"
     };
-    console.log("Nomor WhatsApp Admin dari sellerInfo:", sellerInfo.whatsappAdmin); // <--- TAMBAHKAN BARIS INI
-
 
     const expeditionMethods = [
     { id: 'jne', name: 'JNE Express', logo: 'JNE.jpg', service: 'Reguler', price: 'Konfirmasi Admin' },
@@ -694,33 +692,33 @@ const comparisonTableContainer = document.getElementById('comparison-table-conta
 
 // START: FUNGSI addToCart (Jika belum ada di script Anda)
 const addToCart = (productId, size, quantity, triggerElement) => {
-        if (checkoutFormContainer.style.display === 'block') {
-            showToast('checkout_in_progress_warning', 'warning');
-            return;
-        }
-        const product = products.find(p => p.id === productId);
-        if (!product || quantity <= 0) return;
-        const cartItemIdentifier = `${productId}-${size}`;
-        const existingItem = cart.find(item => item.cartId === cartItemIdentifier);
-        const totalStock = product.stock;
-        const currentQtyInCart = existingItem ? existingItem.quantity : 0;
-        if (currentQtyInCart + quantity > totalStock) {
-            showToast('toast_stock_not_enough', "error", { name: product.name, size: size });
-            return;
-        }
-        const price = getPriceBySize(product.basePrice, size);
-        if (existingItem) {
-            existingItem.quantity += quantity;
-            showToast('toast_quantity_updated', 'info', { name: product.name, size: size });
-        } else {
-            cart.push({ ...product, price, size, quantity, cartId: cartItemIdentifier });
-        }
-        showToast('toast_added_to_cart', 'success', { name: product.name, size: size, qty: quantity });
-        saveCart();
-        refreshAllCartViews();
-        if (triggerElement) flyToCartAnimation(triggerElement);
-        // No loyalty points are added here. Points are added upon successful order completion.
-    };
+    if (checkoutFormContainer.style.display === 'block') {
+        showToast('checkout_in_progress_warning', 'warning');
+        return;
+    }
+    const product = products.find(p => p.id === productId);
+    if (!product || quantity <= 0) return;
+    const cartItemIdentifier = `${productId}-${size}`;
+    const existingItem = cart.find(item => item.cartId === cartItemIdentifier);
+    const totalStock = product.stock;
+    const currentQtyInCart = existingItem ? existingItem.quantity : 0;
+    if (currentQtyInCart + quantity > totalStock) {
+        showToast('toast_stock_not_enough', "error", { name: product.name, size: size });
+        return;
+    }
+    const price = getPriceBySize(product.basePrice, size);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+        showToast('toast_quantity_updated', 'info', { name: product.name, size: size });
+    } else {
+        cart.push({ ...product, price, size, quantity, cartId: cartItemIdentifier });
+    }
+    showToast('toast_added_to_cart', 'success', { name: product.name, size: size, qty: quantity });
+    saveCart();
+    refreshAllCartViews();
+    if (triggerElement) flyToCartAnimation(triggerElement);
+    // No loyalty points are added here. Points are added upon successful order completion.
+};
 // END: FUNGSI addToCart
 
 // --- FUNGSI-FUNGSI UTILITY UMUM BERIKUTNYA ---
@@ -1360,35 +1358,14 @@ const loadSavedAddress = () => {
     }
     const saveSavedForLater = () => localStorage.setItem('savedForLater', JSON.stringify(savedForLater));
 
-     checkoutForm.addEventListener('submit', e => {
+    checkoutForm.addEventListener('submit', e => {
         e.preventDefault();
-        console.log("1. Event submit formulir checkout terpicu."); // <--- TAMBAHKAN BARIS INI
-
-        if (!validateStep(3)) {
-            console.log("2. Validasi langkah 3 GAGAL."); // <--- TAMBAHKAN BARIS INI
-            return;
-        }
-        console.log("2. Validasi langkah 3 BERHASIL."); // <--- TAMBAHKAN BARIS INI
-
+        if (!validateStep(3)) return;
         const customerPhoneInput = document.getElementById('customer-phone').value;
-        console.log("3. Memeriksa validasi nomor WhatsApp..."); // <--- TAMBAHKAN BARIS INI
         if (!/^[0-9]{10,15}$/.test(customerPhoneInput)) {
             showToast("invalid_whatsapp", "error");
-            console.log("3. Validasi nomor WhatsApp GAGAL: Format tidak valid."); // <--- TAMBAHKAN BARIS INI
             return;
         }
-        console.log("2. Validasi langkah 3 BERHASIL."); // <--- TAMBAHKAN BARIS INI
-
-        const customerPhoneInput = document.getElementById('customer-phone').value;
-        console.log("3. Memeriksa validasi nomor WhatsApp..."); // <--- TAMBAHKAN BARIS INI
-        if (!/^[0-9]{10,15}$/.test(customerPhoneInput)) {
-            showToast("invalid_whatsapp", "error");
-            console.log("3. Validasi nomor WhatsApp GAGAL: Format tidak valid."); // <--- TAMBAHKAN BARIS INI
-            return;
-        }
-        console.log("3. Validasi nomor WhatsApp BERHASIL."); // <--- TAMBAHKAN BARIS INI
-
-
         const { total, subtotal, discount, shippingDiscount } = calculateCartTotals();
         const orderId = `LXVR-${orderCounter}`;
         const formData = new FormData(checkoutForm);
@@ -1401,16 +1378,8 @@ const loadSavedAddress = () => {
             notesText + `*Ekspedisi:* ${formData.get('expeditionMethod')}\n*Pembayaran:* ${formData.get('paymentMethod')}\n\n*Detail Pesanan:*\n` +
             cart.map(item => `- ${item.name} (${item.size}) x ${item.quantity} = ${formatRupiah(item.price * item.quantity)}`).join('\n') + `\n\n*Subtotal:* ${formatRupiah(subtotal)}\n` +
             `*Diskon Pembelian:* -${formatRupiah(discount)}\n` + shippingDiscountText + `*Total Pembayaran:* ${formatRupiah(total)}\n\n` + `Terima kasih! Detail biaya pengiriman (setelah promo) akan diinfokan oleh admin kami.`;
-
-        console.log("4. Detail pesanan yang akan dikirim:", orderDetails); // <--- TAMBAHKAN BARIS INI
-        console.log("5. Nomor WhatsApp Admin:", sellerInfo.whatsappAdmin); // <--- TAMBAHKAN BARIS INI
-        console.log("6. URL WhatsApp Lengkap:", `https://wa.me/${sellerInfo.whatsappAdmin}?text=${encodeURIComponent(orderDetails)}`); // <--- TAMBAHKAN BARIS INI
-
         pendingOrder = { orderId, date: new Date().toISOString(), items: [...cart], total };
-
-        // Pastikan baris ini menggunakan sellerInfo.whatsappAdmin
-        window.open(`https://wa.me/${sellerInfo.whatsappAdmin}?text=${encodeURIComponent(orderDetails)}`, '_blank'); // <--- PASTIKAN BARIS INI SEPERTI INI
-
+        window.open(`https://wa.me/${sellerInfo.whatsappAdmin}?text=${encodeURIComponent(orderDetails)}`, '_blank');
         openModal(whatsappConfirmationModal);
     });
 
